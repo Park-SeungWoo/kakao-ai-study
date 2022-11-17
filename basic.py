@@ -1,4 +1,4 @@
-# print(dir(print))  # show usable methods with ~~
+# print(dir(print))  # show usable methods or properties with ~~
 # print(help(print))  # show details about ~~
 
 # indexing
@@ -43,6 +43,7 @@ res = return_test(3, 4)
 
 from collections import Counter  # have to check out more information about Counter library
 
+
 # print(Counter([1, 2, 2, 22, 2, 3, 4, 5, 5, 5, 4, 3, 3, 32, 1]))
 
 # kernel
@@ -69,7 +70,6 @@ from collections import Counter  # have to check out more information about Coun
 #     print(data)
 
 
-
 class DefaultData:  # PascalCase
     def default_data(self):
         print("default data")
@@ -86,13 +86,6 @@ class Data(DefaultData):  # inheritance
     def data(self):  # instance method
         print(self.datas)
 
-    def __str__(self):  # overriding tostring method
-        res = ''
-        for idx, elem in enumerate(self.datas):
-            # print(f"{idx} : {elem}")
-            res += f"{idx} : {elem}\n" if idx < len(self.datas) - 1 else f"{idx} : {elem}"
-        return res
-
     @classmethod
     def data_class_method(cls):
         print("class method")
@@ -101,11 +94,27 @@ class Data(DefaultData):  # inheritance
     def data_static_method():
         print("static method")
 
+    def __str__(self):  # overriding tostring method
+        res = ''
+        for idx, elem in enumerate(self.datas):
+            # print(f"{idx} : {elem}")
+            res += f"{idx} : {elem}\n" if idx < len(self.datas) - 1 else f"{idx} : {elem}"
+        return res
 
-d = Data("t")
-d.default_data()
-d.data()  # argument로 self가 넘어감
-Data.data_class_method()
-d.data_static_method()
-Data.data_static_method()
-print(d)
+
+# d = Data("t")
+# d.default_data()
+# d.data()  # argument로 self가 넘어감
+# Data.data_class_method()
+# d.data_static_method()
+# Data.data_static_method()
+# print(d)
+
+f_l = lambda x: x ** 2  # lambda function, anonymous function
+print(f_l(2))
+
+def sample_f(l, f):  # (list, lambda function)
+    l = [f(item) for item in l]  # example usage
+    print(l)
+
+sample_f([1, 2, 3], lambda x: x ** 2)
