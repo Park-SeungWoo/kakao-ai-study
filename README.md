@@ -1,2 +1,2 @@
 # kakao-ai-study
-for studying Kakao Enterprises' AI lecture
+for studying Kakao Enterprises' AI lecture <br/>
