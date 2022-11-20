@@ -110,11 +110,51 @@ class Data(DefaultData):  # inheritance
 # Data.data_static_method()
 # print(d)
 
+
+############lambda
 f_l = lambda x: x ** 2  # lambda function, anonymous function
-print(f_l(2))
+# print(f_l(2))
+
 
 def sample_f(l, f):  # (list, lambda function)
     l = [f(item) for item in l]  # example usage
     print(l)
 
-sample_f([1, 2, 3], lambda x: x ** 2)
+
+# sample_f([1, 2, 3], lambda x: x ** 2)
+
+
+##########
+# module = single file
+# library, package = multiple files
+# every language has the prefer term to mean this but it means same
+
+import my_module
+
+
+my_module.hello()
+
+
+import numpy as np
+
+
+myarr = np.array([1, 2, 3])
+####
+
+###
+import random as rd
+
+rval = rd.randint(1, 100)
+print(rval)
+###
+##########################################################
+# pip list 모아두고 다른곳 가서 일괄 설치(js의 package.json 파일 비슷한듯)
+# pip freeze > filename.txt  => save (usually use requirements.txt as filename)
+# pip install -r filename.txt  => install
+# pip install libraryname/libraryname.whl
+# pip check  => check if there is any collision or uninstalled required libraries
+# pip show libraryname  => must check this command before uninstall library
+# pip download libraryname  => download install file (.whl) to install in intranet or something that cannot access internet
+##########################################################
+
+
