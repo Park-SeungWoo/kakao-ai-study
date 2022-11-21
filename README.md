@@ -119,7 +119,7 @@ with open("file_path/name", 'mode', encodeing='encoding_method') as file:
     data = ["interesting", "Python", "language"]
     file.write(", ".join(data))
 ```
-__with__ keyword makes us can design the object cycle(construction, use, destruction)
+__with__ keyword allow us designing the object cycle(construction, use, destruction)
 <hr/>
 
 ## Class
@@ -263,7 +263,7 @@ Followings are commonly used commands.
 - `pip install -r filename.txt` : install in batches
 <hr/>
 
-## Type specify
+## Type specification
 Although one of the python's strength is that it doesn't need to specify types, it can give type hints.
 ```python
 def odd_or_even(num: int) -> str:
@@ -273,3 +273,38 @@ def odd_or_even(num: int) -> str:
 Simply use __':'__ to specify types.<br/>
 And __'->'__ means a return type in functions.<br/>
 <hr/>
+
+# Data processing
+In this part I'll study about data processing using python.
+
+## Data Types
+
+- __structured data__ : spreadsheets, database
+- __semi structured data__ : HTML, log, sensor data
+- __unstructured data__ : image, video, sound
+<hr/>
+
+## Deep learning, Machine learning
+
+- __Deep Learning__ 
+- __Machine learning__ 
+
+__DL__ doesn't need feature engineering. It is based on an artificial neural network. So it learns on its own just like a human. But it is not a proper description. No one knows how it exactly works.<br/>
+It is usually used to process unstructured datas. So it preprocesses unstructured datas to transfer to structured datas.<br/>
+__ML__ doesn't need neural network. It needs feature engineering to learn.<br/>
+It is usually used to process structured datas.<br/>
+<hr/>
+
+## Ways to gather data
+
+- __owned data__
+- __unowned data__
+- __public data & open data__
+
+These are ways to gather datas.<br/>
+__Owned data__ means literally my data. These are from my services. (Google Analytics, Elastic Stack, ELK Stack, Zeppelin, etc...)<br/>
+__Unowned data__ is datas from other companies. (API, Web Scrapper, etc...)<br/>
+__Public data & Open data__ is opened datas for anyone who wants to use it. Available via API or downloading. (Kaggle, etc...)
+<hr/>
+
+## 
