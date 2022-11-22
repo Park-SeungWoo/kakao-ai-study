@@ -65,9 +65,9 @@ from collections import Counter  # have to check out more information about Coun
 # # with문 -> 객체의 생성, 사용, 소멸 사이클을 설계 할 수 있음
 #
 #
-# with open('datafiles/data.txt', 'r', encoding='utf-8') as file:
-#     data = file.readlines()[0].split('-')
-#     print(data)
+with open('datafiles/data.txt', 'r', encoding='utf-8') as file:
+    data = file.readlines()[0].split('-')
+    print(data)
 
 
 class DefaultData:  # PascalCase
@@ -132,7 +132,7 @@ def sample_f(l, f):  # (list, lambda function)
 import my_module
 
 
-my_module.hello()
+# my_module.hello()
 
 
 import numpy as np
@@ -145,7 +145,7 @@ myarr = np.array([1, 2, 3])
 import random as rd
 
 rval = rd.randint(1, 100)
-print(rval)
+# print(rval)
 ###
 ##########################################################
 # pip list 모아두고 다른곳 가서 일괄 설치(js의 package.json 파일 비슷한듯)

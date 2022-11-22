@@ -307,4 +307,93 @@ __Unowned data__ is datas from other companies. (API, Web Scrapper, etc...)<br/>
 __Public data & Open data__ is opened datas for anyone who wants to use it. Available via API or downloading. (Kaggle, etc...)
 <hr/>
 
-## 
+# Pandas
+
+__pandas__ is a powerful data analysis, manipulation tool. From now on, I'm going to summarize this.</br>
+
+## Column, Row
+
+- Column : Horizontal groups
+- Row : Vertical Groups
+
+## Read file (excel file)
+```python
+import pandas as pd
+
+
+data = pd.read_excel("PATH")
+```
+There are more methods which can get datas from files. (read_csv(), read_html(), read_json(), etc...)<br/>
+__read_excel()__ needs one more additional library called __"xlrd"__ since it uses this internally.<br/>
+__xlrd__ is usable when read or write Excel files in python.<br/>
+<hr/>
+
+## Pandas data types
+
+- DataFrame
+- Series
+
+__pandas__ has two major data types.<br/>
+DataFrame is like a matrix that has rows and columns, and Series is a 1-dimensional list that has just one row or column.<br/>
+So DataFrame is a collection of Series.
+<hr/>
+
+## Pandas major methods
+
+- __set_index()__
+```python
+import pandas as pd
+data = pd.read_excel("path")
+print(data.set_index("item"))
+```
+In every dataframe, the first column is an index column.<br/>
+__set_index()__ can set index column as a specific column.<br/>
+
+- __head()__, __tail()__
+```python
+import pandas as pd
+data = pd.read_excel("path")
+print(data.head(10))
+print(data.tail(10))
+```
+Can show only first, last few datas.
+
+- __describe()__
+```python
+import pandas as pd
+data = pd.read_excel("path")
+print(data.describe())
+```
+Show us a description of datas. It has statistical values.<br/>
+Same as descriptive statistics.<br/>
+It contains count, mean, std(Standard Deviation), etc...<br/>
+We must check out about the Median, the Mode, the Variance.<br/>
+
+- __info()__
+```python
+import pandas as pd
+data = pd.read_excel("path")
+print(data.info())
+```
+Show information about dataframe.<br/>
+Contains datatype, Non-Null Count, column.<br/>
+> Non-Null == None == Null == NoneType == N/A, similar with Nan(Not A Number).<br/>
+<hr/>
+
+## Ways to handle missing datas
+
+- Fill with a random value (not used)
+- Fill with relative row's value. (datas from time flows)
+- Calculate a representative value in that column(mean, median, etc...)
+- Group all datas in that row according to another row's data, and calculate a representative value in that group.
+If there is a vacant cell in height row, group with another row's value such as age. And get a representative value.
+- Make the ML predict model with the other column's values, and predict.
+- Remove that column, if there are vacant cells over specific rate. And it should be an irrelevant one.
+<hr/>
+
+## Model quantization
+__Model quantization__ is a DL technique that express model parameters as lower bits.<br/>
+It makes calculation and the model accessibility to the memory faster by making it simply. It results a faster prediction.<br/>
+For example, in 32bit cpu it originally uses 32bits to express a number. But Model quantization makes it represented by 8 bits.
+<hr/>
+
