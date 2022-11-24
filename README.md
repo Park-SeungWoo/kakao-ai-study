@@ -439,37 +439,36 @@ Contains datatype, Non-Null Count, column.<br/>
 dataframe.loc[key]  # key(index) in index column
 ```
 __loc[]__ is not a function, it's just a helper to show data. But it is not recommended. There's another way to get datas by row. So just check it out.
-#### Get series as dataframe type
-```python
-dataframe.loc[[key]]
-```
-Simply wrap with '[]' once again.
+> #### Get series as dataframe type
+> ```python
+> dataframe.loc[[key]]
+> ```
+> Simply wrap with '[]' once again.
 
-#### Get two or more series as dataframe
-```python
-dataframe.loc[[key, key, ...]]
-```
-Just pass keys in list format.
+> #### Get two or more series as dataframe
+> ```python
+> dataframe.loc[[key, key, ...]]
+> ```
+> Just pass keys in list format.
 
-#### Get series by specifying ranges.
-```python
-# dataframe.loc[row_key:row_key, column_key:column_key]
-dataframe.loc[3:6, 0:3]
-dataframe.loc[3:6, "key":"key"]
-```
-Just specify keys.<br/>
-It can be also applied to column.<br/>
-But it is different with normal python indexing. In normal python, if we want to get first to third data from the list, we can write like `list[0:3]` or `list[:3]`. However, `loc[]` also contains the last element. For example, the code `loc[0:3]` allows us to get the first to fourth datas.<br/>
-If you don't want this unusual indexing, use `iloc[]`.
-
-```python
-# dataframe.iloc[row_key:row_key, column_key:column_key]
-dataframe.iloc[3:6, 0:3]
-dataframe.iloc[3:6, "key":"key"]
-```
-It has same usage with `loc[]`.<br/>
-Contrary to `loc[]`, `iloc[]` is memorable. It is often used.<br/>
-And it's the only one circumstance that uses the index number in dataframes.
+> #### Get series by specifying ranges.
+> ```python
+> # dataframe.loc[row_key:row_key, column_key:column_key]
+> dataframe.loc[3:6, 0:3]
+> dataframe.loc[3:6, "key":"key"]
+> ```
+> Just specify keys.<br/>
+> It can be also applied to column.<br/>
+> But it is different with normal python indexing. In normal python, if we want to get first to third data from the list, we can write like `list[0:3]` or `list[:3]`. However, `loc[]` also contains the last element. For example, the code `loc[0:3]` allows us to get the first to fourth datas.<br/>
+> If you don't want this unusual indexing, use `iloc[]`.
+> ```python
+> # dataframe.iloc[row_key:row_key, column_key:column_key]
+> dataframe.iloc[3:6, 0:3]
+> dataframe.iloc[3:6, "key":"key"]
+> ```
+> It has same usage with `loc[]`.<br/>
+> Contrary to `loc[]`, `iloc[]` is memorable. It is often used.<br/>
+> And it's the only one circumstance that uses the index number in dataframes.
 <hr/>
 
 ## Get series by column
@@ -512,3 +511,36 @@ Some more methods available.<br/>
 dataframe[dataframe["key"].str.contains("string")]
 ```
 We just learned that `.contains("string")` returns Boolean type values. So we can use it as a filter in dataframe. The usage is same as when we get one column. Just write this codes instead of a key, and we can get corresponding datas only.
+<hr/>
+
+## Advanced ways to handle dataframe.
+
+### .apply()
+```python
+dataframe['new_column'] = dataframe['col_key'].apply(function)
+```
+__.apply()__ can literally apply a function to a column.<br/>
+It can be used when we make a new column using existing columns' values.<br/>
+Any function can be used. We can make a function using 'def' keyword like the way we use in usual, and apply. Or we can also use a lambda function on it.<br/>
+Additionally, there will be a warning issue when we do this, but it doesn't matter just leave it. Or you can check it out and find useful ways.<br/>
+
+### .pivot_table()
+```python
+pivot_df = pd.pivot_table(original_df, index="col_key", aggfunc=function)
+```
+Summarize datas based on a specific column.<br/>
+It's like the pivot table in Excel.<br/>
+In aggfunc(aggregation function) argument, we can set any way to aggregate the other columns' values. Usually use `nu.sum`, `np.mean`, `np.min`, `np.max` on it.<br/>
+LIke this!!
+```python
+def my_sum(x):
+    res = 0
+    for item in x:
+        res = res + 1 if item else res
+    return res
+
+
+pivot_df = pd.pivot_table(df, index="col_key", aggfunc=my_sum)
+```
+And one more important information is that the column will be eliminated which can not be aggregated. For example names.
+<hr/>

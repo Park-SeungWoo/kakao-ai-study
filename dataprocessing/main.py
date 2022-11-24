@@ -24,6 +24,24 @@ df = pd.read_excel("./lecture_datas/animals.xlsx", engine="openpyxl")
 # print(df["name"][0])  # get series by column
 # print(df.loc[0]["name"])  # same as above
 # print(df[["name", "hair", "feathers"]])
-print(df["name"].str.contains("ar"))
-print(sum(df["name"].str.contains("ar")))
-print(df[df["name"].str.contains("ar")])  # dataframe filtering
+# print(df["name"].str.contains("ar"))
+# print(sum(df["name"].str.contains("ar")))
+# print(df[df["name"].str.contains("ar")])  # dataframe filtering
+
+############ advanced ways to handle dataframe
+
+new_df = df[['name', 'hair', 'feathers', 'eggs', 'milk', 'type']]
+print(new_df.head(3))
+new_df['new_hair'] = new_df['hair'].apply(lambda x: x + 1)
+print(new_df.head(3))
+
+def my_sum(x):
+    res = 0
+    for item in x:
+        res = res + 1 if item else res
+    return res
+
+
+# pivot_df = pd.pivot_table(new_df, index="type", aggfunc=my_sum)
+pivot_df = pd.pivot_table(new_df, index="type", aggfunc=np.sum)
+print(pivot_df)
