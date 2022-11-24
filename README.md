@@ -6,6 +6,33 @@ I'll summarize the useful theoretical contents and knowledge about my additional
 # Remind and More
 Because it is literally "remind" and "more", It doesn't have every description about python.
 
+## Famous quotes in programming
+> Don't Reinvent The Wheel, Unless You Plan on Learning More About Wheels
+
+It means don't reinvent existing codes. Just use made codes by the greatest people.
+<hr/>
+
+## IDE
+__I__ ntegrated <br/>
+__D__ evelopment <br/>
+__E__ nvironment<br/>
+__IDE__ is a tool to help programming.
+<hr/>
+
+## Libraries about DL/ML
+
+- __Scikit Learn__ : traditional ML
+- __tensorflow__ : DL
+<hr/>
+
+## R vs Python
+
+- R
+  - _Strength_ : Faster visualization than python.(ggplot), Has advanced statistical techniques, 
+  - _Weakness_ : Almost impossible to apply prediction model to web or app. There is a tool named 'shiny' to visualize in web, but restricted usage only. 
+- Python : Can easily apply the model to web or app using 'django'
+<hr/>
+
 ## Useful methods
 - ```python
    dir(something)
@@ -23,7 +50,7 @@ sample = "Deep Learning"
 print(sample[2:5])  # 'ep '
 print(sample[4:1:-1])  # ' pe'
 ```
-Main structure is like this sth[start:end:step]
+Main structure is like this sth[start\:end\:step]
 <hr/>
 
 ## String formatting
@@ -34,7 +61,7 @@ print(f"{10} is greater than {20}")  # f-string
 ```
 These ways result same but '% operator' is so old method and not efficient due to its complexity.<br/>
 Second methods makes it easier than '% operator' because it doesn't need types.<br/>
-Lastly, 'f-string' is the best way to format string I think. In effect, It is the fastest way to formatting. Above all, It looks so fancy!!<br/>
+Lastly, 'f-string' is the best way to format string I think. In effect, It is the fastest way for formatting. Above all, It looks so fancy!!<br/>
 <hr/>
 
 ## Advanced string formatting
@@ -124,7 +151,7 @@ __with__ keyword allow us designing the object cycle(construction, use, destruct
 
 ## Class
 
-- Inheritance
+### Inheritance
 ```python
 class ParentClass:
   def parent_class(self):
@@ -137,7 +164,7 @@ class ChildClass(ParentClass):
 ```
 In line 6, ChildClass was inherited ParentClass.<br/>
 <br/>
-- Constructor, Destructor
+### Constructor, Destructor
 ```python
 class MyClass:
     def __init__(self, s):  # Constructor
@@ -153,7 +180,7 @@ a = MyClass('t')
 The constructor will be called right after the object is created.<br/>
 The destructor will be called right before the object is deleted.<br/>
 <br/>
-- Instance method, Class method, Static method
+### Instance method, Class method, Static method
 ```python
 def data(self):  # instance method
   print(self.datas)
@@ -183,7 +210,7 @@ Static methods are just a function but when we think that it is related with spe
 These class, static methods can be made by using __decorator__.<br/>
 <br/>
 
-- Decorator
+### Decorator
 
 Decorator is usually used for making __class method__, __static method__, __abstract class__, etc.<br/>
 These are already existing, so we can use it anytime.<br/>
@@ -204,7 +231,7 @@ def sample_func():
 Simply get function as a parameter, wrap it, and return it.<br/>
 <br/>
 
-- Overriding tostring method (+Overloading)
+### Overriding tostring method (+Overloading)
 ```python
 def __str__(self):  # overriding tostring method
     res = ''
@@ -307,6 +334,23 @@ __Unowned data__ is datas from other companies. (API, Web Scrapper, etc...)<br/>
 __Public data & Open data__ is opened datas for anyone who wants to use it. Available via API or downloading. (Kaggle, etc...)
 <hr/>
 
+## Ways to handle missing datas
+
+- Fill with a random value (not used)
+- Fill with relative row's value. (datas from time flows)
+- Calculate a representative value in that column(mean, median, etc...)
+- Group all datas in that row according to another row's data, and calculate a representative value in that group.
+If there is a vacant cell in height row, group with another row's value such as age. And get a representative value.
+- Make the ML predict model with the other column's values, and predict.
+- Remove that column, if there are vacant cells over specific rate. And it should be an irrelevant one.
+<hr/>
+
+## Model quantization
+__Model quantization__ is a DL technique that express model parameters as lower bits.<br/>
+It makes calculation and the model accessibility to the memory faster by making it simply. It results a faster prediction.<br/>
+For example, in 32bit cpu it originally uses 32bits to express a number. But Model quantization makes it represented by 8 bits.
+<hr/>
+
 # Pandas
 
 __pandas__ is a powerful data analysis, manipulation tool. From now on, I'm going to summarize this.</br>
@@ -378,22 +422,5 @@ print(data.info())
 Show information about dataframe.<br/>
 Contains datatype, Non-Null Count, column.<br/>
 > Non-Null == None == Null == NoneType == N/A, similar with Nan(Not A Number).<br/>
-<hr/>
-
-## Ways to handle missing datas
-
-- Fill with a random value (not used)
-- Fill with relative row's value. (datas from time flows)
-- Calculate a representative value in that column(mean, median, etc...)
-- Group all datas in that row according to another row's data, and calculate a representative value in that group.
-If there is a vacant cell in height row, group with another row's value such as age. And get a representative value.
-- Make the ML predict model with the other column's values, and predict.
-- Remove that column, if there are vacant cells over specific rate. And it should be an irrelevant one.
-<hr/>
-
-## Model quantization
-__Model quantization__ is a DL technique that express model parameters as lower bits.<br/>
-It makes calculation and the model accessibility to the memory faster by making it simply. It results a faster prediction.<br/>
-For example, in 32bit cpu it originally uses 32bits to express a number. But Model quantization makes it represented by 8 bits.
 <hr/>
 
