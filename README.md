@@ -357,8 +357,16 @@ __pandas__ is a powerful data analysis, manipulation tool. From now on, I'm goin
 
 ## Column, Row
 
-- Column : Horizontal groups
-- Row : Vertical Groups
+- Row : Horizontal groups
+- Column : Vertical Groups
+
+For example here is 3X4 matrix.<br/>
+>[[ 1 1 1 1 ]<br/>
+  &nbsp;[ 2 2 2 2 ]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3 X 4 matrix<br/>
+  &nbsp;[ 3 3 3 3 ]]<br/>
+
+There are 3 rows and 4 columns.
+<hr/>
 
 ## Read file (excel file)
 ```python
@@ -378,7 +386,7 @@ __xlrd__ is usable when read or write Excel files in python.<br/>
 - Series
 
 __pandas__ has two major data types.<br/>
-DataFrame is like a matrix that has rows and columns, and Series is a 1-dimensional list that has just one row or column.<br/>
+DataFrame is like a matrix that has rows and columns, and Series is a 1-dimensional list with keys that consisted with one row or column.<br/>
 So DataFrame is a collection of Series.
 <hr/>
 
@@ -424,3 +432,83 @@ Contains datatype, Non-Null Count, column.<br/>
 > Non-Null == None == Null == NoneType == N/A, similar with Nan(Not A Number).<br/>
 <hr/>
 
+## Get series by row
+
+### loc[]
+```python
+dataframe.loc[key]  # key(index) in index column
+```
+__loc[]__ is not a function, it's just a helper to show data. But it is not recommended. There's another way to get datas by row. So just check it out.
+#### Get series as dataframe type
+```python
+dataframe.loc[[key]]
+```
+Simply wrap with '[]' once again.
+
+#### Get two or more series as dataframe
+```python
+dataframe.loc[[key, key, ...]]
+```
+Just pass keys in list format.
+
+#### Get series by specifying ranges.
+```python
+# dataframe.loc[row_key:row_key, column_key:column_key]
+dataframe.loc[3:6, 0:3]
+dataframe.loc[3:6, "key":"key"]
+```
+Just specify keys.<br/>
+It can be also applied to column.<br/>
+But it is different with normal python indexing. In normal python, if we want to get first to third data from the list, we can write like `list[0:3]` or `list[:3]`. However, `loc[]` also contains the last element. For example, the code `loc[0:3]` allows us to get the first to fourth datas.<br/>
+If you don't want this unusual indexing, use `iloc[]`.
+
+```python
+# dataframe.iloc[row_key:row_key, column_key:column_key]
+dataframe.iloc[3:6, 0:3]
+dataframe.iloc[3:6, "key":"key"]
+```
+It has same usage with `loc[]`.<br/>
+Contrary to `loc[]`, `iloc[]` is memorable. It is often used.<br/>
+And it's the only one circumstance that uses the index number in dataframes.
+<hr/>
+
+## Get series by column
+```python
+dataframe['key']
+dataframe['key'][0]  # get one element
+dataframe.loc[0]['key']  # same as above
+dataframe[["key", "key", ...]]  # multiple columns
+```
+Same as the way to get datas in dictionary. And also accessible to one element using index.<br/>
+And also able to get multiple columns.
+<hr/>
+
+## Usable methods in series
+
+### .str.contains("str") 
+```python
+dataframe["key"].str.contains("string")
+```
+__.str__ converts the datas to string.<br/>
+__.contains__ can check if the specific string is in datas converted as string. It returns Boolean type values.<br/>
+
+```python
+sum(dataframe["key"].str.contains("string"))
+```
+We can also get the number of datas that contains specific string.
+
+### .endswith, .startswith, .lower, .upper, etc ...
+```python
+dataframe["key"].str.endswith("string")
+dataframe["key"].str.startswith("string")
+dataframe["key"].str.lower()
+dataframe["key"].str.upper()
+```
+Some more methods available.<br/>
+<hr/>
+
+## Dataframe filtering
+```python
+dataframe[dataframe["key"].str.contains("string")]
+```
+We just learned that `.contains("string")` returns Boolean type values. So we can use it as a filter in dataframe. The usage is same as when we get one column. Just write this codes instead of a key, and we can get corresponding datas only.
