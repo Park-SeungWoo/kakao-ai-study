@@ -28,7 +28,7 @@ __IDE__ is a tool to help programming.
 ## R vs Python
 
 - R
-  - _Strength_ : Faster visualization than python.(ggplot), Has advanced statistical techniques, 
+  - _Strength_ : Faster visualization than python.(ggplot), Has advanced statistical techniques
   - _Weakness_ : Almost impossible to apply prediction model to web or app. There is a tool named 'shiny' to visualize in web, but restricted usage only. 
 - Python : Can easily apply the model to web or app using 'django'
 <hr/>
@@ -50,7 +50,7 @@ sample = "Deep Learning"
 print(sample[2:5])  # 'ep '
 print(sample[4:1:-1])  # ' pe'
 ```
-Main structure is like this sth[start\:end\:step]
+Main structure is like this sth[start \: end \: step]
 <hr/>
 
 ## String formatting
@@ -439,36 +439,51 @@ Contains datatype, Non-Null Count, column.<br/>
 dataframe.loc[key]  # key(index) in index column
 ```
 __loc[]__ is not a function, it's just a helper to show data. But it is not recommended. There's another way to get datas by row. So just check it out.
-> #### Get series as dataframe type
-> ```python
-> dataframe.loc[[key]]
-> ```
-> Simply wrap with '[]' once again.
 
-> #### Get two or more series as dataframe
-> ```python
-> dataframe.loc[[key, key, ...]]
-> ```
-> Just pass keys in list format.
+#### Get series as dataframe type
+```python
+dataframe.loc[[key]]
+```
+Simply wrap with '[]' once again.
 
-> #### Get series by specifying ranges.
-> ```python
-> # dataframe.loc[row_key:row_key, column_key:column_key]
-> dataframe.loc[3:6, 0:3]
-> dataframe.loc[3:6, "key":"key"]
-> ```
-> Just specify keys.<br/>
-> It can be also applied to column.<br/>
-> But it is different with normal python indexing. In normal python, if we want to get first to third data from the list, we can write like `list[0:3]` or `list[:3]`. However, `loc[]` also contains the last element. For example, the code `loc[0:3]` allows us to get the first to fourth datas.<br/>
-> If you don't want this unusual indexing, use `iloc[]`.
-> ```python
-> # dataframe.iloc[row_key:row_key, column_key:column_key]
-> dataframe.iloc[3:6, 0:3]
-> dataframe.iloc[3:6, "key":"key"]
-> ```
-> It has same usage with `loc[]`.<br/>
-> Contrary to `loc[]`, `iloc[]` is memorable. It is often used.<br/>
-> And it's the only one circumstance that uses the index number in dataframes.
+#### Get two or more series as dataframe
+```python
+dataframe.loc[[key, key, ...]]
+```
+Just pass keys in list format.
+
+#### Get series by specifying ranges.
+```python
+# dataframe.loc[row_key:row_key, column_key:column_key]
+dataframe.loc[3:6, "key":"key"]
+```
+Just specify keys.<br/>
+It can be also applied to column.<br/>
+Numbers in row_key are not indexes, those are labels in the index_column.
+If you want to access by using index, use `iloc[]`.
+```python
+# dataframe.iloc[row_key:row_key, column_key:column_key]
+dataframe.iloc[3:6, 0:3]
+```
+It has same usage with `loc[]`.<br/>
+Contrary to `loc[]`, `iloc[]` is memorable. It is often used.<br/>
+And it's the only one circumstance that uses the index number in dataframes.<br/>
+If you want to access by indexes, use `iloc[]`. Or use `loc[]` when if you want to access by labels.<br/>
+These are different!!
+If the dataframe is like this.
+```python
+id   name   age ...
+ 1    tom    21 ...
+ 2   tony    23 ...
+ 3  james    21 ...
+```
+And the codes are like this.
+```python
+df.loc[1:2]
+df.iloc[1:2]
+```
+`loc[]` and `iloc[]` return different dataframe.<br/>
+`loc[]` returns __tom__ and __tony's__ datas. Whereas `iloc[]` returns __tony__ and __james's__ datas.
 <hr/>
 
 ## Get series by column
@@ -530,17 +545,67 @@ pivot_df = pd.pivot_table(original_df, index="col_key", aggfunc=function)
 ```
 Summarize datas based on a specific column.<br/>
 It's like the pivot table in Excel.<br/>
-In aggfunc(aggregation function) argument, we can set any way to aggregate the other columns' values. Usually use `nu.sum`, `np.mean`, `np.min`, `np.max` on it.<br/>
+In aggfunc(aggregation function) argument, we can set any function to aggregate the other columns' values. Usually use `nu.sum`, `np.mean`, `np.min`, `np.max` on it. But we can also make our own function!<br/>
 LIke this!!
 ```python
 def my_sum(x):
     res = 0
-    for item in x:
+    for item in x:  # Boolean type value
         res = res + 1 if item else res
     return res
 
 
 pivot_df = pd.pivot_table(df, index="col_key", aggfunc=my_sum)
 ```
-And one more important information is that the column will be eliminated which can not be aggregated. For example names.
+And one more important information is that the column will be removed which can not be aggregated like 'names'.
 <hr/>
+
+### Drop row or column
+```python
+df.drop(['row_keys', ...], inplace=True)  # drop rows
+df.drop(['col_keys', ...], axis=1, inplace=True)  # drop columns
+```
+Use `drop()` method to drop rows or columns. Or we can also use the `del` keyword like a dictionary.<br/>
+Using the `axis` parameter, we can drop columns also. Default is 0 that means rows and 1 means columns.<br/>
+And `inplace` parameter, we can see this parameter in many situation. If we set this as True, methods will overwrite the original variable. Else will return processed value.<br/>
+<hr/>
+
+### Sort
+```python
+df.sort_values(by='col_keys', inplace=True, ascending=False)
+```
+It's intuitive. We can sort in reverse order by setting `ascending` as False.
+<hr/>
+
+### Deep copying dataframe
+```python
+# shallow copy
+new_df = df
+# deep copy
+new_df = df.copy()  # deep=True as default
+```
+'Shallow copy' copies only the address value in memory.<br/>
+'Deep copy' copies the whole object.<br/>
+<hr/>
+
+### loc[], iloc[], at[], iat[]
+```python
+# loc[]
+df.loc['row_key':'row_key', 'col_key':'col_key']  # print
+df.loc['row_key':'row_key', 'col_key':'col_key'] = 100  # update
+
+# iloc[]
+df.iloc[row_idx:row_idx, col_idx:col_idx]  # print
+df.iloc[row_idx:row_idx, col_idx:col_idx] = 100  # update 
+
+# at[]
+df.at['row_key', 'col_key']  # print
+df.at['row_key', 'col_key'] = 100  # update
+
+# iat[]
+df.iat[row_idx, col_idx]  # print
+df.iat[row_idx, col_idx] = 100  # update 
+```
+There are some differences among `loc[]`, `iloc[]`, `at[]`, `iat[]`.<br/>
+Typically `(i)at[]` is faster than `(i)loc[]`. So many use this method.<br/>
+However `(i)at[]` can't access multiple elements, whereas`(i)loc[]` can.
