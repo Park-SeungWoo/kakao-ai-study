@@ -383,19 +383,26 @@ These are some techniques.<br/>
 
 This algorithm basically operates by setting the minimum value of one column as '0', and the maximum value as '1'.<br/>
 Here's the formula to use this algorithm.<br/>
+
 $$ newX = {oldX-min \over max-min} $$<br/>
+
 Just pick one value in specific column, and do this.<br/>
 __oldX__ is the original value, and __newX__ is the result of Min-Max Algorithm.<br/>
 It may return some negative values. Then we can normalize each indices by taking its relative absolute value or square value to the total.<br/>
 Simply sum that column's absolute value, and divide each value to the total.<br/>
+
 $$ df = {\lvert d_i \rvert \over \sum\limits_{i=1}^n \lvert d_i \rvert} $$<br/>
+
 or<br/>
+
 $$ df = {d_i^2 \over \sum\limits_{i=1}^n d_i^2} $$<br/>
+
 [Min-Max Normalization Docs](https://people.revoledu.com/kardi/tutorial/Similarity/Normalization.html)
 - Standardization<br/>
 
 This algorithm basically operates like Min-Max. But the difference is it sets the mean value of one column as '0', and the standard deviation(std) as '1'.<br/>
 And also here's the formula.<br/>
+
 $$ newX = {oldX-mean \over std} $$<br/>
 
 Many people use __Min-Max Algorithm__ because it is intuitive. But!!!! when if we use these in ML or DL, __Standardization__ will often get better model performances than __Min-Max Algorithm__. But not everytime.
