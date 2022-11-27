@@ -483,7 +483,7 @@ df.loc[1:2]
 df.iloc[1:2]
 ```
 `loc[]` and `iloc[]` return different dataframe.<br/>
-`loc[]` returns __tom__ and __tony's__ datas. Whereas `iloc[]` returns __tony__ and __james's__ datas.
+`loc[]` returns __tom__ and __tony's__ datas. Whereas `iloc[]` returns __tony's__ datas.
 <hr/>
 
 ## Get series by column
@@ -609,3 +609,73 @@ df.iat[row_idx, col_idx] = 100  # update
 There are some differences among `loc[]`, `iloc[]`, `at[]`, `iat[]`.<br/>
 Typically `(i)at[]` is faster than `(i)loc[]`. So many use this method.<br/>
 However `(i)at[]` can't access multiple elements, whereas`(i)loc[]` can.
+<hr/>
+
+### Masking
+```python
+print(df['col_key'] > 7)
+df[df['col_key'] > 7] = 0
+
+print(df[['col_key']] > 7)
+df[df[['col_key']] > 7] = 0
+```
+These are the masking technique.<br/>
+These look similar but return totally different type.<br/>
+First one returns a set of datas in index column and bool datas of each index as series.<br/>
+And we can set it as a key to get and update datas.<br/>
+So if we set value on that, all datas at those indexes in returned series are updated by that value.<br/>
+Because it means just specific indexes are true and the others are False like this!!<br/>
+```python
+print(df['col_key'] > 7)
+----------------------------------
+index
+    0 True
+    1 False
+    2 False
+    3 True
+```
+It returns a series. Therefore, When we use this as a key and print, it will show only the rows that have True value.
+So when if we update dataframe as 0 using this, all datas in '0' and '3' rows will be updated as 0.<br/>
+Additionally, we can apply 'and', 'or', 'not' operations on that so that we can apply multiple conditions.<br/>
+```python
+print(df[ (df['col_key'] > 7) & (df['col_key'] > 2000) ])
+print(df[ (df['col_key'] > 7) | (df['col_key'] > 2000) ])
+print(df[ ~(df['col_key'] < 5) ])
+```
+However, second one is different.<br/>
+It returns a dataframe like this.<br/>
+```python
+print(df[['col_key']] > 7)
+----------------------------------
+      column
+index 
+    0   True
+    1  False
+    2  False
+    3   True
+```
+When we use this as a key and print, it will show the whole dataframe fill with NaN except for the datas that have True value. And they will be printed as their own values like this.
+```python
+      column  column2 ...
+index 
+    0      8      NaN
+    1    NaN      NaN
+    2    Nan      NaN
+    3     10      Nan
+```
+So If we update using this, it will only change specific datas.
+
+### Merge
+
+#### a.join(b)
+It works well with unsorted dataframes, But 'a', 'b' dataframes' index column should be same.
+
+#### pd.merge(a, b, left_on='', right_on='', how='')
+Should set detailed props, and also works well with unsorted dataframe, but it doesn't matter when if two dataframes have not same indexes.<br/>
+`left_on` means the a's index column name, and `right_on` means the b's index column name.<br/>
+`how` means the way to merge two dataframes. It has inner, left, right, full outer like join in SQL.<br/>
+
+#### pd.concat([a, b], axis=)
+It doesn't follow the index columns, can be done by rows or columns. Often used when adding new rows.
+<hr/>
+

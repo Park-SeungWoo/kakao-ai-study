@@ -71,9 +71,49 @@ state_df['검거율'] = state_df['소계(검거)'] / state_df['소계(발생)'] 
 ###### drop column
 state_df.drop(['강간(검거)', '강도(검거)', '절도(검거)', '살인(검거)', '폭력(검거)', '소계(검거)', '소계(발생)'], inplace=True, axis=1)
 # print(state_df)
-state_df[state_df[['강간(검거율)', '강도(검거율)', '절도(검거율)', '살인(검거율)', '폭력(검거율)']] > 100] = 100  # Just to show the way to access columns simultaneously.
-print(state_df)
-print(state_df.loc[['강남구', '송파구'], '검거율'])
-state_df.loc[['강남구', '송파구'], '검거율'] = 100
-print(state_df.loc[['강남구', '송파구'], '검거율'])
+state_df[state_df[['강간(검거율)', '강도(검거율)', '절도(검거율)', '살인(검거율)',
+                   '폭력(검거율)']] > 100] = 100  # Just to show the way to access columns simultaneously. (masking technique)
 
+# for row_idx, row in state_df.iterrows():
+#     print(row_idx, row, sep="\n")
+
+# print(state_df[state_df['살인(발생)'] > 7])
+# print(state_df[state_df[["살인(발생)"]] > 7])
+# state_df[state_df['살인(발생)'] > 7] = 0
+
+# state_df.drop(list(state_df[state_df['살인(발생)'] > 7].index), inplace=True)  # drop
+
+# print(state_df)
+# state_df[state_df[['살인(발생)']] > 7] = 0
+# print(state_df)
+
+# print(state_df[(state_df['살인(발생)'] > 7) & (state_df['폭력(발생)'] > 2000)])
+# print(state_df[(state_df['살인(발생)'] > 7) | (state_df['폭력(발생)'] > 2000)])
+# print(state_df[~(state_df['살인(발생)'] < 5)])
+# print(state_df[~(state_df['살인(발생)'] > 5)])
+
+# print(list(state_df[state_df['살인(발생)'] == 0].index))
+state_df['살인(검거율)'].fillna(100, inplace=True)
+# print(state_df.loc[['도봉구']])
+
+state_df.rename(columns={
+    '강간(발생)': '강간',
+    '강도(발생)': '강도',
+    '살인(발생)': '살인',
+    '절도(발생)': '절도',
+    '폭력(발생)': '폭력'}, inplace=True)
+# print(state_df)
+
+########## merge with population data
+
+# a.join(b) - it will work well even if unsorted, But a, b dataframes' index column should be same.
+# pd.merge(a, b, left_on='', right_on='', how='inner') - should set detailed props, work well with unsorted dataframe, doesn't matter when if two dataframes have not same index
+# pd.concat([a, b], axis=0) - it doesn't follow the index columns, can be done by rows or columns. Often used when adding new rows.
+
+popul_df = pd.read_csv('./lecture_datas/crime/pop_kor.csv', encoding='utf-8')
+# popul_df = pd.read_csv('./lecture_datas/crime/pop_kor.csv', encoding='utf-8', index_col='구별')  # set_index too
+popul_df.rename(columns={'구별': 'state'}, inplace=True)
+popul_df.set_index('state', inplace=True)
+
+total_df = state_df.join(popul_df)
+print(total_df)
