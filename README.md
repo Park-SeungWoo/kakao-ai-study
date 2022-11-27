@@ -290,7 +290,7 @@ Followings are commonly used commands.
 - `pip install -r filename.txt` : install in batches
 <hr/>
 
-## Type specification
+## Type hint
 Although one of the python's strength is that it doesn't need to specify types, it can give type hints.
 ```python
 def odd_or_even(num: int) -> str:
@@ -299,6 +299,29 @@ def odd_or_even(num: int) -> str:
 ```
 Simply use __':'__ to specify types.<br/>
 And __'->'__ means a return type in functions.<br/>
+If we use __'typing'__ library, we can also do these fantastic things.
+```python
+# dict
+d: dict[str, int] = {
+    '1': 1,
+    '2': 2,
+    '3': 3
+}
+
+# list
+l: list[str] = ['hello', 'python']
+l2: list[Union[str, int]] = [1, '1', 2, '2']
+
+# optional
+def foo(a: Optional[str] = None):
+    return a if a else 'None'
+
+# final
+CONST_VAR: Final = 1000
+```
+It's not mandatory, the  but it will still increase our code qualities.<br/>
+Check out the official document of __'typing'__. This library and additional library named __'type annotation'__ have already included in internal libraries from python version 3.5.<br/>
+And there are also a type checking library named __'mypy'__. But some editors already have a plugin to do that. So check it out!
 <hr/>
 
 # Data processing
@@ -351,9 +374,38 @@ It makes calculation and the model accessibility to the memory faster by making 
 For example, in 32bit cpu it originally uses 32bits to express a number. But Model quantization makes it represented by 8 bits.
 <hr/>
 
+## Feature scaling(Normalization)
+Sometimes we can have a data that has ruined scale of features.<br/>
+When we use this data in ML, DL, and even a heatmap will not operate properly.<br/>
+So we should do a __Feature scaling__.<br/>
+These are some techniques.<br/>
+- Min-Max Algorithm<br/>
+
+This algorithm basically operates by setting the minimum value of one column as '0', and the maximum value as '1'.<br/>
+Here's the formula to use this algorithm.<br/>
+$$ newX = {oldX-min \over max-min} $$<br/>
+Just pick one value in specific column, and do this.<br/>
+__oldX__ is the original value, and __newX__ is the result of Min-Max Algorithm.<br/>
+It may return some negative values. Then we can normalize each indices by taking its relative absolute value or square value to the total.<br/>
+Simply sum that column's absolute value, and divide each value to the total.<br/>
+$$ df = {\lvert d_i \rvert \over \sum\limits_{i=1}^n \lvert d_i \rvert} $$<br/>
+or<br/>
+$$ df = {d_i^2 \over \sum\limits_{i=1}^n d_i^2} $$<br/>
+[Min-Max Normalization Docs](https://people.revoledu.com/kardi/tutorial/Similarity/Normalization.html)
+- Standardization<br/>
+
+This algorithm basically operates like Min-Max. But the difference is it sets the mean value of one column as '0', and the standard deviation(std) as '1'.<br/>
+And also here's the formula.<br/>
+$$ newX = {oldX-mean \over std} $$<br/>
+
+Many people use __Min-Max Algorithm__ because it is intuitive. But!!!! when if we use these in ML or DL, __Standardization__ will often get better model performances than __Min-Max Algorithm__. But not everytime.
+
+We don't need to remember these formulas. When we use these in ML or DL, there's already existing method to do this job. So we just need to understand.
+<hr/>
+
 # Pandas
 
-__pandas__ is a powerful data analysis, manipulation tool. From now on, I'm going to summarize this.</br>
+__pandas__ is a powerful data analysis, manipulation tool. From now on, I'm going to summarize this.<br/>
 
 ## Column, Row
 
@@ -664,6 +716,7 @@ index
     3     10      Nan
 ```
 So If we update using this, it will only change specific datas.
+<hr/>
 
 ### Merge
 
@@ -672,10 +725,54 @@ It works well with unsorted dataframes, But 'a', 'b' dataframes' index column sh
 
 #### pd.merge(a, b, left_on='', right_on='', how='')
 Should set detailed props, and also works well with unsorted dataframe, but it doesn't matter when if two dataframes have not same indexes.<br/>
-`left_on` means the a's index column name, and `right_on` means the b's index column name.<br/>
+`left_on` means a's index column name, and `right_on` means b's index column name.<br/>
 `how` means the way to merge two dataframes. It has inner, left, right, full outer like join in SQL.<br/>
 
 #### pd.concat([a, b], axis=)
 It doesn't follow the index columns, can be done by rows or columns. Often used when adding new rows.
 <hr/>
 
+### .quantile()
+```python
+df.quantile()
+```
+It returns 0%, 25%, 50%, 75%, 100% of Quaternary values.<br/>
+Pass float value 0, 0.25, 0.5, 0.75, 1.<br/>
+`df.quantile(0.5)` is same as `df.median()`.<br/>
+<hr/>
+
+## Seaborn
+__Seaborn__ is a visualization tool.<br/>
+It operates based on __matplotlib__.<br/>
+
+### font setting
+If we have Korean in our datas, Seaborn cannot display Korean well.<br/>
+So we have to set a Korean font.<br/>
+Here's the code.<br/>
+```python
+plt.rc('font', family='Nanum GaRamYeonGgoc')  # font setting (Korean)
+```
+Done!
+In addition, __rc__ means 'run configure'.<br/>
+If you want to know available fonts list, run this code.<br/>
+```python
+from matplotlib import font_manager as fm
+
+for font in fm.fontManager.ttflist:
+    print(font)
+```
+It'll show you fonts list.<br/>
+For more information, check this website. (It's written in Korean though..)<br/>
+[korean font setting](https://deepblancs-it-study.tistory.com/54)<br/>
+<hr/>
+
+### heatmap
+```python
+sns.heatmap(df.sort_values(by="col_key", ascending=False), cmap="rocket_r", annot=True, fmt="f", linewidth=.5)
+```
+It can show a heatmap easily.<br/>
+__cmap__ is a color map. So we can set a color map to show.
+If __annot__ is True, the value of each index will appear in the heatmap.<br/>
+__fmt__ means a format to annotate the value.<br/>
+And there are some more props. Check out the docs.<br/>
+<hr/>
