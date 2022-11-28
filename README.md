@@ -111,7 +111,7 @@ Here's some more information.<br/>
 
 1. file path : It covers file path, file name, extensions.
    - .csv : comma-separated values
-   - .json, .xml, .yaml : data expression types
+   - .json(Javascript Object Notation), .xml, .yaml : data expression types
 
 2. mode : we have three main options.
    - 'r' : read option
@@ -384,18 +384,24 @@ These are some techniques.<br/>
 This algorithm basically operates by setting the minimum value of one column as '0', and the maximum value as '1'.<br/>
 Here's the formula to use this algorithm.<br/>
 
-$$ newX = {oldX-min \over max-min} $$<br/>
+```math
+newX = {oldX-min \over max-min}
+```
 
 Just pick one value in specific column, and do this.<br/>
 __oldX__ is the original value, and __newX__ is the result of Min-Max Algorithm.<br/>
 It may return some negative values. Then we can normalize each indices by taking its relative absolute value or square value to the total.<br/>
 Simply sum that column's absolute value, and divide each value to the total.<br/>
 
-$$ df = {\lvert d_i \rvert \over \sum\limits_{i=1}^n \lvert d_i \rvert} $$<br/>
+```math
+df = {\lvert d_i \rvert \over \sum\limits_{i=1}^n \lvert d_i \rvert}
+```
 
 or<br/>
 
-$$ df = {d_i^2 \over \sum\limits_{i=1}^n d_i^2} $$<br/>
+```math
+df = {d_i^2 \over \sum\limits_{i=1}^n d_i^2}
+```
 
 [Min-Max Normalization Docs](https://people.revoledu.com/kardi/tutorial/Similarity/Normalization.html)
 - Standardization<br/>
@@ -403,7 +409,9 @@ $$ df = {d_i^2 \over \sum\limits_{i=1}^n d_i^2} $$<br/>
 This algorithm basically operates like Min-Max. But the difference is it sets the mean value of one column as '0', and the standard deviation(std) as '1'.<br/>
 And also here's the formula.<br/>
 
-$$ newX = {oldX-mean \over std} $$<br/>
+```math
+newX = {oldX-mean \over std}
+```
 
 Many people use __Min-Max Algorithm__ because it is intuitive. But!!!! when if we use these in ML or DL, __Standardization__ will often get better model performances than __Min-Max Algorithm__. But not everytime.
 
@@ -748,6 +756,14 @@ Pass float value 0, 0.25, 0.5, 0.75, 1.<br/>
 `df.quantile(0.5)` is same as `df.median()`.<br/>
 <hr/>
 
+### A.div()
+```python
+target_df = target_df.div(source_df['col_key'], axis=0)
+```
+It divides target_df's values by source_df's specific columns values.<br/>
+Default axis is 1, so if we want to divide by column, we should set axis as 0.<br/>
+<hr/>
+
 ## Seaborn
 __Seaborn__ is a visualization tool.<br/>
 It operates based on __matplotlib__.<br/>
@@ -783,3 +799,37 @@ If __annot__ is True, the value of each index will appear in the heatmap.<br/>
 __fmt__ means a format to annotate the value.<br/>
 And there are some more props. Check out the docs.<br/>
 <hr/>
+
+## folium(map visualization library)
+__folium__ is a map visualization library.
+
+To use this we have to pass GEOJSON datas that we're going to visualize.
+I'm going to pass the Seoul datas.
+
+First, get GEOJSON datas. and pass it to `folium.Map()`
+```python
+import json
+import folium
+geo_str = json.load(open(PATH, 'r', encoding='utf-8'))  # get GEOJSON
+
+geo_map = folium.Map(location=[center_lat, center_long], zoom_start=10, tiles='Stamen Toner')
+```
+I'll describe some major parameters of `Map()`.<br/>
+First __*location*__ receives center lat/long as tuple or list of float values. And set the center of the map.<br/>
+__*zoom_start*__ receives a number and set initial zoom levels.<br/>
+__*tiles*__ receives a string value of Map tileset. It can be done with built-in tiles, or custom tiles also can be pass as an URL.<br/>
+
+And we all want to visualize these map. Let's do this.<br/>
+When we use __folium__, it makes html codes to visualize maps. So we should save these html codes and open it to see the result.<br/>
+```python
+import webbrowser
+def show_geo(m):
+    m.save('geomap.html')
+    webbrowser.open(url=f'file://{os.getcwd()}/geomap.html')
+```
+We'll use the __webbrowser__ library to open html by code.<br/>
+It already exists in our internal library.<br/>
+To make it easily to see the result. I made a function.<br/>
+First it saves the map data as a html file, and open it using __webbrowser__.<br/>
+webbrowser receives an absolute PATH.<br/>
+And.. it's all done! Let's run this code! Boom!!

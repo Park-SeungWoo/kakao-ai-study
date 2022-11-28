@@ -1,3 +1,5 @@
+import os
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -145,12 +147,155 @@ max_vals = tot_df[['강간', '강도', '살인', '절도', '폭력']].max()
 norm_df = tot_df[['강간', '강도', '살인', '절도', '폭력']] / max_vals  # temporary normalization
 # print(norm_df)
 
-plt.figure(figsize=(10, 8))
-plt.subplot(1, 2, 1)
-sns.heatmap(norm_df.sort_values(by="살인", ascending=False), cmap="rocket_r", annot=True, fmt="f", linewidth=.5)
-plt.title('Crime Occurrences sorted by Murders')
+# plt.figure(figsize=(10, 8))
+# plt.subplot(1, 2, 1)
+# sns.heatmap(norm_df.sort_values(by="살인", ascending=False), cmap="rocket_r", annot=True, fmt="f", linewidth=.5)
+# plt.title('Crime Occurrences without population')
 
-plt.subplot(1, 2, 2)
-sns.heatmap(norm_df.sort_values(by="절도", ascending=False), cmap="rocket_r", annot=True, fmt="f", linewidth=.5)
-plt.title('Crime Occurrences sorted by Thieves')
-plt.show()
+# plt.subplot(1, 2, 2)
+# sns.heatmap(norm_df.sort_values(by="절도", ascending=False), cmap="rocket_r", annot=True, fmt="f", linewidth=.5)
+# plt.title('Crime Occurrences sorted by Thieves')
+# plt.show()
+
+norm_df = norm_df.div(tot_df['인구수'], axis=0) * 100000
+# print(norm_df.head(5))
+
+# plt.subplot(1, 2, 2)
+# sns.heatmap(norm_df.sort_values(by="살인", ascending=False), cmap="rocket_r", annot=True, fmt="f", linewidth=.5)
+# plt.title('Crime Occurrences with population')
+# plt.show()
+
+norm_df['total'] = norm_df.mean(axis=1)
+# print(norm_df)
+
+# sns.heatmap(norm_df.sort_values(by="total", ascending=False), cmap="rocket_r", annot=True, fmt="f", linewidth=.5)
+# plt.show()
+
+##############folium
+
+import json
+
+geo_path = './lecture_datas/crime/skorea-2018-municipalities-geo.json'
+# geo_path = './lecture_datas/crime/skorea_municipalities_geo_simple.json'
+geo_str = json.load(open(geo_path, 'r', encoding='utf-8'))  # get geo datas
+
+# print(geo_str)
+# print(geo_str['features'][0])
+
+import folium
+import webbrowser
+
+
+def show_geo(m):
+    m.save('./dataprocessing/geo_html/geomap.html')
+    webbrowser.open(url=f'file://{os.getcwd()}/dataprocessing/geo_html/geomap.html')
+
+
+geo_map = folium.Map(location=[37.5502, 126.982], zoom_start=11)
+
+# geo_map.choropleth(geo_data=geo_str,
+#                    data=tot_df['살인'],
+#                    columns=[tot_df.index, tot_df['살인']],
+#                    fill_color='PuRd',
+#                    # key_on='feature.id'
+#                    key_on='properties.name'
+#                    )
+
+# geo_map.choropleth(geo_data=geo_str,
+#                    data=norm_df['total'],
+#                    columns=[norm_df.index, norm_df['total']],
+#                    fill_color='PuRd',
+#                    key_on='properties.name')
+# show_geo(geo_map)
+
+GEOCODE_KEY = json.load(open('./keys.json', 'r', encoding='utf-8'))['GEOCODE']
+# print(GEOCODE_KEY)
+station_name = []
+for name in df_new['관서명']:
+    station_name.append(f'서울{name[:-1]}경찰서')
+
+# print(station_name)
+df_new['police'] = station_name
+df_new['arrest rate'] = df_new['소계(검거)'] / df_new['소계(발생)'] * 100
+
+
+# print(df_new)  # similar arrest rate
+
+# print(df_new['arrest rate'])
+
+def my_min_max(x, mini, maxi, min_range, max_range):
+    return ((x - mini) * (max_range - min_range) / (maxi - mini)) + 1
+
+
+df_new['score'] = my_min_max(df_new['arrest rate'], df_new['arrest rate'].min(), df_new['arrest rate'].max(), 1, 100)
+# print(df_new.sort_values(by='score', ascending=False))
+
+############################################ geocoding
+
+# import googlemaps
+#
+# gmaps = googlemaps.Client(key=GEOCODE_KEY)
+# # location_info = gmaps.geocode('서울중부경찰서', language='ko')
+# # print(location_info[0]['geometry']['location'])
+#
+# lat = []
+# long = []
+#
+# for station in df_new['police']:
+#     tmploc = gmaps.geocode(station)
+#     lat.append(tmploc[0]['geometry']['location']['lat'])
+#     long.append(tmploc[0]['geometry']['location']['lng'])
+#
+# df_new['lat'] = lat
+# df_new['long'] = long
+
+# print(df_new)
+
+df_geo = pd.read_excel('./lecture_datas/crime/관서별 5대범죄 발생 및 검거(with lat & lng).xlsx', engine='openpyxl')
+# print(df_geo)
+
+# geo_map.choropleth(geo_data=geo_str,
+#                    data=norm_df['total'],
+#                    columns=[norm_df.index, norm_df['total']],
+#                    fill_color='PuRd',
+#                    # key_on='feature.id'
+#                    key_on='properties.name'
+#                    )
+
+############################################draw circle
+# for i in df_geo.index:
+#     folium.CircleMarker((df_geo['lat'][i], df_geo['lng'][i]),
+#                         radius=df_geo['점수'][i] * 0.5,
+#                         color="#3186cc",
+#                         fill=True,
+#                         fillcolor="#3186cc").add_to(geo_map)
+
+
+# show_geo(geo_map)
+
+#################################choropleth only seoul
+# print(geo_str['features'][0]['properties'])
+seoul_geo = []
+for item in geo_str['features']:
+    if item['properties']['code'][:2] == '11':
+        seoul_geo.append(item)
+
+# print(len(seoul_geo))
+geo_str['features'] = seoul_geo
+
+geo_map.choropleth(geo_data=geo_str,
+                   data=tot_df['살인'],
+                   columns=[tot_df.index, tot_df['살인']],
+                   fill_color='PuRd',
+                   # key_on='feature.id'
+                   key_on='properties.name'
+                   )
+
+for i in df_geo.index:
+    folium.CircleMarker((df_geo['lat'][i], df_geo['lng'][i]),
+                        radius=df_geo['점수'][i] * 0.5,
+                        color="#3186cc",
+                        fill=True,
+                        fillcolor="#3186cc").add_to(geo_map)
+
+show_geo(geo_map)
