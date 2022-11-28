@@ -832,4 +832,116 @@ It already exists in our internal library.<br/>
 To make it easily to see the result. I made a function.<br/>
 First it saves the map data as a html file, and open it using __webbrowser__.<br/>
 webbrowser receives an absolute PATH.<br/>
-And.. it's all done! Let's run this code! Boom!!
+And.. it's all done! Let's run this code! Boom!!<br/>
+<hr/>
+
+## Numpy(Numerical Python)
+__Numpy__ is designed for high-performance numerical calculation. Especially in the vector or the matrix.<br/>
+And also it is used as a basis for other libraries. For example __matplotlib__, __pandas__, etc ...<br/>
+
+### np.array()
+```python
+a = np.array([1, 2, 3])
+```
+It convert a list to np.array
+<hr/>
+
+### .shape
+```python
+print(a.shape)
+```
+It returns shape of the array.
+<hr/>
+
+### .ndim
+```python
+print(a.ndim)
+```
+It returns the number of dimension of the array.
+<hr/>
+
+### .zeros()
+```python
+z = np.zeros((2, 2))
+```
+It returns a numpy array filled with 0.<br/>
+And we can pass the shape of the array that we'll get.
+<hr/>
+
+### .ones()
+```python
+o = np.ones((2, 2))
+```
+Same as `zeros()` but it consists with 1.
+<hr/>
+
+### .eye()
+```python
+e = np.eye(3)
+```
+It(Identity matrix) returns a 2-dim sizeXsize array filled with 1 only values of the diagonal. Rest of the matrix will be filled with 0.
+<hr/>
+
+### np.random
+- .random()
+```python
+r = np.random.random()
+```
+It returns a random float value between 0 and 1. And we can also pass the shape of the array.
+- .randint())
+```python
+ri = np.random().randint(1, 100, size=(2, 2))
+```
+It returns a random integer value between min and max that we passed. And It also receives the size.
+<hr/>
+
+### .sort()
+```python
+a.sort()
+```
+Not any description needed.
+<hr/>
+
+### .arange()
+```python
+ar = np.arange(9)
+```
+It returns an array filled with increasing value by one from 0 to the size that we passed.
+<hr/>
+
+### .reshape()
+```python
+ar.reshape(3, 3)  # ar from above
+```
+It can reshape a numpy array. For example ar was 1-dim array. But when we use .reshape(3, 3), It;ll be transformed as 3x3 matrix.
+<hr/>
+
+### .mean(), .sum(), .min(), .max(), np.median()
+
+```python
+ar.mean()
+ar.sum()
+ar.min()
+ar.max()
+np.median(ar, axis=0)
+```
+These all returns mean, sum, min, max, median value of the array.<br/>
+And we can also pass the axis value. If we pass as 1, it will return corresponding value by rows, and if we pass 0, it will return by columns.
+<hr/>
+
+### np.diag()
+```python
+np.diag(ar)
+```
+It returns a vector consisted with the diagonal values in original matrix.<br/>
+But when if the original data was a vector, It will return a matrix diagonally filled with original values. And the others are filled with 0.<br/>
+<hr/>
+
+### np.dot()
+```python
+np.dot(a, c)
+```
+This is a method for matrix operations.<br/>
+To use this, we have to learn about matrix operations.
+<hr/>
+
