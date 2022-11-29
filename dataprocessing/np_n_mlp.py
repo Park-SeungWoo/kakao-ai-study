@@ -1,8 +1,4 @@
 import numpy as np
-import matplotlib as mlp
-import matplotlib.pyplot as plt
-import seaborn as sns
-
 
 arr1 = np.array([1, 2, 3])
 # print(arr1.dtype)
@@ -56,3 +52,50 @@ c = np.random.randint(1, 10, (3, 2))
 # print(np.dot(a, c))
 
 ######################matplotlib
+
+import matplotlib as mlp
+import matplotlib.pyplot as plt
+from matplotlib import rc
+import pandas as pd
+
+
+rc('font', family='Nanum GaRamYeonGgoc')  # set font
+plt.rcParams['axes.unicode_minus'] = False
+
+x = [1, 2, 3, 4, 5]
+y = [10, 20, 30, 40, 50]
+
+# plt.plot(x, y)
+
+# plt.grid()  # add grid
+# plt.xlabel('x label')
+# plt.ylabel('y label')
+
+# plt.title('title')
+# plt.show()
+
+df = pd.DataFrame(np.random.randn(10, 4).cumsum(axis=0),
+                  columns=['A', 'B', 'C', 'D'],
+                  index=np.arange(0, 100, 10))
+
+# df.plot()
+# plt.xlabel('x')
+# plt.ylabel('y')
+# plt.title('title')
+# plt.show()
+
+s = pd.Series(np.random.rand(16), index=list('abcdefghijklmnop'))
+
+# s.plot(kind="bar")
+# df.plot(kind='bar')
+# plt.show()
+
+norm = np.random.normal(1, 1, size=(100, 1))
+norm2 = np.random.normal(-2, 4, size=(100, 1))
+
+norm = pd.DataFrame(np.concatenate((norm, norm2), axis=1), columns=['x1', 'x2'])
+# print(norm)
+
+plt.scatter(norm['x1'], norm['x2'])
+plt.show()
+
