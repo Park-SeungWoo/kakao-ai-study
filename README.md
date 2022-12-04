@@ -324,6 +324,33 @@ Check out the official document of __'typing'__. This library and additional lib
 And there are also a type checking library named __'mypy'__. But some editors already have a plugin to do that. So check it out!
 <hr/>
 
+## Regular Expression
+
+To check strings by matching patterns.<br/>
+For example, if we want to get an email address, we can use this to make sure it is an email address.<br/>
+Let's see a simple example item below.<br/>
+```python
+import re
+
+
+str = 'apple is delicious, but it is red.'
+a = '^[a-zA-Z0-9]+'  # one or more ('a', 'apple') 
+b = '^[a-zA-Z0-9]*'  # zero or more ('', 'a', 'apple')
+c = '^[a-zA-Z0-9]?'  # zero or one ('', 'a')
+# ^ : starts with following patterns
+re.match(a, str)
+re.match(b, str)
+re.match(c, str)
+
+d = '[a-zA-Z0-9]+' 
+re.findall(d, str)  # return all words that matches the pattern as a list.
+```
+It returns None type if it matches nothing.<br/>
+For more information, check this web page.<br/>
+[Regex(written in Korean)](http://pythonstudy.xyz/python/article/401-%EC%A0%95%EA%B7%9C-%ED%91%9C%ED%98%84%EC%8B%9D-Regex) <br/>
+[advanced](https://hamait.tistory.com/342)
+<hr/>
+
 # Data processing
 In this part I'll study about data processing using python.
 
@@ -1039,7 +1066,92 @@ Using .find() or .find_all(), take out tags we want to get.
 Take out pure contents(texts) from the tags we got. Using tag.get_text() or tag.attrs
 <hr/>
 
-## Konlpy
-This is a library to analyze Korean.
+## NLP
 
-## Beautiful Soup
+### Konlpy
+This is a library to analyze Korean.
+<hr/>
+
+### Text data analysis process
+
+1. Set up text data as string type.
+
+2. Tokenize
+
+Divide the text as morphemes.
+
+3. POS(part of speech) tagging / Remove stopwords
+
+Display POS / Remove not essential words like an article
+
+4. Count words and make a dictionary
+
+Count the number of times each morpheme appears.
+
+5. Visualization
+
+6. Apply a ML/DL model.
+<hr/>
+
+### POS tags in nltk
+
+- Noun : N~
+- Verb : V~
+- Adj : J~, A~
+<hr/>
+
+### Lemmatizing
+
+Find lemma by removing derivative meanings.
+```python
+import nltk
+lem = nltk.wordnet.WordNetLemmatizer()
+print(lem.lemmatize('cats'))
+print(lem.lemmatize('better', pos='a'))
+```
+We can also set specific POS to get based words.
+<hr/>
+
+### TF-IDF (Term-Frequency - Inverse Document Frequency)
+TF-IDF vectorizer gives weights to the words that appears in the text dataset so that make the important words more important and not necessary words less important.<br/>
+In many documents, the word's importance is different by following document's character, and we have to regard this.<br/>
+Let's see the formula.<br/>
+
+```math
+tf&ndash;idf(d, t) = {tf(d, t) \times idf(d, t)}
+```
+
+- tf(d, t) : words frequency (count)
+- idf(d, t) : inverse document frequency
+
+```math
+idf(d, t) = {log \times {n_d \over 1 + df(t)}}
+```
+
+- $n_d$ : the number of documents.
+- df(t) : the number of documents that has words `t`.
+
+Take `log` to reduce magnitudes.<br/>
+`log` is used in feature scaling.<br/>
+
+It can be done with __*'scikit-learn's TfidfVectorizer*__.<br/>
+
+We're now doing text data analysis, so we have to extract the feature words of the sentences so that we could get characteristics of the sentences or writer's.
+<hr/>
+
+### Cosine similarity
+
+It's the cosine value that calculated between two vectors' angle.<br/>
+And it means the similarity of two vectors.
+![cosine similarity](readme_assets/cosine_similarity.png)
+[image ref](https://medium.com/geekculture/cosine-similarity-and-cosine-distance-48eed889a5c4)
+
+- If the angle between two vectors' is 0, the cosine similarity value is 1.<br/>
+It means there is a high similarity between them.<br/>
+- Else if the angle between two vectors' is 90, the cosine similarity value is 0.<br/>
+It means two vectors are independent to each other which means they have no correlation between them.<br/>
+- Else if the angle between two vectors' is 180, the cosine similarity value is -1.<br/>
+It means two vector has exactly opposite meaning.
+
+It doesn't matter how long the vector is, it just cares about the directionality of the vector.<br/>
+As we can see cosine similarity gets from -1 to 1 values. We get similarity between documents by using this.<br/>
