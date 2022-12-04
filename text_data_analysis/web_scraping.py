@@ -94,7 +94,7 @@ while True:
         source = BeautifulSoup(web, 'html.parser')
         is_not_last_article = source.find('div', {'class': 'wrap_page_article'}).find('a', {'class': 'link_next'})  # find last article
 
-        with open('./NLP/scraping_datas/blog_content.txt', 'a', encoding='utf-8') as f:  # get content and save
+        with open('./text_data_analysis/scraping_datas/blog_content.txt', 'a', encoding='utf-8') as f:  # get content and save
             f.write('In' + blog_url + str(blog_page) + '\n')
             content_all = source.find('div', {'class': 'wrap_body'}).find_all()
             for content in content_all:

@@ -1031,7 +1031,7 @@ rc('axes', unicode_minus=False)  # it also works
 Set this code before show figures, then it'll work.
 <hr/>
 
-## Web Crawling & Web scraping
+# Web Crawling & Web scraping
 - web crawling
 
 Collecting links in WWW(World Wide Web) by web crawling bot.
@@ -1066,13 +1066,30 @@ Using .find() or .find_all(), take out tags we want to get.
 Take out pure contents(texts) from the tags we got. Using tag.get_text() or tag.attrs
 <hr/>
 
-## NLP
+## HTTP requests
+- GET : pass queries by inserting in url. Used when client requests an information to server.
+- POST : pass queries in header. Used when client requests information creation to server.
+- PUT : Used when client requests an update to server.
+- DELETE : Used when client requests a deletion to server.
 
-### Konlpy
+These all used in REST API's HTTP methods.
+REST API is an interface that defined the ways to handle information in web.
+<hr/>
+
+## Bypass HTTP request rate limits
+
+When we do a web scrapping, we can easily face the limit of the HTTP requests.<br/>
+That's because for a secure issue like 'Dos', developers set a limitation that one client can push request in a short time.<br/>
+So to avoid this limitation, just set an interval between requests by using `time.sleep()` in python.<br/>
+<hr/>
+
+# NLP
+
+## Konlpy
 This is a library to analyze Korean.
 <hr/>
 
-### Text data analysis process
+## Text data analysis process
 
 1. Set up text data as string type.
 
@@ -1093,14 +1110,14 @@ Count the number of times each morpheme appears.
 6. Apply a ML/DL model.
 <hr/>
 
-### POS tags in nltk
+## POS tags in nltk
 
 - Noun : N~
 - Verb : V~
 - Adj : J~, A~
 <hr/>
 
-### Lemmatizing
+## Lemmatizing
 
 Find lemma by removing derivative meanings.
 ```python
@@ -1112,7 +1129,7 @@ print(lem.lemmatize('better', pos='a'))
 We can also set specific POS to get based words.
 <hr/>
 
-### TF-IDF (Term-Frequency - Inverse Document Frequency)
+## TF-IDF (Term-Frequency - Inverse Document Frequency)
 TF-IDF vectorizer gives weights to the words that appears in the text dataset so that make the important words more important and not necessary words less important.<br/>
 In many documents, the word's importance is different by following document's character, and we have to regard this.<br/>
 Let's see the formula.<br/>
@@ -1139,7 +1156,7 @@ It can be done with __*'scikit-learn's TfidfVectorizer*__.<br/>
 We're now doing text data analysis, so we have to extract the feature words of the sentences so that we could get characteristics of the sentences or writer's.
 <hr/>
 
-### Cosine similarity
+## Cosine similarity
 
 It's the cosine value that calculated between two vectors' angle.<br/>
 And it means the similarity of two vectors.
@@ -1155,3 +1172,5 @@ It means two vector has exactly opposite meaning.
 
 It doesn't matter how long the vector is, it just cares about the directionality of the vector.<br/>
 As we can see cosine similarity gets from -1 to 1 values. We get similarity between documents by using this.<br/>
+In actual, it used only in positive space that results in range 0~1.<br/>
+<hr/>
