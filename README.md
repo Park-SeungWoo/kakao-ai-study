@@ -1083,6 +1083,17 @@ That's because for a secure issue like 'Dos', developers set a limitation that o
 So to avoid this limitation, just set an interval between requests by using `time.sleep()` in python.<br/>
 <hr/>
 
+## Avoid blocking from server
+
+In many server, they block the access from codes. It recognizes the access from the codes. So we have to program to access like a web browser.<br/>
+It can be done simply by adding 'user-agent' option in header.<br/>
+In python these can be done like this.<br/>
+```python
+headers = {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'}
+requests.get(url, headers=headers)
+```
+The header option can be found in network tab in any web browser's developer tool.
+
 # NLP
 
 ## Konlpy
