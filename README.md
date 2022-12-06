@@ -1108,7 +1108,24 @@ tokenizer.pos('한글 문자', norm=True, stem=True)
 `Okt` is one of the morpheme analyzer in __*'konlpy'*__.<br/>
 `norm` in pos is a __normalization__ option.<br/>
 `stem` in pos is a __stemming__ option.<br/>
-It returns a list of tuple that matches each morpheme with POS.
+It returns a list of tuple that matches each morpheme with POS.<br/>
+> But if there are any emoticons, It won't work. So care about it.
+<hr/>
+
+## Korean stopwords
+
+When we do nlp with Korean, there is a words set.<br/>
+Actually it supports in many languages. So check it out.<br/>
+[stopwords-iso](https://github.com/stopwords-iso/stopwords-iso) <br/>
+And, let's check the usage.<br/>
+Simply import it, and use it!<br/>
+```python
+from stopwordsiso import stopwords
+stopword_list = stopwords('ko')  # return as a set
+many_langs = stopwords(['ko', 'en'])  # also return a set
+```
+But it is not a perfect dataset for our every project.<br/>
+So we have to add or delete stopwords to use this.
 <hr/>
 
 ## Text data analysis process
