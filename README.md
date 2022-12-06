@@ -417,7 +417,7 @@ newX = {oldX-min \over max-min}
 
 Just pick one value in specific column, and do this.<br/>
 __oldX__ is the original value, and __newX__ is the result of Min-Max Algorithm.<br/>
-It may return some negative values. Then we can normalize each indices by taking its relative absolute value or square value to the total.<br/>
+It may return some negative values. Then we can normalize each index by taking its relative absolute value or square value to the total.<br/>
 Simply sum that column's absolute value, and divide each value to the total.<br/>
 
 ```math
@@ -1098,6 +1098,17 @@ The header option can be found in network tab in any web browser's developer too
 
 ## Konlpy
 This is a library to analyze Korean.
+
+### Okt.pos()
+```python
+from konlpy.tag import Okt
+tokenizer = Okt()
+tokenizer.pos('한글 문자', norm=True, stem=True)
+```
+`Okt` is one of the morpheme analyzer in __*'konlpy'*__.<br/>
+`norm` in pos is a __normalization__ option.<br/>
+`stem` in pos is a __stemming__ option.<br/>
+It returns a list of tuple that matches each morpheme with POS.
 <hr/>
 
 ## Text data analysis process
