@@ -70,54 +70,54 @@ def google_translate(text, driver, bef_text=''):
 
 
 # main process
-DF = pd.read_excel('./text_data_analysis/scraping_datas/articles/221207_0249.xlsx', engine='openpyxl')
-TR_URL = 'https://translate.google.co.kr/?sl=ko&tl=en&op=translate'
-stopwords_list = list(stopwords('ko'))
-stopwords_list.extend(['하다', '되다', '있다', '이다', '돼다', '않다', '그렇다', '아니다', '이렇다', '어떻다'])
-tokenizer = Okt()
-articles = ' '.join(DF['Article'].tolist())
+if __name__ == '__main__':
+    DF = pd.read_excel('./text_data_analysis/scraping_datas/articles/221207_0249.xlsx', engine='openpyxl')
+    TR_URL = 'https://translate.google.co.kr/?sl=ko&tl=en&op=translate'
+    stopwords_list = list(stopwords('ko'))
+    stopwords_list.extend(['하다', '되다', '있다', '이다', '돼다', '않다', '그렇다', '아니다', '이렇다', '어떻다'])
+    tokenizer = Okt()
+    articles = ' '.join(DF['Article'].tolist())
 
-pos_tagged = tokenizer.pos(articles, norm=True, stem=True)
+    pos_tagged = tokenizer.pos(articles, norm=True, stem=True)
 
-# extract useful words only
-cleaned = []
-for word in pos_tagged:
-    if word[1] not in ['Josa', 'Eomi', 'Punctuation', 'Foreign']:
-        if (len(word[0]) != 1) & (word[0] not in stopwords_list):
-            cleaned.append(word[0])
+    # extract useful words only
+    cleaned = []
+    for word in pos_tagged:
+        if word[1] not in ['Josa', 'Eomi', 'Punctuation', 'Foreign']:
+            if (len(word[0]) != 1) & (word[0] not in stopwords_list):
+                cleaned.append(word[0])
 
-counted = dict(Counter(cleaned))
-counted = dict(sorted(counted.items(), key=lambda x: x[1], reverse=True)[:100])
+    counted = dict(Counter(cleaned))
+    counted = dict(sorted(counted.items(), key=lambda x: x[1], reverse=True)[:100])
 
-translated_dict = {}
-bef_text = ''
-driver = get_Chrome_driver(TR_URL)
-for item in counted.items():
-    translated = google_translate(item[0], driver, bef_text)
-    translated_dict[translated] = item[1]
-    bef_text = translated
-    time.sleep(0.5)  # avoid blocking
+    translated_dict = {}
+    bef_text = ''
+    driver = get_Chrome_driver(TR_URL)
+    for item in counted.items():
+        translated = google_translate(item[0], driver, bef_text)
+        translated_dict[translated] = item[1]
+        bef_text = translated
+        time.sleep(0.5)  # avoid blocking
 
-# print(counted, translated_dict, sep='\n')
-masking = np.array(Image.open('./text_data_analysis/assets/masks/python_mask.jpg'))
-coloring = ImageColorGenerator(masking)
+    # print(counted, translated_dict, sep='\n')
+    masking = np.array(Image.open('./text_data_analysis/assets/masks/python_mask.jpg'))
+    coloring = ImageColorGenerator(masking)
 
-word_cloud = WordCloud(font_path='/Users/seungwoosmac/Library/Fonts/BMJUA_ttf.ttf',
-                       width=1000,
-                       height=500,
-                       background_color='white',
-                       max_words=100,
-                       mask=masking
-                       # prefer_horizontal=True
-                       ).generate_from_frequencies(translated_dict)
+    word_cloud = WordCloud(font_path='/Users/seungwoosmac/Library/Fonts/BMJUA_ttf.ttf',
+                           width=1000,
+                           height=500,
+                           background_color='white',
+                           max_words=100,
+                           mask=masking
+                           # prefer_horizontal=True
+                           ).generate_from_frequencies(translated_dict)
 
-plt.figure(figsize=(10, 10))
-plt.imshow(word_cloud.recolor(color_func=coloring), interpolation='bilinear')
-plt.axis('off')
-plt.tight_layout(pad=0)
-plt.show()
+    plt.figure(figsize=(10, 10))
+    plt.imshow(word_cloud.recolor(color_func=coloring), interpolation='bilinear')
+    plt.axis('off')
+    plt.tight_layout(pad=0)
+    plt.show()
 
-# finish
-driver.close()
-driver.quit()
-
+    # finish
+    driver.close()
+    driver.quit()
