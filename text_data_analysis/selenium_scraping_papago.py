@@ -33,17 +33,15 @@ def driver_close(func):
 def papago_translate(dri, text, bef_text=''):
     translator = WebDriverWait(dri, 10).until(
         EC.visibility_of_element_located((By.ID, 'txtSource')))  # wait til loading
-    translator.clear()
     translator.send_keys(text)
 
     WebDriverWait(dri, 10).until(
-        EC.presence_of_element_located((By.XPATH, '/html/body/div/div/div[1]/section/div/div[1]/div[2]/div/div[5]/p[1]'))
+        EC.presence_of_element_located(
+            (By.XPATH, '/html/body/div/div/div[1]/section/div/div[1]/div[2]/div/div[5]/p[1]'))
     )  # wait until translated
 
-    time.sleep(0.5)
     translated_elem = WebDriverWait(dri, 10).until(
         EC.visibility_of_element_located((By.ID, 'txtTarget')))  # wait til displayed
-
 
     # PAPAGO displays text that has not yet been translated by pasting '...' after the word.
     # The changes in translated text over time are like this.
@@ -51,14 +49,19 @@ def papago_translate(dri, text, bef_text=''):
     # And elem.text returns a text exactly in that time. I think elem saves specific element's information, and when we do '.text', it finds that element and get text.
     # The text can be changed while we checking the conditions.
     # So I made a variable to save text to prevent that the text changes while checking the conditions.
+    ################# These are not necessary now.
+    # I used some conditions in while loop but now I'm not using.
+    # But this information is an important one, so I left it.
+
     while True:
         tr_txt = translated_elem.text
         if tr_txt.endswith('...'):  # wait til translated
             continue
-        elif bef_text.lower() == tr_txt.lower():  # wait til translated
-            continue
         else:
             break
+
+    cancel = dri.find_element_by_xpath('/html/body/div/div/div[1]/section/div/div[1]/div[1]/div/div[3]/button')
+    cancel.click()
 
     return tr_txt
 
@@ -71,9 +74,9 @@ def translate_words(dri, word_list):
         tr_txt = papago_translate(dri, t, bef_txt)
         bef_txt = tr_txt
         tr_dict[t] = tr_txt
+        print(f'{t}: {tr_txt}')
         time.sleep(0.5)  # to avoid blocking from server
 
-    print(tr_dict)
     return tr_dict
 
 
@@ -109,17 +112,16 @@ tr_keys_dict = translate_words(driver, top_words_dict.keys())
 tr_keys = list(tr_keys_dict.values())
 
 # preprocessing translated keys
+temp = []
 for key in tr_keys:
-    key = key.replace('.', '').split(',')[0]
+    temp.append(key.replace('.', '').split(',')[0])
+
+tr_keys = temp
 
 for idx, item in enumerate(top_words_dict.items()):
     if tr_keys[idx] in translated_dict.keys():
         translated_dict[tr_keys[idx] + f'{item[0]}'] = item[1]
     translated_dict[tr_keys[idx]] = item[1]
-
-
-print(translated_dict)
-print(top_words_dict)
 
 masking = np.array(Image.open('./text_data_analysis/assets/masks/python_mask.jpg'))
 coloring = ImageColorGenerator(masking)
