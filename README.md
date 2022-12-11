@@ -1071,9 +1071,13 @@ Take out pure contents(texts) from the tags we got. Using tag.get_text() or tag.
 - POST : pass queries in header. Used when client requests information creation to server.
 - PUT : Used when client requests an update to server.
 - DELETE : Used when client requests a deletion to server.
+- etc... 
 
 These all used in REST API's HTTP methods.
 REST API is an interface that defined the ways to handle information in web.
+
+There are a term called 'payload'.<br/>
+It means only the data we are going to send. It doesn't contain 'header' or 'footer' datas, just 'body' datas.
 <hr/>
 
 ## Bypass HTTP request rate limits
