@@ -92,6 +92,7 @@ def get_tour_infos_selenium(driver):  # using selenium
     return products  # return a structured information list in this page
 
 
+# same as above, but using bs4 not selenium
 @paging
 def get_tour_infos_bs(driver):  # using bs4
     DOM = BeautifulSoup(driver.page_source, 'html.parser')
@@ -100,7 +101,12 @@ def get_tour_infos_bs(driver):  # using bs4
     products = []
     for tour_elem in tour_lists_elem:
         title = tour_elem.find('h5', {'class': 'infoTitle'}).get_text()
-        print(title)
+        price = tour_elem.find('div', {'class': 'infoPrice'}).find('strong').get_text()
+        starting_date = tour_elem.find_all('p', {'class': 'info'})[1].get_text().split(':')[1].strip()
+        able_sd_from = starting_date.split('~')[0]
+        able_sd_to = starting_date.split('~')[1]
+        product_img_src = tour_elem.find('img').attrs['src']
+        products.append([title, price, able_sd_from, able_sd_to, product_img_src])
     return products  # return a structured information list in this page
 
 
@@ -108,7 +114,7 @@ def get_tour_infos_bs(driver):  # using bs4
 def scraping_tour_lists(driver):
     WebDriverWait(driver, 10).until(EC.element_to_be_clickable(
         (By.XPATH, '/html/body/div[1]/div/div[1]/div[2]/div[3]/div[2]/div[3]/div/button'))).click()  # click more infos
-    return get_tour_infos_selenium(driver)  # get tour lists
+    return get_tour_infos_bs(driver)  # get tour lists, {options: [bs4, selenium]}
 
 
 '''******main******'''
