@@ -692,7 +692,7 @@ df.loc['row_key':'row_key', 'col_key':'col_key'] = 100  # update
 df.iloc[row_idx:row_idx, col_idx:col_idx]  # print
 df.iloc[row_idx:row_idx, col_idx:col_idx] = 100  # update 
 
-# at[]
+# at[]  -> recommended
 df.at['row_key', 'col_key']  # print
 df.at['row_key', 'col_key'] = 100  # update
 
@@ -870,7 +870,7 @@ And also it is used as a basis for other libraries. For example __matplotlib__, 
 ```python
 a = np.array([1, 2, 3])
 ```
-It convert a list to np.array
+It convert a list to np.array, and return numpy.ndarray(n-dimensional array)
 <hr/>
 
 ### .shape
@@ -939,8 +939,29 @@ It returns an array filled with increasing value by one from 0 to the size that 
 ### .reshape()
 ```python
 ar.reshape(3, 3)  # ar from above
+ar.reshape(3, -1)  # same as above
 ```
-It can reshape a numpy array. For example ar was 1-dim array. But when we use .reshape(3, 3), It;ll be transformed as 3x3 matrix.
+It can reshape a numpy array. For example ar was 1-dim array. But when we use .reshape(3, 3), It;ll be transformed as 3x3 matrix.<br/>
+When if we put '-1' in arguments, numpy will automatically calculate that dimension.<br/>
+And there is another option which is not such important because It barely used.<br/>
+```python
+ar = np.arange(12)
+ar.reshape(2, 6, order='F')
+# [[ 0 2 4 6 8 10]
+#  [ 1 3 5 7 9 11]]
+```
+'order' option can fill the elements first in the column direction.<br/>
+But when if the original array's dimension is not 1, it will also take the elements first in the column direction.<br/>
+```python
+ar = np.arange(12).reshape(2, 6)  # method chaining
+# [[ 0  1  2  3  4  5]
+#  [ 6  7  8  9 10 11]]
+ar = ar.reshape(3, 4, order='F')
+# [[ 0  7  3 10]
+#  [ 6  2  9  5]
+#  [ 1  8  4 11]]
+```
+It's not necessary.
 <hr/>
 
 ### .mean(), .sum(), .min(), .max(), np.median()
@@ -964,12 +985,66 @@ It returns a vector consisted with the diagonal values in original matrix.<br/>
 But when if the original data was a vector, It will return a matrix diagonally filled with original values. And the others are filled with 0.<br/>
 <hr/>
 
+### np.add()
+```python
+np.add(mat, matt)
+```
+Element-wise add.<br/>
+It means apply 'add' operator at each element.<br/>
+```python
+a = [[1 2]
+     [3 4]]
+b = [[5 6]
+     [7 8]]
+# consider as np.array variables
+np.add(a, b)
+# res = [[ 6  8]
+#        [10 12]]
+ ```
+<hr/>
+
+### np.subtract()
+```python
+np.subtract(a, b)
+```
+Element-wise subtract.
+<hr/>
+
+### np.multiply()
+
+```python
+np.multiply(a, b)
+```
+Element-wise multiply.
+<hr/>
+
 ### np.dot()
 ```python
 np.dot(a, c)
 ```
+Contrary to those above, it is not an Element-wise operation<br/>
 This is a method for matrix multiplication.<br/>
-To use this, we have to know about matrix multiplication.
+To use this, we have to know about matrix multiplication.<br/>
+<hr/>
+
+### Broadcasting
+
+numpy array operation's one of feature is broadcasting.<br/>
+Which means apply the operation to each element.<br/>
+For example if there is a list, and multiply by 2.
+```python
+a = [1, 2, 3, 4] * 2
+# [1, 2, 3, 4, 1, 2, 3, 4]
+```
+It'll result these two repeated list.<br/>
+But if we multiply a numpy array by 2,
+```python
+a = np.array([1, 2, 3, 4]) * 2
+# [ 2 4 6 8 ]
+```
+It'll result an array of elements multiplied by 2.<br/>
+This is a broadcasting.<br/>
+Broadcasting is actually appears in many fields like network.
 <hr/>
 
 ## matplotlib
@@ -1217,3 +1292,38 @@ It doesn't matter how long the vector is, it just cares about the directionality
 As we can see cosine similarity gets from -1 to 1 values. We get similarity between documents by using this.<br/>
 In actual, it used only in positive space that results in range 0~1.<br/>
 <hr/>
+
+# Data Analysis
+
+When we do Data Analysis, we do EDA(Exploratory Data Analysis) to understand datas and missing datas, and adjusting outliers.<br/>
+
+## Skewness & Kurtosis
+
+### Skewness
+![Skewness](https://blog.kakaocdn.net/dn/n2GAv/btqGvdEzrac/HLfolQAEN36UbISRKMhWEk/img.jpg)
+
+[image ref](https://blog.kakaocdn.net/dn/n2GAv/btqGvdEzrac/HLfolQAEN36UbISRKMhWEk/img.jpg) <br/>
+__'Skewness'__ is an symmetry of the data distribution.<br/>
+It can be a negative, positive or 0 value.<br/>
+As you can see,
+- positive skewness : right tail is longer than left, ${Mean, Median \gt Mode}$ <br/>
+- negative skewness : left tail is longer than right, ${Mean, Median \lt Mode}$ <br/>
+
+And this is the way to understand skewness
+
+- ${-0.5 \lt skewness \lt 0.5}$ : symmetry
+- ${-1 \lt skewness \lt -0.5}$ or ${0.5 \lt skewness \lt 1}$ : moderately skewed
+- ${skewness \lt -1}$ or ${1 \lt skewness}$: considerably skewed
+
+### Kurtosis
+
+![Kurtosis](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FtrZKu%2FbtqGsoAAPjq%2FJXHiEgowgEoBKBbJ29iXM0%2Fimg.jpg)
+
+[image ref](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FtrZKu%2FbtqGsoAAPjq%2FJXHiEgowgEoBKBbJ29iXM0%2Fimg.jpg) <br/>
+__'Kurtosis'__ is a measure of how thick the tail of a probability distribution.<br/>
+In other words, it indicates the measure of outliers present in the distribution.<br/>
+Since the kurtosis value of the normal distribution is 3, many people base it on 0 that has subtracted 3 from normal distribution's kurtosis.
+
+- Mesokurtic (${Kurtosis \approx 3}$) : similar to normal distribution's kurtosis.
+- Leptokurtic(${Kurtosis \gt 3}$) : It has a longer distribution, and a fatter tail. Because the peak is higher and sharper than Mesokurtic, the data means that the tail is heavy or has many outliers.
+- Platykurtic(${Kurtosis \lt 3}$) : It has a shorter distribution, and the tail is thinner than the normal distribution. The peak is lower and wider than Mesokurtic, which means that the data are lighter or lack of outliers.
