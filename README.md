@@ -1324,6 +1324,6 @@ __'Kurtosis'__ is a measure of how thick the tail of a probability distribution.
 In other words, it indicates the measure of outliers present in the distribution.<br/>
 Since the kurtosis value of the normal distribution is 3, many people base it on 0 that has subtracted 3 from normal distribution's kurtosis.
 
-- Mesokurtic (${Kurtosis \approx 3}$) : similar to normal distribution's kurtosis.
-- Leptokurtic(${Kurtosis \gt 3}$) : It has a longer distribution, and a fatter tail. Because the peak is higher and sharper than Mesokurtic, the data means that the tail is heavy or has many outliers.
-- Platykurtic(${Kurtosis \lt 3}$) : It has a shorter distribution, and the tail is thinner than the normal distribution. The peak is lower and wider than Mesokurtic, which means that the data are lighter or lack of outliers.
+- Mesokurtic ( ${Kurtosis \approx 3}$ ) : similar to normal distribution's kurtosis.
+- Leptokurtic( ${Kurtosis \gt 3}$ ) : It has a longer distribution, and a fatter tail. Because the peak is higher and sharper than Mesokurtic, the data means that the tail is heavy or has many outliers.
+- Platykurtic( ${Kurtosis \lt 3}$ ) : It has a shorter distribution, and the tail is thinner than the normal distribution. The peak is lower and wider than Mesokurtic, which means that the data are lighter or lack of outliers.
