@@ -443,6 +443,13 @@ newX = {oldX-mean \over std}
 Many people use __Min-Max Algorithm__ because it is intuitive. But!!!! when if we use these in ML or DL, __Standardization__ will often get better model performances than __Min-Max Algorithm__. But not everytime.
 
 We don't need to remember these formulas. When we use these in ML or DL, there's already existing method to do this job. So we just need to understand.
+
+- Log
+
+Log can make a large number into a small number of equal proportions.<br/>
+And it can also be used in preprocessing(lower skewness, kurtosis) the data with large skewness or kurtosis.<br/>
+As a result, increase the normality of each column, can get accurate values in analysis.<br/>
+Just take the log for each value.<br/>
 <hr/>
 
 # Pandas
@@ -1315,6 +1322,8 @@ And this is the way to understand skewness
 - ${-1 \lt skewness \lt -0.5}$ or ${0.5 \lt skewness \lt 1}$ : moderately skewed
 - ${skewness \lt -1}$ or ${1 \lt skewness}$: considerably skewed
 
+But when if absolute Skewness value is lower than 3, it considered as a normal distribution.
+
 ### Kurtosis
 
 ![Kurtosis](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FtrZKu%2FbtqGsoAAPjq%2FJXHiEgowgEoBKBbJ29iXM0%2Fimg.jpg)
@@ -1327,3 +1336,46 @@ Since the kurtosis value of the normal distribution is 3, many people base it on
 - Mesokurtic ( ${Kurtosis \approx 3}$ ) : similar to normal distribution's kurtosis.
 - Leptokurtic( ${Kurtosis \gt 3}$ ) : It has a longer distribution, and a fatter tail. Because the peak is higher and sharper than Mesokurtic, the data means that the tail is heavy or has many outliers.
 - Platykurtic( ${Kurtosis \lt 3}$ ) : It has a shorter distribution, and the tail is thinner than the normal distribution. The peak is lower and wider than Mesokurtic, which means that the data are lighter or lack of outliers.
+
+But when if absolute Kurtosis value is lower than 8 or 10, it considered as a normal distribution.
+<hr/>
+
+## Remove outlier
+
+If there are outliers in the data, the model training and statistics might be not result properly.<br/>
+So we have to detect it and handle it.<br/>
+There are other ways to handle outliers, for example, collect outliers separately, and handle it separately.<br/>
+In this time we'll remove it.<br/>
+To detect, and remove outlier, we're going to use IQR(InterQuartile Range).<br/>
+
+### IQR(InterQuartile Range)
+
+It simply means ${Q3 - Q1}$.
+> ${Q3 - Q1}$ : difference between top 75% and bottom 25% of the data quartile.
+
+And IQR is the basic figure of th Box plot(box-and-whisker plot).<br/>
+Let's see this image.
+![IGR](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcAqc6V%2FbtqyQLiddUd%2FiXQVu1nYTo2rx3Q8xZBqy0%2Fimg.png)
+[img ref](https://hong-yp-ml-records.tistory.com/15) <br/>
+
+As you can see, To get IQR value, follow some steps.
+
+1. Find median, if the data length is even, ${M1 + M2 \over 2}$ will be the median.
+2. Find the median in the left set of data divided by the median. And it will be the Q1(25th percentile). 
+3. Find the median in the right set of data divided by the median. And it will be the Q3(75th percentile).
+4. Subtract Q3 and Q1. ANd it will be the IQR.
+5. To get lower Whisker(Minimum), subtract ${1.5 * IQR}$ from Q1.
+6. To get upper Whisker(Maximum), add ${1.5 * IQR}$ to Q3.
+7. And the data not included between the minimum and maximum values are outliers.
+
+It is such an aggressive way to detect outliers. Therefore, before using this, consider carefully whether it is appropriate for your data.<br/>
+
+## cross-tabulation analysis(Chi-sqare test)
+
+__cross-tabulation analysis__ is an analysis technique for checking correlation between two categorical columns.<br/>
+This technique find correlations using frequency of datas. And uses the __*chi-square statistics*__ as the test statistics. So It is also called as __*Chi-square test*__.<br/>
+
+As with all analysis, it also has __Null hypothesis__ and __Opposing hypothesis__.<br/>
+Null hypothesis means each two column has independent values.<br/>
+Opposing hypothesis means there are correlation between two columns.<br/>
+
