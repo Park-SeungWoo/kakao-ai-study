@@ -1300,7 +1300,9 @@ As we can see cosine similarity gets from -1 to 1 values. We get similarity betw
 In actual, it used only in positive space that results in range 0~1.<br/>
 <hr/>
 
-# Data Analysis
+# Basic Statistic
+
+## Data Analysis
 
 When we do Data Analysis, we do EDA(Exploratory Data Analysis) to understand datas and missing datas, and adjusting outliers.<br/>
 
@@ -1369,13 +1371,90 @@ As you can see, To get IQR value, follow some steps.
 7. And the data not included between the minimum and maximum values are outliers.
 
 It is such an aggressive way to detect outliers. Therefore, before using this, consider carefully whether it is appropriate for your data.<br/>
+<hr/>
 
 ## cross-tabulation analysis(Chi-sqare test)
 
 __cross-tabulation analysis__ is an analysis technique for checking correlation between two categorical columns.<br/>
 This technique find correlations using frequency of datas. And uses the __*chi-square statistics*__ as the test statistics. So It is also called as __*Chi-square test*__.<br/>
 
-As with all analysis, it also has __Null hypothesis__ and __Opposing hypothesis__.<br/>
+As with all analysis, it also has __Null hypothesis__ and __Anti hypothesis__.<br/>
+In Chi square test,
 Null hypothesis means each two column has independent values.<br/>
-Opposing hypothesis means there are correlation between two columns.<br/>
+Anti hypothesis means there are correlation between two columns.<br/>
+
+The result of this analysis, named p-value(probability value) is the discriminating factor.<br/>
+If p-value is under 0.05, the Null hypothesis is rejected and the Anti hypothesis is adopted.<br/>
+So It means two columns have correlation each other.
+
+<hr/>
+
+## P-value (probability value)
+
+Let's learn more about p-value.<br/>
+Actually the __*p-value*__ is the conditional probability that the observed value or the more extreme value appears through the sample data. On the premise that the null hypothesis is true.<br/>
+Simply, It indicate the degree to which the null hypothesis is supported.<br/>
+Usually we determine the validity of Null hypothesis with 0.05(5%) or 0.01(1%) of p-value.<br/>
+But It doesn't mean the Anti hypothesis is true. It means only the probability that the Null hypothesis is true.<br/>
+Therefore, even if the p-value is 0.05(5%), there is still a possibility that Null hypothesis is true.
+So, If It is dangerous to reject the Null hypothesis like determining the efficacy of vaccine, we have to set lower significance level.<br/>
+Even if the p-value is low, it is useless if it is not well revealed in the data.<br/>
+<hr/>
+
+## Conditional probability
+
+Conditional probability is the probability that another event will occur when a given event occurs.<br/>
+If there is two event, S(alive or dead) and R(got treatment or didn't).<br/>
+The conditional probability means the probability that the probability of occurrence event B when even A occurred.<br/>
+So it means the intersection of A and B.
+So Let's see the table.<br/>
+
+|void|survive( ${S}$ )|dead( ${S^c}$ )|
+|:---|:---:|:---:|
+|treated( ${T}$ )|1,000|9,000|
+|didn't( ${T^c}$ )|50|950|
+
+Survival probability if treated, this is the conditional probability. And can indicate like this.<br/>
+
+$${ { P(S \lvert T) } = {P(S \lvert T) \over P(T)} = {{1,000 \over 11,000} \over {10,000 \over 11,000}} = {1,000 \over 10,000} = 0.1 }$$
+
+As we can see there is difference between just a probability of survive, and survive if treated.<br/>
+This is the __*Conditional probability*__.<br/>
+
+<hr/>
+
+## T-test
+
+T-test analyze the difference between the means of the two groups.</br>
+And t-test is classified into three depends on two groups' kind.<br/>
+- One sample T-test
+- Independent T-test
+- Paired T-test
+
+### One sample T-test
+
+Comparison the Population's mean and the subgroup of a Population's mean.
+
+- Null hypothesis : No difference between the sample mean and the population mean.
+- Anti hypothesis : There is difference between the sample mean and the population mean.
+
+For example, When we want to compare whole country's test score average, and specific school's test score average, the country is a population and the specific school is a sample group.
+
+### Independent T-test(two sample T-test)
+
+Comparison of the mean of two independent groups.
+
+- Null hypothesis : No difference between two groups' mean.
+- Anti hypothesis : There is difference between two groups' mean.
+
+For example, comparison of averages of the English test score in class 1 and the English test score in class 2.
+
+### Paired T-test
+
+Comparison of the mean of two variables in one group.<br/>
+
+- Null hypothesis : No difference between two groups' mean.
+- Anti hypothesis : There is difference between two groups' mean.
+
+For example, comparison of the class 1's middle test's score and final test's score.
 
