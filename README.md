@@ -1378,13 +1378,13 @@ It is such an aggressive way to detect outliers. Therefore, before using this, c
 __cross-tabulation analysis__ is an analysis technique for checking correlation between two categorical columns.<br/>
 This technique find correlations using frequency of datas. And uses the __*chi-square statistics*__ as the test statistics. So It is also called as __*Chi-square test*__.<br/>
 
-As with all analysis, it also has __Null hypothesis__ and __Anti hypothesis__.<br/>
+As with all analysis, it also has __Null hypothesis__ and __Alternative hypothesis__.<br/>
 In Chi square test,
 Null hypothesis means each two column has independent values.<br/>
-Anti hypothesis means there are correlation between two columns.<br/>
+Alternative hypothesis means there are correlation between two columns.<br/>
 
 The result of this analysis, named p-value(probability value) is the discriminating factor.<br/>
-If p-value is under 0.05, the Null hypothesis is rejected and the Anti hypothesis is adopted.<br/>
+If p-value is under 0.05, the Null hypothesis is rejected and the Alternative hypothesis is adopted.<br/>
 So It means two columns have correlation each other.
 
 <hr/>
@@ -1395,7 +1395,7 @@ Let's learn more about p-value.<br/>
 Actually the __*p-value*__ is the conditional probability that the observed value or the more extreme value appears through the sample data. On the premise that the null hypothesis is true.<br/>
 Simply, It indicate the degree to which the null hypothesis is supported.<br/>
 Usually we determine the validity of Null hypothesis with 0.05(5%) or 0.01(1%) of p-value.<br/>
-But It doesn't mean the Anti hypothesis is true. It means only the probability that the Null hypothesis is true.<br/>
+But It doesn't mean the Alternative hypothesis is true. It means only the probability that the Null hypothesis is true.<br/>
 Therefore, even if the p-value is 0.05(5%), there is still a possibility that Null hypothesis is true.
 So, If It is dangerous to reject the Null hypothesis like determining the efficacy of vaccine, we have to set lower significance level.<br/>
 Even if the p-value is low, it is useless if it is not well revealed in the data.<br/>
@@ -1404,7 +1404,7 @@ Even if the p-value is low, it is useless if it is not well revealed in the data
 ## Conditional probability
 
 Conditional probability is the probability that another event will occur when a given event occurs.<br/>
-If there is two event, S(alive or dead) and R(got treatment or didn't).<br/>
+If there is two event, S(alive or dead) and T(got treatment or didn't).<br/>
 The conditional probability means the probability that the probability of occurrence event B when even A occurred.<br/>
 So it means the intersection of A and B.
 So Let's see the table.<br/>
@@ -1414,7 +1414,7 @@ So Let's see the table.<br/>
 |treated( ${T}$ )|1,000|9,000|
 |didn't( ${T^c}$ )|50|950|
 
-Survival probability if treated, this is the conditional probability. And can indicate like this.<br/>
+Survival probability if treated, this is the conditional probability. And can be indicated like this.<br/>
 
 $${ { P(S \lvert T) } = {P(S \lvert T) \over P(T)} = {{1,000 \over 11,000} \over {10,000 \over 11,000}} = {1,000 \over 10,000} = 0.1 }$$
 
@@ -1436,7 +1436,7 @@ And t-test is classified into three depends on two groups' kind.<br/>
 Comparison the Population's mean and the subgroup of a Population's mean.
 
 - Null hypothesis : No difference between the sample mean and the population mean.
-- Anti hypothesis : There is difference between the sample mean and the population mean.
+- Alternative hypothesis : There is difference between the sample mean and the population mean.
 
 For example, When we want to compare whole country's test score average, and specific school's test score average, the country is a population and the specific school is a sample group.
 
@@ -1445,16 +1445,113 @@ For example, When we want to compare whole country's test score average, and spe
 Comparison of the mean of two independent groups.
 
 - Null hypothesis : No difference between two groups' mean.
-- Anti hypothesis : There is difference between two groups' mean.
+- Alternative hypothesis : There is difference between two groups' mean.
 
 For example, comparison of averages of the English test score in class 1 and the English test score in class 2.
 
 ### Paired T-test
 
 Comparison of the mean of two variables in one group.<br/>
+And two variables don't have to be a time-related variable.
 
 - Null hypothesis : No difference between two groups' mean.
-- Anti hypothesis : There is difference between two groups' mean.
+- Alternative hypothesis : There is difference between two groups' mean.
 
 For example, comparison of the class 1's middle test's score and final test's score.
+<hr/>
 
+## Analysis of variance (ANOVA)
+
+Contrary to t-test, ANOVA is a statistical testing technique that compares three or more groups' averages.<br/>
+
+### Can't we do t-test several times?
+
+It can bring a result that shows which groups have differences.<br/>
+But if we do t-test at several times, the probability of type 1 error will increase.<br/>
+That's because, usually the significance level is 0.05(5%), But it will be getting higher and higher when more groups are added. So the probability of make type 1 error will be getting higher too.<br/>
+
+The significance level(SL) is __'⍺'__ in two groups.<br/>
+And the reliability(R) will be (1 - ⍺).<br/>
+And then the probability of type 1 error(P) will be 1 - (1 - ⍺).<br/>
+If more t-tests, the reliability will be squared again and again.
+So this is the formula that indicates increment of the probability of type 1 error.<br/>
+
+- Sl : significance level
+- R : reliability
+- t : the number of t-test
+- P : probability of type 1 error
+
+$${ SL = \alpha }$$
+
+$${ R = 1 - \alpha }$$
+
+$${ P = 1 - R }$$
+
+$${ R_t = (1 - \alpha)^t }$$
+
+$${ P_t = 1 - (1 - \alpha)^t}$$
+
+For example, when we compare 3 groups we have to do t-test three times.<br/>
+
+$${SL = 0.05}$$
+
+$${R = 1 - \alpha = 1 - 0.05 = 0.95}$$
+
+$${t = 3 (A-B, B-C, A-C)}$$
+
+$${P = {1 - (1 - 0.05)^3} = {1 - 0.95^3 \approx 0.14 }}$$
+
+So the probability of type 1 is increasing.<br/>
+Accordingly, the reliability will automatically decrease.<br/>
+
+So in this case, we have to do ANOVA test not t-test.<br/>
+
+When if we want to get a result that shows which groups have differences, we can do Post hoc test.<br/>
+
+### Type 1 error, Type 2 error
+
+- Type 1 error : Although the Null hypothesis is true, it is an error that rejecting the Null hypothesis.
+- Type 2 error : Although the Null hypothesis is false, it is an error that adopting the Null hypothesis.
+
+### Post Hoc tests in ANOVA
+
+There are some techniques in Post Hoc, I'll introduce four major techniques of them.<br/>
+
+- Scheffe : It is the most conservative way, the groups are passively separated and tested. And it is okay even if the number of samples in each group is different.
+- Bonferroni : It used when the number of samples in each group is different. The degree to which a group is tested separately is similar to Tukey.
+- Tukey : It is used when the number of samples in each group is same. But the smaller the number of samples, the lower the accuracy.
+- Duncan : The tendency to test groups separately is strongest. But it doesn't control the probability of type 1 error.
+
+Many people use Scheffe.<br/>
+
+### Types of ANOVA
+
+- One-way ANOVA
+
+Analyze with 1 independent variable and 1 dependent variable.<br/>
+For example, significant difference test of exam score according to studying techniques among three or more countries.<br/>
+Independent variable is studying technique.
+![One-wau ANOVA](https://t1.daumcdn.net/cfile/tistory/993543505DC004822E)
+
+- Two-way ANOVA
+
+Analyze with 2 independent variables and 1 dependent variable.<br/>
+For example, significant difference test of weights according to gender and the level of exercise among three or more countries.<br/>
+Independent variables are gender and the level of exercise.<br/>
+![Two-way ANOVA](https://t1.daumcdn.net/cfile/tistory/9965484D5DC004DB05)
+
+- MANOVA(Multiple ANOVA)
+
+Analyze with 1 or 2 independent variables and 2 dependent variable.<br/>
+![MANOVA 1ind](https://t1.daumcdn.net/cfile/tistory/9971204B5DC0062B2B)
+![MANOVA 2ind](https://t1.daumcdn.net/cfile/tistory/99AD90485DC006A625)
+
+- ANCOVA(ANlaysis of COVAriance)
+
+Analyze based on specific independent variable, and the others are used as covariates.<br/>
+Not covariances, it is covariates.<br/>
+![ANCOVA](https://t1.daumcdn.net/cfile/tistory/9979524E5DC008542E)
+
+[images ref](https://bioinformaticsandme.tistory.com/198)
+
+<hr/>
