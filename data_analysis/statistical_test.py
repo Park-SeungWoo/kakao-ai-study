@@ -63,7 +63,7 @@ ind_ttest = stats.ttest_ind(male_satisf_all, female_satisf_all)
 
 rel_ttest = stats.ttest_rel(df_ttest['satisf_b'], df_ttest['satisf_i'])
 # Null hypo : don't have any correlation
-# Anti hypo : have correlation
+# Alternative hypo : have correlation
 
 # print(rel_ttest)
 
@@ -84,11 +84,32 @@ appear_satisf = df_anova[df_anova['decision'] == 3].satisf_al
 
 anova = stats.f_oneway(social_satisf, mental_satisf, appear_satisf)
 # Null hypo : no correlations
-# Anti hypo : there are at least one correlation.
+# ALternative hypo : there are at least one correlation.
 # print(anova)
 
-sns.distplot(social_satisf, kde=False, fit=stats.norm, hist_kws={'color': 'r', 'alpha': 0.2}, fit_kws={'color': 'r'})
-sns.distplot(mental_satisf, kde=False, fit=stats.norm, hist_kws={'color': 'g', 'alpha': 0.2}, fit_kws={'color': 'g'})
-sns.distplot(appear_satisf, kde=False, fit=stats.norm, hist_kws={'color': 'b', 'alpha': 0.2}, fit_kws={'color': 'b'})
-plt.show()
+# sns.distplot(social_satisf, kde=False, fit=stats.norm, hist_kws={'color': 'r', 'alpha': 0.2}, fit_kws={'color': 'r'})
+# sns.distplot(mental_satisf, kde=False, fit=stats.norm, hist_kws={'color': 'g', 'alpha': 0.2}, fit_kws={'color': 'g'})
+# sns.distplot(appear_satisf, kde=False, fit=stats.norm, hist_kws={'color': 'b', 'alpha': 0.2}, fit_kws={'color': 'b'})
+# plt.show()
 
+"""find correlation"""
+df_cor = df_ttest[['decision', 'satisf_b', 'satisf_i', 'satisf_al', 'repurchase']]
+
+# print(df_cor.head(5))
+
+# pearson coefficient
+# print(df_cor.corr())
+
+# sns.pairplot(df_cor)
+# plt.show()
+
+"""additional"""
+
+iris = sns.load_dataset('iris')
+# print(iris.head())
+cor = iris.corr()
+print(cor)
+
+sns.set(style="ticks", color_codes=True)
+sns.pairplot(iris, kind='reg')
+plt.show()

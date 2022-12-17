@@ -1300,7 +1300,7 @@ As we can see cosine similarity gets from -1 to 1 values. We get similarity betw
 In actual, it used only in positive space that results in range 0~1.<br/>
 <hr/>
 
-# Basic Statistic
+# Basic Statistics
 
 ## Data Analysis
 
@@ -1399,6 +1399,11 @@ But It doesn't mean the Alternative hypothesis is true. It means only the probab
 Therefore, even if the p-value is 0.05(5%), there is still a possibility that Null hypothesis is true.
 So, If It is dangerous to reject the Null hypothesis like determining the efficacy of vaccine, we have to set lower significance level.<br/>
 Even if the p-value is low, it is useless if it is not well revealed in the data.<br/>
+In other words, the effect of the experiment is more important. It is just a statistical figure, doesn't have practical meaning. So we have to find another way to get better result.<br/>
+
+### p-hacking
+
+To get p-value as we wanted, some people manipulated datas. Because of this, a tendency not to rely too much on p-value spread throughout the academia.<br/>
 <hr/>
 
 ## Conditional probability
@@ -1436,7 +1441,7 @@ And t-test is classified into three depends on two groups' kind.<br/>
 Comparison the Population's mean and the subgroup of a Population's mean.
 
 - Null hypothesis : No difference between the sample mean and the population mean.
-- Alternative hypothesis : There is difference between the sample mean and the population mean.
+- Alternative hypothesis : There is a significant difference between the sample mean and the population mean.
 
 For example, When we want to compare whole country's test score average, and specific school's test score average, the country is a population and the specific school is a sample group.
 
@@ -1445,7 +1450,7 @@ For example, When we want to compare whole country's test score average, and spe
 Comparison of the mean of two independent groups.
 
 - Null hypothesis : No difference between two groups' mean.
-- Alternative hypothesis : There is difference between two groups' mean.
+- Alternative hypothesis : There is a significant difference between two groups' mean.
 
 For example, comparison of averages of the English test score in class 1 and the English test score in class 2.
 
@@ -1455,9 +1460,15 @@ Comparison of the mean of two variables in one group.<br/>
 And two variables don't have to be a time-related variable.
 
 - Null hypothesis : No difference between two groups' mean.
-- Alternative hypothesis : There is difference between two groups' mean.
+- Alternative hypothesis : There is a significant difference between two groups' mean.
 
 For example, comparison of the class 1's middle test's score and final test's score.
+<hr/>
+
+## Type 1 error, Type 2 error
+
+- Type 1 error : Although the Null hypothesis is true, it is an error that rejecting the Null hypothesis.
+- Type 2 error : Although the Null hypothesis is false, it is an error that adopting the Null hypothesis.
 <hr/>
 
 ## Analysis of variance (ANOVA)
@@ -1466,11 +1477,11 @@ Contrary to t-test, ANOVA is a statistical testing technique that compares three
 
 ### Can't we do t-test several times?
 
-It can bring a result that shows which groups have differences.<br/>
+It can bring a result that shows which groups have a significant differences.<br/>
 But if we do t-test at several times, the probability of type 1 error will increase.<br/>
 That's because, usually the significance level is 0.05(5%), But it will be getting higher and higher when more groups are added. So the probability of make type 1 error will be getting higher too.<br/>
 
-The significance level(SL) is __'⍺'__ in two groups.<br/>
+The significance level(SL) is __'⍺'__.<br/>
 And the reliability(R) will be (1 - ⍺).<br/>
 And then the probability of type 1 error(P) will be 1 - (1 - ⍺).<br/>
 If more t-tests, the reliability will be squared again and again.
@@ -1507,11 +1518,6 @@ Accordingly, the reliability will automatically decrease.<br/>
 So in this case, we have to do ANOVA test not t-test.<br/>
 
 When if we want to get a result that shows which groups have differences, we can do Post hoc test.<br/>
-
-### Type 1 error, Type 2 error
-
-- Type 1 error : Although the Null hypothesis is true, it is an error that rejecting the Null hypothesis.
-- Type 2 error : Although the Null hypothesis is false, it is an error that adopting the Null hypothesis.
 
 ### Post Hoc tests in ANOVA
 
@@ -1553,5 +1559,86 @@ Not covariances, it is covariates.<br/>
 ![ANCOVA](https://t1.daumcdn.net/cfile/tistory/9979524E5DC008542E)
 
 [images ref](https://bioinformaticsandme.tistory.com/198)
+<hr/>
 
+## Pearson correlation coefficient
+
+It is a commonly used correlation coefficient in numerical columns.<br/>
+If we want to test correlation between columns in categorical columns, we can use chi-square test instead.
+
+### feature
+
+- It always has the range of -1 to 1.<br/>
+- The closer to -1, the negative correlation, and the closer to 1, the positive correlation.<br/>
+
+Negative correlation means that the higher one column, the lower the other negatively correlated column. And it has the minimum value as -1.<br/>
+Positive correlation means the opposite, When the higher one column, the higher the other column with positive correlation too. And it has the maximum value as 1.<br/>
+
+- When the pearson value is 0, there isn't any correlation between two columns.<br/>
+- Accordingly, the absolute value means the size of the correlation.<br/>
+
+### Check with the sample data
+
+I'll use the built-in iris flower dataset in seaborn.<br/>
+It has the information of sepals, petals, and species.<br/>
+![sample datas of iris](readme_assets/iris_datas_sample.png)
+
+And let's check out the pearson correlation coefficient.
+![cor_coeff_iris](readme_assets/correlation_coefficient_iris.png)
+
+As you can see it returns the correlation coefficient between each column.<br/>
+
+Next, let's check the scatters using `sns.pairplot`.<br/>
+![scatters_iris](readme_assets/iris_pairplot.png)
+
+I also added the linear regression line to each scatter plot to see the datas' trend intuitively.
+We will except the plots that displays between same column, because it shows just a histogram.<br/>
+
+As we can see it has the tendency of strong positive correlation between petal length and petal width.<br/>
+But in the case of sepal width and petal length, although the correlation coefficient and the trends indicates the negative correlation, it doesn't.<br/>
+We can understand the datas in the plot that the data can be divided by two, and the first left group has the positive correlation and the other group has the independent relationship.<br/>
+It is called as __"Simpson's paradox"__.<br/>
+So we have to visualize the scatters plot of the data and check it also.<br/>
+
+If we look at the formula, because it calculate the cosine similarity between each normalized datas, it can be used as a similarity also.<br/>
+For example, we can use it in a recommending system.<br/>
+
+### Criteria for determining correlation by correlation coefficient
+ 
+There is some differences in criteria for determining correlation by correlation coefficient among the academias.<br/>
+![criteria for determining correlation by correlation coefficient among the academias](https://d3i71xaburhd42.cloudfront.net/dd7ceee5b05eb672e850140220f7db44ead3968f/2-Table1-1.png)
+
+[img src](https://www.semanticscholar.org/paper/User's-guide-to-correlation-coefficients-Ako%C4%9Flu/dd7ceee5b05eb672e850140220f7db44ead3968f) <br/>
+
+Usually we use the Psychology's criteria.<br/>
+
+### Crucial point to understand correlation coefficient
+
+![correlation coefficient in unusual datas](https://blog.kakaocdn.net/dn/rKOVj/btrgCFGn1cR/A9VcYhgnQK6RAUi1l5EtOk/img.png)
+
+[img src](https://umbum.dev/1006) <br/>
+
+These all have correlation coefficient of 0.82, but those all have different relationship So do not strongly depend on this value, we have to check the visualized dataset also.<br/>
+Because the correlation coefficient means just a strength of the linear relationships.<br/>
+
+And there is also the another reason to check the scatters plot named __"simpson's paradox"__
+<hr/>
+
+## Simpson's paradox
+
+Actually it is completely unrelated with the animation 'The Simpsons'.<br/>
+Simpson is derived from Edward Simpson, a British statistician who summarized this paradox.<br/>
+
+![Simpson's paradox](https://t1.daumcdn.net/cfile/tistory/996A2B4C5D6DC58B0C)
+[image ref](https://bioinformaticsandme.tistory.com/117) <br/>
+
+When we check the data as a whole, a certain trend appears, but checking it in a detailed group, the trend disappears or a trend in opposite direction appears.<br/>
+This is the __"Simpson's paradox"__.<br/>
+<hr/>
+
+## To learn more basic Statistics
+
+Here's two YouTube channels that handles about Statistics.<br/>
+[Korean](https://www.youtube.com/channel/UCnN2E8RCEuKi-WLBrd0Nu1A) <br/>
+[English](https://www.youtube.com/@statquest)
 <hr/>
