@@ -1643,5 +1643,55 @@ Here's two YouTube channels that handles about Statistics.<br/>
 [English](https://www.youtube.com/@statquest)
 <hr/>
 
-# Machine Learning
+# Artificial intelligence
+
+## What is AI?
+
+Artificial intelligence (AI), sometimes called machine intelligence, is intelligence demonstrated by machines, in contrast to the natural intelligence displayed by humans and other animals. In computer science AI research is defined as the study of "intelligent agents": any device that perceives its environment and takes actions that maximize its chance of successfully achieving its goals.<br/>
+[extracted from here](https://www.toppr.com/ask/question/which-of-the-following-is-a-machine-for-reading-documents-that-are-encoded-in-a-2/)
+
+![AI ML DL](https://miro.medium.com/max/1400/1*Jf1NcBvaDH7fP0-QZp4XiA.webp)
+[source](https://blogs.nvidia.com/blog/2016/07/29/whats-difference-artificial-intelligence-machine-learning-deep-learning-ai/) <br/>
+
+## 3 stages of AI
+
+AI can be broken into 3 stages.<br/>
+
+- ANI(Artificial Narrow Intelligence) or Weak AI
+
+All AI in these days is classified as ANI. It is good at performing only a single task. But it can't take on tasks beyond its field.
+
+- AGI(Artificial General Intelligence)
+
+It is as smart as a human. So it can perform any intellectual tasks. But it can be done far away from now. There is some tests to classify AI as AGI.<br/>
+
+__"Turing test"__ is a test to determine whether the AI can think. 
+If human didn't realize that they are having conversation with AI for 5 minutes, the AI can pass the test. 
+
+__"The Coffee test"__ is also a test to determine whether AI can think.
+In this test an ai robot is required to go into an average home and figure out how to make coffee. 
+It involves finding the coffee machine and adding coffee, as well as sourcing a mug and correctly brewing the hot drink.
+
+- ASI(Artificial Super Intelligence)
+
+It is much smarter than the human being in practically every field.
+
+[3 stages of ai](https://gemmo.ai/the-3-stages-of-ai)
+
+## What is model?
+
+In almost every cases, we can meet models with a function.<br/>
+So the model is a function that expresses our datas best.<br/>
+Usually expressed as h(x).
+
+## What is Learning?
+
+The process of finding the best model that expresses our datas.<br/>
+For some more technically expression, 'learning' is a process of decreasing loss, cost, error values.
+
+### How?
+
+- input datas to initial model
+- evaulate the result (accuracy, loss)
+- modify the model's type or the parameters(θ: theta) in model.
 
