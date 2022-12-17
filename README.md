@@ -1606,7 +1606,7 @@ For example, we can use it in a recommending system.<br/>
 ### Criteria for determining correlation by correlation coefficient
  
 There is some differences in criteria for determining correlation by correlation coefficient among the academias.<br/>
-![criteria for determining correlation by correlation coefficient among the academias](https://d3i71xaburhd42.cloudfront.net/dd7ceee5b05eb672e850140220f7db44ead3968f/2-Table1-1.png)
+![Criteria for determining correlation by correlation coefficient](readme_assets/criteria_for_determining_correlation_by_correlation_coefficient.png)
 
 [img src](https://www.semanticscholar.org/paper/User's-guide-to-correlation-coefficients-Ako%C4%9Flu/dd7ceee5b05eb672e850140220f7db44ead3968f) <br/>
 
@@ -1642,3 +1642,6 @@ Here's two YouTube channels that handles about Statistics.<br/>
 [Korean](https://www.youtube.com/channel/UCnN2E8RCEuKi-WLBrd0Nu1A) <br/>
 [English](https://www.youtube.com/@statquest)
 <hr/>
+
+# Machine Learning
+
