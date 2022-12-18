@@ -1651,7 +1651,9 @@ Artificial intelligence (AI), sometimes called machine intelligence, is intellig
 [extracted from here](https://www.toppr.com/ask/question/which-of-the-following-is-a-machine-for-reading-documents-that-are-encoded-in-a-2/)
 
 ![AI ML DL](https://miro.medium.com/max/1400/1*Jf1NcBvaDH7fP0-QZp4XiA.webp)
+
 [source](https://blogs.nvidia.com/blog/2016/07/29/whats-difference-artificial-intelligence-machine-learning-deep-learning-ai/) <br/>
+<hr/>
 
 ## 3 stages of AI
 
@@ -1675,6 +1677,7 @@ It involves finding the coffee machine and adding coffee, as well as sourcing a 
 - ASI(Artificial Super Intelligence)
 
 It is much smarter than the human being in practically every field.
+<hr/>
 
 [3 stages of ai](https://gemmo.ai/the-3-stages-of-ai)
 
@@ -1683,15 +1686,147 @@ It is much smarter than the human being in practically every field.
 In almost every cases, we can meet models with a function.<br/>
 So the model is a function that expresses our datas best.<br/>
 Usually expressed as h(x).
+<hr/>
 
 ## What is Learning?
 
 The process of finding the best model that expresses our datas.<br/>
-For some more technically expression, 'learning' is a process of decreasing loss, cost, error values.
+For some more technically expression, 'learning' is an optimizing process of decreasing loss, cost, error values between real data and predicted data.
 
 ### How?
 
 - input datas to initial model
 - evaulate the result (accuracy, loss)
 - modify the model's type or the parameters(θ: theta) in model.
+<hr/>
 
+# Machine Learning
+
+Machine Learning is a comprehensive definition that means __"It is a field of AI that gives computers the ability to learn from data, without being explicitly programmed."__ defined by Arthur Samuel.<br/>
+
+## 3 Types of ML
+
+![3 types of ML](https://miro.medium.com/max/1400/1*8wU0hfUY3UK_D8Y7tbIyFQ.webp)
+
+[img src](https://towardsdatascience.com/coding-deep-learning-for-beginners-types-of-machine-learning-b9e651e1ed9d)
+
+
+### Supervised Learning
+
+Learn from the data has the answer(label, target).<br/>
+It can be used in Regression problem with numerical answer value or Classification problem with categorical answer value.
+
+In further description, it learns for predicting the answer for the data.<br/>
+According to form of the answers, it can be classified with regression analysis and classification analysis.
+These are typical algorithms.
+- Linear/Logistic regression
+- Decision tree
+- Bayesian classification
+- Basic Neural Network
+- Hidden Markov Model(HMM)
+
+And it can solve these tasks.
+
+- Junk message classification
+- Predict stock prices
+- Medical diagnosis
+- Image recognition
+
+In many cases it brings a better result and makes the problem easy by using classification not regression even if it looks like a regression task.<br/>
+We can have the model predict the range by dividing the range of the answer instead of predicting the exact numerical answer.
+
+### Unsupervised Learning
+
+Learn from the data doesn't have the answer(label, target).<br/>
+It can be used in Clustering problem or Dimensionality reduction problem.
+
+In further description, it learns for finding the patterns in input datas.<br/>
+Therefore, it finds shorter description to express our datas.<br/>
+It can solve the __Clustering tasks__ and use __Dimensionality reduction__ to get better result.<br/>
+These are typical algorithms.
+- K-means clustering
+- Nearest Neighbor Clustering
+- t-SNE
+- EM Clustering
+- Principal Component Analysis(PCA)
+- Linear Discriminant Analysis(LDA)
+
+And it can solve these tasks.
+
+- Customer group classification
+- Association Rule
+- Recommendation system
+- etc...
+
+### Reinforcement Learning
+
+It has a totally different concept with the other two types.<br/>
+It focuses on maximizing the reward, and learns from trial and errors to get the best result.<br/>
+In other words, It receives the feedback on the result from taking a lot of different actions(Decision), and learns through whether this action brings the best result(Policy : action-selection policy).<br/>
+It can be used in the real-time decisions like game AI.<br/>
+
+Let's see it in order
+- It recognizes the __state__ in every sequential steps.
+- Takes __action__ that decided in each step.
+- Learn the __reward__ received from the __environment__ for the action set.
+- Find the action-selection policy that maximize the reward for the every action.
+
+These are typical algorithms.
+
+- Monte Carlo Methods
+- Markov Decision Processes
+- Q-learning
+- Deep Q-learning
+- Dynamic programming
+
+And it can solve these tasks.
+
+- Robot control
+- Process optimization
+- Automated data augmentation
+
+### Additional information
+
+We can combine these model to solve our problems. That means we can combine the different type of models and use to solve the problem.<br/>
+![sup an unsup learning](https://journal.code4lib.org/media/issue50/brousseau/figure1.png)
+
+[ima src](https://journal.code4lib.org/articles/15660)
+<hr/>
+
+## What if Feature, Dimension, Attribute, Column in ML / DL.
+
+- Feature : The independent variable that is a reference column. Feature always means the X data.
+- Attribute, Dimension, column : It means X or Y datas. And the Y data means dependent variable that is determined by X data.
+
+The Y data is always expressed as Target and Label. But the Label is used in a classification task.
+<hr/>
+
+## How to find the best model?
+
+Using model's __capacity__.<br/>
+It is proportional to the model's degree.<br/>
+
+The good model means not only good at with training datas, but also the new datas.<br/>
+If the model works well only with the training datas, it is called __overfitting__.<br/>
+
+So the larger the capacity isn't mean the better model performance.
+<hr/>
+
+## Overfitting, Underfitting, Generalization
+
+![overfitting, underfitting](https://media.geeksforgeeks.org/wp-content/cdn-uploads/20190523171258/overfitting_2.png)
+
+[img src](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.geeksforgeeks.org%2Funderfitting-and-overfitting-in-machine-learning%2F&psig=AOvVaw26-3mpS9ncAsYpuanSAt8W&ust=1671482747632000&source=images&cd=vfe&ved=0CBEQjhxqFwoTCKCH4c-EhPwCFQAAAAAdAAAAABAS)
+
+__Overfitting__ means that the model fits with the training data too much. So it doesn't bring good results with the new datas. It can be called as __Generalization error__.<br/>
+__Underfitting__ means the opposite of Overfitting. That means it is not trained enough. So it cannot bring good results with any datas.<br/>
+
+![overfitting graph](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_OoUfSv7AsYBwzg6wllenoUXAOI17o3DExw&usqp=CAU)
+
+[img src](https://www.google.com/url?sa=i&url=https%3A%2F%2Fvitalflux.com%2Foverfitting-underfitting-concepts-interview-questions%2F&psig=AOvVaw3DljlKhnAbxbDE_1wm6Hk6&ust=1671483202044000&source=images&cd=vfe&ved=0CBEQjhxqFwoTCMi8qaaGhPwCFQAAAAAdAAAAABAJ) <br/>
+
+In this graph the model complexity means anything that makes the model complex like model's capacity, degree, the number of layers, epoch, etc...<br/>
+As we can see in the graph, the more complex the model, the lower the training error comes. But the testing error is getting higher at some point. After that point, we can say the model is overfitted. And before that point, we can say the model is underfitted.<br/>
+
+To reduce __Generalization error__, we can use some techniques like dropout, data augmentation,  etc...
+<hr/>
