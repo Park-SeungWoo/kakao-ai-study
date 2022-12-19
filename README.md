@@ -1702,7 +1702,7 @@ For some more technically expression, 'learning' is an optimizing process of dec
 
 # Machine Learning
 
-Machine Learning is a comprehensive definition that means __"It is a field of AI that gives computers the ability to learn from data, without being explicitly programmed."__ defined by Arthur Samuel.<br/>
+Machine Learning is a comprehensive definition that means __"It is a field of AI that gives computers the ability to learn from data, without being explicitly programmed."__ defined by *Arthur Samuel*.<br/>
 
 ## 3 Types of ML
 
@@ -1793,7 +1793,7 @@ We can combine these model to solve our problems. That means we can combine the 
 [ima src](https://journal.code4lib.org/articles/15660)
 <hr/>
 
-## What if Feature, Dimension, Attribute, Column in ML / DL.
+## What is Feature, Dimension, Attribute, Column in ML / DL.
 
 - Feature : The independent variable that is a reference column. Feature always means the X data.
 - Attribute, Dimension, column : It means X or Y datas. And the Y data means dependent variable that is determined by X data.
@@ -1812,7 +1812,7 @@ If the model works well only with the training datas, it is called __overfitting
 So the larger the capacity isn't mean the better model performance.
 <hr/>
 
-## Overfitting, Underfitting, Generalization
+## Overfitting, Underfitting
 
 ![overfitting, underfitting](https://media.geeksforgeeks.org/wp-content/cdn-uploads/20190523171258/overfitting_2.png)
 
@@ -1830,3 +1830,85 @@ As we can see in the graph, the more complex the model, the lower the training e
 
 To reduce __Generalization error__, we can use some techniques like dropout, data augmentation,  etc...
 <hr/>
+
+## Generalization
+
+We have to generalize our model to avoid overfitting.<br/>
+These are the typical generalization techniques.<br/>
+
+### Cross validation
+
+This technique divides the dataset into 3 parts.<br/>
+
+- training data
+
+It accounts for 60%~70% of the datas.<br/>
+And we make our model learn only with these datas.<br/>
+
+- validation data
+
+It accounts for 15%~20% of the datas.<br/>
+And we tune our model or Hyper Parameters only with these datas.<br/>
+In DL, after training finished, we can modify Hyper Parameters or select the best model according to the loss value from validation datas.<br/>
+We must not tune our model via the test datas.
+
+- test data
+
+It accounts for 15%~20% of the datas.<br/>
+And we only tests our model with these datas.<br/>
+
+Sometimes people divide the dataset as 70% of  training datas and 30% of test datas without validation datas.
+
+But these percentages are not fixed.<br/>
+If we have small amount of datas as 100 ~ n*10,000, these can be the best choice.<br/>
+But, if we have more than n*100,000 of datas, we can divide as 98 : 1 : 1 or 99 : 0.5 : 0.5.<br/>
+
+There is a representative technique about cross validation named __K-Fold cross validation__.<br/>
+
+#### (stratified)K-Fold cross validation
+
+This image shows the process with one model.
+![k-fold cv](https://i.stack.imgur.com/0SQJq.png)
+
+[img src](https://stats.stackexchange.com/questions/338044/what-is-exact-way-to-do-k-fold-validation)
+
+K-Fold cross validation is an algorithm for comparison between selectable models.
+
+1. Shuffle our datas.
+2. Divide the datas by 8(training) : 2(test). And it is not fixed.
+3. If 10 folds, divide training datas by 10.
+4. Train a model with 9 pieces of datas. And validate with the other 1 pieces of datas.
+5. Reset the model and train with 9 pieces of datas including that piece which was used as a validation datas in prior training. And also set 1 piece as a validation datas.
+6. Iterate these processes(4 ~ 5) 10(K) times.
+7. Calculate the average of the results from validation. And this average is this model's performance.
+8. Iterate these processes(4 ~ 7) with the other models.
+9. Select the best model.
+10. Reset the model, and train with whole training datas.
+11. Test the model with test datas. And it will be the final result.
+
+People usually use 10 Folds.<br/>
+
+The __stratify__ is used in classification.<br/>
+And it can match the total training data's class proportion and the pieces' class proportion.<br/>
+For example, the data has 2 classes of 0 and 1.<br/>
+It will be good if the proportion is 5 : 5 between the classes, but if the proportion is 90% of class 0 and 10% of class 1, the whole 10% of class 1 datas can be included in a piece of validation datas.<br/>
+So __stratify__ matches the proportion of each piece of training and validation datas with the proportion of whole train datas' classes.
+
+### Add Regularization term to the Cost function (Deep Learning)
+
+### Drop out & Batch Normalization (Deep Learning)
+
+### More ways
+
+Get more massive amount of datas(Data augmentation & Test time augmentation) is the best way to generalize models.<br/>
+Feature reduction is also good but not recommended.
+
+### Ways to handle class imbalance.
+
+[Tensorflow.org](https://www.tensorflow.org/tutorials/structured_data/imbalanced_data?hl=ko#oversample_the_minority_class) <br/>
+[blog](https://3months.tistory.com/414?category=756964)
+
+<hr/>
+
+## Cost Function & MSE
+
