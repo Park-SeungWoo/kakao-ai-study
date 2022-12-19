@@ -1910,5 +1910,62 @@ Feature reduction is also good but not recommended.
 
 <hr/>
 
-## Cost Function & MSE
+## Linear Regression(Suprevised Learning)
 
+Regression analysis technique that modeling linear correlation between one dependent variable(Y) and one or more independent variable(X).<br/>
+It can be divided into two types according to the number of X.
+
+- Simple Regression Analysis : one X influences Y.
+
+![simple linear regression](https://miro.medium.com/max/1400/0*Y_wKuvGOCaoUQKeJ.png)
+
+[src](https://medium.datadriveninvestor.com/machine-learning-101-part-1-24835333d38a)
+
+$${h_\theta(X) = \theta_0 + \theta_1X}$$
+
+- Multivariate Regression Analysis : over 2 amount of X influence Y.
+
+
+![multivariate linear regression](https://miro.medium.com/max/602/0*Bsjmsbn0hJNX6ZuH)
+
+[src](https://www.google.com/url?sa=i&url=https%3A%2F%2Fblog.devgenius.io%2Fmultivariate-linear-regression-dfd18a26431d&psig=AOvVaw17vss2UzqqTGi4xJT_s8s0&ust=1671568693096000&source=images&cd=vfe&ved=0CBEQjhxqFwoTCKjmseXEhvwCFQAAAAAdAAAAABAD)
+
+$${h_\theta(X) = \theta_0 + \theta_1X_1 + \theta_2X_2}$$
+
+For a general expression,
+
+$${h_\theta(X) = \theta_0 + \theta_1X_1 + \theta_2X_2 + \dots + \theta_nX_x}$$
+
+And it can be calle __"linear Combination"__.
+<hr/>
+
+## Cost Function
+
+Cost Function is a function for judging the model's performance(accuracy) based on the difference between the real value and the predicted value.
+
+### Mean Squared Error(MSE)
+
+$${J(\theta) = MSE = {1 \over N} \sum_{i=1}^N (y_i - \hat{y_i})^2}$$
+
+![MSE](https://vitalflux.com/wp-content/uploads/2020/09/Regression-terminologies-Page-2-1024x619.png)
+
+[src](https://www.google.com/url?sa=i&url=https%3A%2F%2Fvitalflux.com%2Fmean-square-error-r-squared-which-one-to-use%2F&psig=AOvVaw2gxr6-B472SlpQb-kdU-gy&ust=1671570651803000&source=images&cd=vfe&ved=0CBEQjhxqFwoTCNCLiYvMhvwCFQAAAAAdAAAAABAs) <br/>
+
+It is the most basic and representative cost function.<br/>
+For example we have errors list like this. <br/>
+[3, -4, 5, -3.2, -0.8]<br/>
+The sum of them is 0.<br/>
+And then can we say our model works well?
+The answer is no. Because there are __errors__ in actual results.<br/>
+So we have to __square__(MSE) or absolute(MAE : It used in ML as an indicator for regression evaluation) them to get total costs.<br/>
+And we divide it by the amount of datas, we can get the error's absolute __Mean__.<br/>
+The closer the value to 0, we can think the model works well.<br/>
+That's the reason why it called as Mean Squared Error. It is so intuitive.<br/>
+
+#### Similar to MSE
+
+- MAE(Mean Absolute Error) : Use the absolute errors instead of squared errors.
+- MAPE(Mean Absolute Percentage Error) : Use the percentage of the errors.
+- RMSE(Root Mean Squared Error) : Because the MSE squared the errors, It takes rooted value to get closer error values to the initial error values.
+
+## Gradient Descent Algorithm
