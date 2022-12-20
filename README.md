@@ -2061,7 +2061,7 @@ There is some advanced gradient descent to solve this problem.
 
 ### Why don't we find the best thetas by using a differential equation?
 
-How about calculating $${{\partial \over \partial \theta}cost(\theta) = 0}$$ ?
+How about calculating ${{\partial \over \partial \theta}cost(\theta) = 0}$ ?<br/>
 That's right!<br/>
 There are many ways to find the best thetas.<br/>
 And it is just another way to find it.<br/>
