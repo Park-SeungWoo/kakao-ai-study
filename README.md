@@ -1962,10 +1962,134 @@ And we divide it by the amount of datas, we can get the error's absolute __Mean_
 The closer the value to 0, we can think the model works well.<br/>
 That's the reason why it called as Mean Squared Error. It is so intuitive.<br/>
 
+> error == cost == loss
+
 #### Similar to MSE
 
 - MAE(Mean Absolute Error) : Use the absolute errors instead of squared errors.
 - MAPE(Mean Absolute Percentage Error) : Use the percentage of the errors.
-- RMSE(Root Mean Squared Error) : Because the MSE squared the errors, It takes rooted value to get closer error values to the initial error values.
+- RMSE(Root Mean Squared Error) : Because the MSE squared the errors, It takes rooted value to
+- get closer error values to the initial error values.
+<hr/>
 
 ## Gradient Descent Algorithm
+
+![gradient descent](https://mblogthumb-phinf.pstatic.net/MjAyMDAzMTZfMTQ2/MDAxNTg0MzAxMTIxNTE1.MSfJ4ch9dy_oRPgmvgAEzRtB-E12P-cf20QLXeIVwo4g.MvGGYWMDQQUbQ9-VzmT3jTZTXoNBlW4PLM5-TOimmy8g.PNG.jevida/031520_1938_Gradient1.png?type=w800)
+
+[img src](https://m.blog.naver.com/sqlmvp/221855713144)
+
+- The way to find optimum thetas that minimize the error value from Cost Function.
+- Modifying by subtracting the value that multiplied cost function's gradient and a constant.
+
+So "Gradient Descent" finds the point at which the cost is minimal by stepping down to the lower direction of gradient in Cost Function.<br/>
+Determine the direction that decreases the theta by differentiating the cost function at the current theta's location.<br/>
+In this process we can get each theta's gradients by doing __partial derivative__.
+
+If the gradient has negative value, the bigger theta, the lower the cost will be.<br/>
+On the contrary, if the gradient has positive value, the lower theta, the lower the cost will be.<br/>
+So we have to modify theta in the opposite direction of the gradient's symbols.<br/>
+And the lowest point in the graph(Global minimum) is our goal that we have to arrive.
+
+Total process is here.
+
+1. Initialize theta value.
+2. Get gradient value in current position.
+3. Set the next theta by moving the theta to the gradient direction.
+4. Iterate 1 ~ 3 until the value of the cost function converges to a specific value.
+
+And the formula is here.<br/>
+
+$${\theta_j(next) := \theta_j -\alpha{\partial \over \partial\theta_j}J(\theta_0, \theta_1)}$$
+
+- ${\theta_j}$ : current theta value
+- ${J(\theta)}$ : Cost Function
+- ${\theta_1}$ : weight
+- ${\theta_0}$ : bias
+- ${\alpha}$ : Hyper Parameter(learning rate)
+
+It works like this.
+
+![gradient descent](https://hackernoon.com/hn-images/1*ZmzSnV6xluGa42wtU7KYVA.gif)
+
+[img src](https://angeloyeo.github.io/2020/08/16/gradient_descent.html) <br/>
+
+X : Theta<br/>
+Y : Cost
+
+This gif indicates the descending process of 1 theta, But in actual, the descending of all theta is brought together.<br/>
+So if we have two thetas, we can get this graph.<br/>
+
+![two thetas gd](https://miro.medium.com/max/758/0*-j3BGxc-EJDOddim)
+
+[src](https://medium.com/@acb28/implement-linear-regression-using-gradient-descent-9209e45273ce) <br/>
+
+### Learning rate (Alpha)
+
+Alpha is a parameter that we have to set.<br/>
+In ML or DL, every parameter that we have to set are called as __Hyper Parameter__ like Learning rate, epoch, etc...<br/>
+And the " ${\alpha}$ (step size or learning rate)" means the decrease amount per each step(iteration).<br/>
+We have to set it as a proper value or the loss will not converge, or it will diverge.<br/>
+
+![learning rate](https://www.jeremyjordan.me/content/images/2018/02/Screen-Shot-2018-02-24-at-11.47.09-AM.png)
+
+[img src](https://www.jeremyjordan.me/nn-learning-rate/) <br/>
+
+The proper value of learning rate will be different at each model.<br/>
+Usually we use 0.01 or 0.001 as the learning rate.<br/>
+Actually one of the goal of __AutoML__ is finding the best Hyper parameter automatically.<br/>
+- Auto HPO(Hyper Parameter Optimization) == Model Tuning
+- Auto MS(Model Selection)
+- Auto FE(Feature Engineering)
+
+These three thing is the goal of __AutoML__.
+
+### Local minima & Global minimum
+
+Another problem of Gradient descent is __local minima__ problem.<br/>
+While the red point(Global minimum) in this image, is our goal, there is some cases that the loss converges to the local minima(yellow point), because the starting point of gradient descent is random every time.<br/>
+
+![local & global minimum](https://raw.githubusercontent.com/angeloyeo/angeloyeo.github.io/master/pics/2020-08-16-gradient_descent/pic5.png)
+
+[img src](https://angeloyeo.github.io/2020/08/16/gradient_descent.html) <br/>
+
+There is some advanced gradient descent to solve this problem.
+- Momentum
+- NAG
+- SGD
+- Adagrad
+- Adadelta
+
+### Why don't we find the best thetas by using a differential equation?
+
+How about calculating $${{\partial \over \partial \theta}cost(\theta) = 0}$$ ?
+That's right!<br/>
+There are many ways to find the best thetas.<br/>
+And it is just another way to find it.<br/>
+But in deep learning, it caused a problem during training.<br/>
+During the calculation of this equation, there is a problem of increasing data beyond calculation.<br/>
+So we selected gradient descent.<br/>
+<hr/>
+
+## Partial derivative
+
+Partial derivative is a derivative for functions with multiple independent variables.<br/>
+Using this, we can differentiate based on each independent variable.<br/>
+We can differentiate based on a particular variable while considering other variables as constants.<br/>
+
+For example, this is the function.<br/>
+
+$${z = f(X, Y) = X^2 + XY + Y^2}$$
+
+This is the result of partial derivative.<br/>
+
+$${{\partial z \over \partial X} = 2X + Y}$$
+
+$${{\partial z \over \partial Y} = 2Y + X}$$
+
+And if X is 1 and Y is 2, the result will be like this.<br/>
+
+$${{\partial z \over \partial X}(1, 2) = 4}$$
+
+$${{\partial z \over \partial Y}(1, 2) = 5}$$
+
+This is the partial derivative's basic principle.<br/>
