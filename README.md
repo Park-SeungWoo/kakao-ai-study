@@ -2093,3 +2093,53 @@ $${{\partial z \over \partial X}(1, 2) = 4}$$
 $${{\partial z \over \partial Y}(1, 2) = 5}$$
 
 This is the partial derivative's basic principle.<br/>
+
+## Scikit learn
+
+This is a library for traditional Machine Learning.<br/>
+
+To do ML, follow these processes.<br/>
+1. Load dataset
+
+Load datas as a dataframe.
+
+2. Preprocess datas.
+
+Feature scaling for numerical columns using Min-MAX algorithm or Standardization, or One-hot encoding for categorical columns.<br/>
+
+3. Split the data as train, test datas.
+4. Generate Model Instance.
+5. Model fitting.
+6. Predict on test datas to estimate the model performance.
+7. Apply to real datas.
+
+<hr/>
+
+## One-hot encoding
+
+It's for only categorical columns.<br/>
+It converts numerical categories to vectorized categories.<br/>
+In other words, It makes a vector that each index indicates each category.<br/>
+And set as true only the corresponding index for each category, and the other indices as false.<br/>
+
+![one hot encoding](https://www.researchgate.net/publication/354354484/figure/fig8/AS:1080214163587113@1634554534870/Illustration-of-the-one-hot-encoding-and-word-embeddings-a-One-hot-encoding-and-b.jpg)
+
+[img src](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.researchgate.net%2Ffigure%2FIllustration-of-the-one-hot-encoding-and-word-embeddings-a-One-hot-encoding-and-b_fig8_354354484&psig=AOvVaw3J5crkF3vh0g1x1HtW3Nxi&ust=1671787604856000&source=images&cd=vfe&ved=0CBEQjhxqFwoTCOjQtaT0jPwCFQAAAAAdAAAAABBI) <br/>
+
+And also it eliminates the possibility for model to determining that each category has correlation with each other while training.<br/>
+So it makes each category works independently.<br/>
+
+For example, If there are categories like [1, 2, 3], computer can think them that they are calculable numeric like 3 = 1 + 2.<br/>
+So it converts this to [[1, 0, 0], [0, 1, 0], [0, 0, 1]] called __one-hot vector__.<br/>
+So it makes a vectors filled with 0 except one for indicating each category.<br/>
+And also it can be used in a string categories.<br/>
+If categories are like this ['a', 'b', 'c'], we have to match it as a number.<br/>
+['a', 'b', 'c'] => [1, 2, 3]<br/>
+After that, do the one-hot encoding, and it'll result [[1, 0, 0], [0, 1, 0], [0, 0, 1]].<br/>
+And categories will be matched like this.<br/>
+a => [1, 0, 0]<br/>
+b => [0, 1, 0]<br/>
+c => [0, 0, 1]<br/>
+This is one-hot encoding.
+
+It is mandatory in linear models, and usually applied in non-linear models too but no needs in tree-based models.<br/>
