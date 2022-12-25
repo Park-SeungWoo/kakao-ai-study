@@ -1706,7 +1706,7 @@ Machine Learning is a comprehensive definition that means __"It is a field of AI
 
 ## 3 Types of ML
 
-![3 types of ML](https://miro.medium.com/max/1400/1*8wU0hfUY3UK_D8Y7tbIyFQ.webp)
+<img src="https://miro.medium.com/max/1400/1*8wU0hfUY3UK_D8Y7tbIyFQ.webp" style="background-color: #ffffff"/>
 
 [img src](https://towardsdatascience.com/coding-deep-learning-for-beginners-types-of-machine-learning-b9e651e1ed9d)
 
@@ -1910,7 +1910,7 @@ Feature reduction is also good but not recommended.
 
 <hr/>
 
-## Linear Regression(Suprevised Learning)
+## Linear Regression
 
 Regression analysis technique that modeling linear correlation between one dependent variable(Y) and one or more independent variable(X).<br/>
 It can be divided into two types according to the number of X.
@@ -1939,38 +1939,7 @@ $${h_\theta(X) = \theta_0 + \theta_1X_1 + \theta_2X_2 + \dots + \theta_nX_x}$$
 And it can be calle __"linear Combination"__.
 <hr/>
 
-## Cost Function
 
-Cost Function is a function for judging the model's performance(accuracy) based on the difference between the real value and the predicted value.
-
-### Mean Squared Error(MSE)
-
-$${J(\theta) = MSE = {1 \over N} \sum_{i=1}^N (y_i - \hat{y_i})^2}$$
-
-![MSE](https://vitalflux.com/wp-content/uploads/2020/09/Regression-terminologies-Page-2-1024x619.png)
-
-[src](https://www.google.com/url?sa=i&url=https%3A%2F%2Fvitalflux.com%2Fmean-square-error-r-squared-which-one-to-use%2F&psig=AOvVaw2gxr6-B472SlpQb-kdU-gy&ust=1671570651803000&source=images&cd=vfe&ved=0CBEQjhxqFwoTCNCLiYvMhvwCFQAAAAAdAAAAABAs) <br/>
-
-It is the most basic and representative cost function.<br/>
-For example we have errors list like this. <br/>
-[3, -4, 5, -3.2, -0.8]<br/>
-The sum of them is 0.<br/>
-And then can we say our model works well?
-The answer is no. Because there are __errors__ in actual results.<br/>
-So we have to __square__(MSE) or absolute(MAE : It used in ML as an indicator for regression evaluation) them to get total costs.<br/>
-And we divide it by the amount of datas, we can get the error's absolute __Mean__.<br/>
-The closer the value to 0, we can think the model works well.<br/>
-That's the reason why it called as Mean Squared Error. It is so intuitive.<br/>
-
-> error == cost == loss
-
-#### Similar to MSE
-
-- MAE(Mean Absolute Error) : Use the absolute errors instead of squared errors.
-- MAPE(Mean Absolute Percentage Error) : Use the percentage of the errors.
-- RMSE(Root Mean Squared Error) : Because the MSE squared the errors, It takes rooted value to
-- get closer error values to the initial error values.
-<hr/>
 
 ## Gradient Descent Algorithm
 
@@ -2094,6 +2063,224 @@ $${{\partial z \over \partial Y}(1, 2) = 5}$$
 
 This is the partial derivative's basic principle.<br/>
 
+## Cost Function
+
+Cost Function is a function for judging the model's performance(accuracy) based on the difference between the real value and the predicted value.
+
+### Mean Squared Error(MSE)
+
+$${J(\theta) = MSE = {1 \over N} \sum_{i=1}^N (y_i - \hat{y_i})^2}$$
+
+![MSE](https://vitalflux.com/wp-content/uploads/2020/09/Regression-terminologies-Page-2-1024x619.png)
+
+[src](https://www.google.com/url?sa=i&url=https%3A%2F%2Fvitalflux.com%2Fmean-square-error-r-squared-which-one-to-use%2F&psig=AOvVaw2gxr6-B472SlpQb-kdU-gy&ust=1671570651803000&source=images&cd=vfe&ved=0CBEQjhxqFwoTCNCLiYvMhvwCFQAAAAAdAAAAABAs) <br/>
+
+It is the most basic and representative cost function.<br/>
+For example we have errors list like this. <br/>
+[3, -4, 5, -3.2, -0.8]<br/>
+The sum of them is 0.<br/>
+And then can we say our model works well?
+The answer is no. Because there are __errors__ in actual results.<br/>
+So we have to __square__(MSE) or absolute(MAE : It used in ML as an indicator for regression evaluation) them to get total costs.<br/>
+And we divide it by the amount of datas, we can get the error's absolute __Mean__.<br/>
+The closer the value to 0, we can think the model works well.<br/>
+That's the reason why it called as Mean Squared Error. It is so intuitive.<br/>
+
+> error == cost == loss
+
+#### Similar to MSE
+
+- MAE(Mean Absolute Error) : Use the absolute errors instead of squared errors.
+- MAPE(Mean Absolute Percentage Error) : Use the percentage of the errors.
+- RMSE(Root Mean Squared Error) : Because the MSE squared the errors, It takes rooted value to
+- get closer error values to the initial error values.
+<hr/>
+
+### Cross Entropy
+
+$${J(\theta) = -\sum_i y^{(i)} \log(h(x^{(i)}))}$$
+
+It is a cost function for classification problem.<br/>
+Basically, it calculates the cost by comparing the differences between predicted value's distribution and the real value's distribution.
+For more technical expression, It compares predicted which is applied __softmax function__ and the real __one-hot label__ and calculate the distance to move one's distribution to the other's distribution.<br/>
+So It always with the __softmax function__.<br/>
+
+It doesn't simply determine whether it is correct or wrong in the classification problems, but how sure got the correct answer and how close the wrong answer to the correct answer is.<br/>
+For example, there is two models like this.
+
+<table style="text-align: center">
+    <caption>Model 1</caption>
+    <tr>
+        <td colspan="3">predicted</td>
+        <td colspan="3">answer(one-hot vector)</td>
+        <td>correct?</td>
+    </tr>
+    <tr>
+        <td style="border-right: 0">0.3</td>
+        <td style="border: 0">0.3</td>
+        <td style="border-left: 0; font-weight: bold">$$\color{blue}{0.4}$$</td>
+        <td style="border-right: 0">0</td>
+        <td style="border: 0">0</td>
+        <td style="border-left: 0; font-weight: bold">1</td>
+        <td>yes</td>
+    </tr>
+    <tr>
+        <td style="border-right: 0">0.3</td>
+        <td style="border: 0; font-weight: bold">$$\color{blue}{0.4}$$</td>
+        <td style="border-left: 0">0.3</td>
+        <td style="border-right: 0">0</td>
+        <td style="border: 0; font-weight: bold">1</td>
+        <td style="border-left: 0">0</td>
+        <td>yes</td>
+    </tr>
+    <tr>
+        <td style="border-right: 0">0.1</td>
+        <td style="border: 0">0.2</td>
+        <td style="border-left: 0; font-weight: bold">$$\color{red}{0.7}$$</td>
+        <td style="border-right: 0; font-weight: bold">1</td>
+        <td style="border: 0">0</td>
+        <td style="border-left: 0">0</td>
+        <td>No</td>
+    </tr>
+</table>
+
+Classification error = ${{1 \over 3} = 0.33}$
+
+With cross-entropy = ${-(ln(0.4) + ln(0.4) + ln(0.1)) / 3 = 1.38}$
+
+<table style="text-align: center">
+    <caption>Model 2</caption>
+    <tr>
+        <td colspan="3">predicted</td>
+        <td colspan="3">answer(one-hot vector)</td>
+        <td>correct?</td>
+    </tr>
+    <tr>
+        <td style="border-right: 0">0.1</td>
+        <td style="border: 0">0.2</td>
+        <td style="border-left: 0; font-weight: bold">$$\color{blue}{0.7}$$</td>
+        <td style="border-right: 0">0</td>
+        <td style="border: 0">0</td>
+        <td style="border-left: 0; font-weight: bold">1</td>
+        <td>yes</td>
+    </tr>
+    <tr>
+        <td style="border-right: 0">0.1</td>
+        <td style="border: 0; font-weight: bold">$$\color{blue}{0.7}$$</td>
+        <td style="border-left: 0">0.2</td>
+        <td style="border-right: 0">0</td>
+        <td style="border: 0; font-weight: bold">1</td>
+        <td style="border-left: 0">0</td>
+        <td>yes</td>
+    </tr>
+    <tr>
+        <td style="border-right: 0">0.3</td>
+        <td style="border: 0; font-weight: bold">$$\color{red}{0.4}$$</td>
+        <td style="border-left: 0">0.3</td>
+        <td style="border-right: 0; font-weight: bold">1</td>
+        <td style="border: 0">0</td>
+        <td style="border-left: 0">0</td>
+        <td>No</td>
+    </tr>
+</table>
+
+Classification error = ${{1 \over 3} = 0.33}$
+
+With cross-entropy = ${-(ln(0.7) + ln(0.7) + ln(0.3)) / 3 = 0.64}$
+
+These two model's classification error is same as 0.33.<br/>
+But If calculate the loss with cross-entropy, first one will be 1.38 and the second one will be 0.64.<br/>
+Second model's loss is lower than the first one.<br/>
+It calculates the degree to which the answer is far from the correct answer, and also the closer to the correct answer is to 0, the exponentially higher the loss.<br/>
+So it makes us select model2.<br/>
+
+[more about CE](https://umbum.tistory.com/210)
+
+<hr/>
+
+## Softmax
+
+![softmax](https://miro.medium.com/max/1133/1*670CdxchunD-yAuUWdI7Bw.png)
+
+[src](https://www.google.com/url?sa=i&url=http%3A%2F%2Fm.blog.naver.com%2Ftakion7%2F221625764552&psig=AOvVaw3auiaVlzn5uYP6yRUbYk4N&ust=1672091249022000&source=images&cd=vfe&ved=0CBEQjhxqFwoTCNCXo7vflfwCFQAAAAAdAAAAABAS) <br/>
+
+$${S(y_i) = {e^{y_i} \over \sum\limits_{j=1}^n e^{y_j}}}$$
+
+Softmax is a function for multi-class classification problem.<br/>
+It converts the scores(model output) to the vector consist of the probability for each class.<br/>
+So it makes the sum of the probabilities of all classes one.<br/>
+If with cross-entropy, it can also be called as __softmax with loss__.<br/>
+It iss usually used at the output layer in DL. And do the __Backpropagation__ with the loss from it.<br/>
+
+<hr/>
+
+## One-hot encoding
+
+It's for only categorical columns.<br/>
+It converts numerical categories to vectorized categories.<br/>
+In other words, It makes a vector that each index indicates each category.<br/>
+And set as true only the corresponding index for each category, and the other indices as false.<br/>
+
+![one hot encoding](https://cdn-images-1.medium.com/max/1600/1*0kkqYg0mGpyvqvrMam2k2A.png)
+
+[img src](https://www.dictionary4it.com/term/one-hot-encoding-6577/) <br/>
+
+And also it eliminates the possibility for model to determining that each category has correlation with each other while training.<br/>
+So it makes each category works independently.<br/>
+
+For example, If there are categories like [1, 2, 3], computer can think them that they are calculable numeric like 3 = 1 + 2.<br/>
+So it converts this to [[1, 0, 0], [0, 1, 0], [0, 0, 1]] called __one-hot label(vector)__.<br/>
+So it makes a vectors filled with 0 except one for indicating each category.<br/>
+And also it can be used in a string categories.<br/>
+If categories are like this ['a', 'b', 'c'], we have to match it as a number.<br/>
+['a', 'b', 'c'] => [1, 2, 3]<br/>
+After that, do the one-hot encoding, and it'll result [[1, 0, 0], [0, 1, 0], [0, 0, 1]].<br/>
+And categories will be matched like this.<br/>
+a => [1, 0, 0]<br/>
+b => [0, 1, 0]<br/>
+c => [0, 0, 1]<br/>
+This is one-hot encoding.
+
+It is mandatory in linear models, and usually applied in non-linear models too but no needs in tree-based models.<br/>
+<hr/>
+
+## Sigmoid Function
+
+![sigmoid](https://miro.medium.com/max/970/1*Xu7B5y9gp0iL5ooBj7LtWw.png)
+
+[src](https://towardsdatascience.com/activation-functions-neural-networks-1cbd9f8d91d6)
+
+$${h(x) = p(Class_{(+)} \lvert X) = {1 \over 1 + e^{ax + b}}}$$
+
+It indicates a positive probability in range 0 to 1.<br/>
+So we can classify true or false if the value over 0.5 or not.
+
+And it also used in Deep learning as an __activation function__.<br/>
+Actually there are more __activation functions__ like Relu, Tanh, Softmax. And these also have deformed shapes.<br/>
+<hr/>
+
+## Logistic Regression
+
+<img src="https://static.javatpoint.com/tutorial/machine-learning/images/logistic-regression-in-machine-learning.png" style="background-color: #ffffff"/>
+
+[img src](https://www.javatpoint.com/logistic-regression-in-machine-learning)
+
+It's for binary classification problems.<br/>
+There are __'k-class logistic regression'__ and __'k-class & ordinal logistic regression'__ as deformed models. For example, spam detection<br/>
+__k-class__ is for multiple(3 or more) categories. For example, sports preference.<br/>
+__k-class & ordinal__ is for multiple categories and there is a natural ordering among the categories. For example, movie ratings.<br/>
+
+It uses __Sigmoid function__ to calculate the probability that specific data is included in the class. So it can predict the probability, or classify true or false if the value over the cutoff(threshold or decision boundary).<br/>
+
+So logistic regression can return 2 types of results.<br/>
+- <predict_proba()> Real probability of 2 classes. It can return probabilities like this [0.32, 0.68]. It means the probability for class0 is 0.32, and 0.68 is for class1.<br/>
+- <predict()> Return just 0 or 1 of value. It means false or true. We can also set the cutoff(default: 0.5). So It classifies true or false if the value over the cutoff.<br/>
+
+And it needs another cost function not mse.<br/>
+It uses __cross entropy(CE)__ cost function.
+
+<hr/>
+
 ## Scikit learn
 
 This is a library for traditional Machine Learning.<br/>
@@ -2114,56 +2301,3 @@ Feature scaling for numerical columns using Min-MAX algorithm or Standardization
 7. Apply to real datas.
 
 <hr/>
-
-## One-hot encoding
-
-It's for only categorical columns.<br/>
-It converts numerical categories to vectorized categories.<br/>
-In other words, It makes a vector that each index indicates each category.<br/>
-And set as true only the corresponding index for each category, and the other indices as false.<br/>
-
-![one hot encoding](https://cdn-images-1.medium.com/max/1600/1*0kkqYg0mGpyvqvrMam2k2A.png)
-
-[img src](https://www.dictionary4it.com/term/one-hot-encoding-6577/) <br/>
-
-And also it eliminates the possibility for model to determining that each category has correlation with each other while training.<br/>
-So it makes each category works independently.<br/>
-
-For example, If there are categories like [1, 2, 3], computer can think them that they are calculable numeric like 3 = 1 + 2.<br/>
-So it converts this to [[1, 0, 0], [0, 1, 0], [0, 0, 1]] called __one-hot vector__.<br/>
-So it makes a vectors filled with 0 except one for indicating each category.<br/>
-And also it can be used in a string categories.<br/>
-If categories are like this ['a', 'b', 'c'], we have to match it as a number.<br/>
-['a', 'b', 'c'] => [1, 2, 3]<br/>
-After that, do the one-hot encoding, and it'll result [[1, 0, 0], [0, 1, 0], [0, 0, 1]].<br/>
-And categories will be matched like this.<br/>
-a => [1, 0, 0]<br/>
-b => [0, 1, 0]<br/>
-c => [0, 0, 1]<br/>
-This is one-hot encoding.
-
-It is mandatory in linear models, and usually applied in non-linear models too but no needs in tree-based models.<br/>
-<hr/>
-
-## Logistic Regression
-
-It's for binary classification problems.<br/>
-There are __'k-class logistic regression'__ and __'k-class & ordinal logistic regression'__ as deformed models. For example, spam detection<br/>
-__k-class__ is for multiple(3 or more) categories. For example, sports preference.<br/>
-__k-class & ordinal__ is for multiple categories and there is a natural ordering among the categories. For example, movie ratings.<br/>
-
-It uses __Sigmoid function__ to calculate the probability that specific data is included in the class. So it can predict the probability, or classify true or false if the value over the cutoff(threshold or decision boundary).<br/>
-
-<hr/>
-
-## Sigmoid Function
-
-![sigmoid](https://miro.medium.com/max/970/1*Xu7B5y9gp0iL5ooBj7LtWw.png)
-
-[src](https://towardsdatascience.com/activation-functions-neural-networks-1cbd9f8d91d6)
-
-It returns a probability in range 0 to 1.<br/>
-So we can classify true or false if the value over 0.5 or not.
-
-And it also used in Deep learning as an activation function.<br/>
-Actually there are more activation functions like Relu, Tanh, Softmax. And these also have deformed shapes.<br/>
