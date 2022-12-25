@@ -2122,9 +2122,9 @@ It converts numerical categories to vectorized categories.<br/>
 In other words, It makes a vector that each index indicates each category.<br/>
 And set as true only the corresponding index for each category, and the other indices as false.<br/>
 
-![one hot encoding](https://www.researchgate.net/publication/354354484/figure/fig8/AS:1080214163587113@1634554534870/Illustration-of-the-one-hot-encoding-and-word-embeddings-a-One-hot-encoding-and-b.jpg)
+![one hot encoding](https://cdn-images-1.medium.com/max/1600/1*0kkqYg0mGpyvqvrMam2k2A.png)
 
-[img src](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.researchgate.net%2Ffigure%2FIllustration-of-the-one-hot-encoding-and-word-embeddings-a-One-hot-encoding-and-b_fig8_354354484&psig=AOvVaw3J5crkF3vh0g1x1HtW3Nxi&ust=1671787604856000&source=images&cd=vfe&ved=0CBEQjhxqFwoTCOjQtaT0jPwCFQAAAAAdAAAAABBI) <br/>
+[img src](https://www.dictionary4it.com/term/one-hot-encoding-6577/) <br/>
 
 And also it eliminates the possibility for model to determining that each category has correlation with each other while training.<br/>
 So it makes each category works independently.<br/>
@@ -2143,3 +2143,27 @@ c => [0, 0, 1]<br/>
 This is one-hot encoding.
 
 It is mandatory in linear models, and usually applied in non-linear models too but no needs in tree-based models.<br/>
+<hr/>
+
+## Logistic Regression
+
+It's for binary classification problems.<br/>
+There are __'k-class logistic regression'__ and __'k-class & ordinal logistic regression'__ as deformed models. For example, spam detection<br/>
+__k-class__ is for multiple(3 or more) categories. For example, sports preference.<br/>
+__k-class & ordinal__ is for multiple categories and there is a natural ordering among the categories. For example, movie ratings.<br/>
+
+It uses __Sigmoid function__ to calculate the probability that specific data is included in the class. So it can predict the probability, or classify true or false if the value over the cutoff(threshold or decision boundary).<br/>
+
+<hr/>
+
+## Sigmoid Function
+
+![sigmoid](https://miro.medium.com/max/970/1*Xu7B5y9gp0iL5ooBj7LtWw.png)
+
+[src](https://towardsdatascience.com/activation-functions-neural-networks-1cbd9f8d91d6)
+
+It returns a probability in range 0 to 1.<br/>
+So we can classify true or false if the value over 0.5 or not.
+
+And it also used in Deep learning as an activation function.<br/>
+Actually there are more activation functions like Relu, Tanh, Softmax. And these also have deformed shapes.<br/>
