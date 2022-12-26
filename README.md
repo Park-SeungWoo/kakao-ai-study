@@ -2418,7 +2418,7 @@ So the closer the graph is to the left-top, the better the model is.<br/>
 
 ### How to measure the model's performance with these?
 
-![roc](https://www.researchgate.net/profile/Rachneet-Kaur-2/publication/343939033/figure/fig6/AS:937198840979462@1600457024498/ROC-curve-AUC-of-05-means-random-guess-and-1-signifies-perfect-classification.ppm)
+![roc](readme_assets/roc_auc.png)
 
 [src](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.researchgate.net%2Ffigure%2FROC-curve-AUC-of-05-means-random-guess-and-1-signifies-perfect-classification_fig6_343939033&psig=AOvVaw0qg3qcBcCpTX-73v7uSSFz&ust=1672177609284000&source=images&cd=vfe&ved=0CBEQjhxqFwoTCMC8rpWhmPwCFQAAAAAdAAAAABA8) <br/>
 
