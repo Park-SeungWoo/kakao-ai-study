@@ -30,7 +30,8 @@ label_df = pd.DataFrame({'price': target.reshape(-1), 'label': label.reshape(-1)
 # print(data_df.head(10))
 # print(label_df.head(10))
 
-x = data[:, (5, 12)]  # use two features
+# x = data[:, (5, 12)]  # use two features
+x = data[:, 5:13]  # more features
 y = label
 
 train_x, test_x, train_y, test_y = model_selection.train_test_split(x, y, test_size=0.3, random_state=42)
@@ -47,8 +48,25 @@ model.fit(train_x, train_y)
 
 # predict
 pred = model.predict(test_x)
+pred_proba = model.predict_proba(test_x)
 
 # check results
 print(f'acc : {accuracy_score(test_y, pred) * 100}%')  # accuracy_score => classification only
 
-# visualization
+# visualization of ROC curve
+fpr, tpr, _ = roc_curve(y_true=test_y, y_score=pred_proba[:, 1])
+
+auc_val = auc(fpr, tpr)
+print(f'auc : {auc_val}')  # totally different with accuracy score
+
+plt.figure(figsize=(10, 10))
+plt.plot(fpr, tpr, color='darkorange', lw=2, label='ROC curve (AUC = %0.2f)' % auc_val)
+plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
+
+plt.xlim([0.0, 1.0])
+plt.ylim([0.0, 1.05])
+plt.xlabel('FPR')
+plt.ylabel('TPR')
+plt.legend(loc='lower right')
+plt.title('ROC curve')
+plt.show()

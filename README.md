@@ -2392,3 +2392,81 @@ So 1.5 or 2.0 for focusing on the Recall, and 0.6 or 0.3 for focusing on the Pre
 
 Lastly, if the Precision and the Recall has exactly same value, the result will be same regardless of the beta value.<br/>
 <hr/>
+
+## ROC-Curve & AUC
+
+![ROC AUC](https://t1.daumcdn.net/cfile/tistory/99CB69345F28E0242A)
+
+[src](https://bioinformaticsandme.tistory.com/328)
+
+ROC-Curve(Receiver Operating Characteristic Curve) is a measurement graph about the model's classification performance in various thresholds(Cut off, Decision boundary).<br/>
+And AUC(Area Under the Curve) is the size of an area under the curve.<br/>
+
+It's for binary classification models.<br/>
+
+ROC uses FPR(False Positive Rate), TPR(True Positive Rate).<br/>
+
+- TPR : The ratio of the value predicted as true among actual true values. ${TP \over TP + FN}$
+- FPR : The ratio of the value predicted as true among actual false values. ${FP \over TN + FP}$
+
+The graph shows differences of FPR and TPR according to the threshold.<br/>
+And each line indicates the model's performance in various thresholds.<br/>
+Because FPR and TPR are in a trade-off relationship, one will be decreased when the other one is increasing.<br/>
+Look at the graph.<br/>
+By making the model strictly to classify as true(high threshold), if the FPR becomes 0, the TPR becomes 0.5. In other words, it means that only 50% of the actual correct answer can be properly determined when FPR is 0.<br/>
+So the closer the graph is to the left-top, the better the model is.<br/>
+
+### How to measure the model's performance with these?
+
+![roc](https://www.researchgate.net/publication/343939033/figure/fig6/AS:937198840979462@1600457024498/ROC-curve-AUC-of-05-means-random-guess-and-1-signifies-perfect-classification.ppm)
+
+[src](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.researchgate.net%2Ffigure%2FROC-curve-AUC-of-05-means-random-guess-and-1-signifies-perfect-classification_fig6_343939033&psig=AOvVaw0qg3qcBcCpTX-73v7uSSFz&ust=1672177609284000&source=images&cd=vfe&ved=0CBEQjhxqFwoTCMC8rpWhmPwCFQAAAAAdAAAAABA8) <br/>
+
+Each graph indicates a different type of model's ROC curve.<br/>
+It's difficult to determine which model is the best only with the ROC curves.<br/>
+So we use AUC values to determine it.<br/>
+In this graph, GBM(Gradient Boosting Machine) is the best classification model.<br/>
+
+The closer the AUC value is to 1, the model is good.<br/>
+The closer the AUC value is to 0, the model is bad.<br/>
+But actually the minimum value of AUC is 0.5.<br/>
+Let's see below descriptions.<br/>
+the green and red graph mean actual classes' distribution.<br/>
+- AUC = 1
+
+![AUC=1](https://t1.daumcdn.net/cfile/tistory/990615345F295BD502)
+
+[src](https://bioinformaticsandme.tistory.com/328)
+
+If AUC is 1, each distribution graph doesn't overlap, and the ROC curve is exactly stick to the left-top.<br/>
+It means the model can classify the class perfectly.<br/>
+
+- AUC = 0.7
+
+![AUC=0.7](https://t1.daumcdn.net/cfile/tistory/9918083D5F295DB81E)
+
+[src](https://bioinformaticsandme.tistory.com/328)
+
+If AUC is 0.7, each distribution graph overlap each other, and there would be type 1 error and type 2 error.<br/>
+We can minimize or maximize those errors by modifying the threshold.<br/>
+And it means that the model has a 70% probability of properly classifying classes.<br/>
+
+- AUC = 0.5
+
+![AUC=0.7](https://t1.daumcdn.net/cfile/tistory/991FD8505F29609F05)
+
+[src](https://bioinformaticsandme.tistory.com/328)
+
+If AUC is 0.5, the ROC curve will be a straight line.<br/>
+It means that the model doesn't have the ability to classify two classes.<br/>
+
+If the AUC value is over 0.78~9, the model is practically useful.<br/>
+
+Actually the ROC curve indicates the cascading graph abstractly.<br/>
+
+Typically, used for the normal person and patient classification problems.<br/>
+
+[more about ROC-Curve & AUC](https://bioinformaticsandme.tistory.com/328) <br/>
+[more about ROC-Curve & AUC (2)](https://angeloyeo.github.io/2020/08/05/ROC.html)
+<hr/>
+
