@@ -2399,7 +2399,7 @@ Lastly, if the Precision and the Recall has exactly same value, the result will 
 
 [src](https://bioinformaticsandme.tistory.com/328)
 
-ROC-Curve(Receiver Operating Characteristic Curve) is a measurement graph about the model's classification performance in various thresholds(Cut off, Decision boundary).<br/>
+ROC-Curve(Receiver Operating Characteristic Curve) is a measurement graph(Evaluation metric) about the model's classification performance in various thresholds(Cut off, Decision boundary).<br/>
 And AUC(Area Under the Curve) is the size of an area under the curve.<br/>
 
 It's for binary classification models.<br/>
@@ -2418,7 +2418,7 @@ So the closer the graph is to the left-top, the better the model is.<br/>
 
 ### How to measure the model's performance with these?
 
-![roc](https://www.researchgate.net/publication/343939033/figure/fig6/AS:937198840979462@1600457024498/ROC-curve-AUC-of-05-means-random-guess-and-1-signifies-perfect-classification.ppm)
+![roc](https://www.researchgate.net/profile/Rachneet-Kaur-2/publication/343939033/figure/fig6/AS:937198840979462@1600457024498/ROC-curve-AUC-of-05-means-random-guess-and-1-signifies-perfect-classification.ppm)
 
 [src](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.researchgate.net%2Ffigure%2FROC-curve-AUC-of-05-means-random-guess-and-1-signifies-perfect-classification_fig6_343939033&psig=AOvVaw0qg3qcBcCpTX-73v7uSSFz&ust=1672177609284000&source=images&cd=vfe&ved=0CBEQjhxqFwoTCMC8rpWhmPwCFQAAAAAdAAAAABA8) <br/>
 
