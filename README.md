@@ -2214,6 +2214,28 @@ It iss usually used at the output layer in DL. And do the __Backpropagation__ wi
 
 <hr/>
 
+## Logistic Regression
+
+<img src="https://static.javatpoint.com/tutorial/machine-learning/images/logistic-regression-in-machine-learning.png" style="background-color: #ffffff"/>
+
+[img src](https://www.javatpoint.com/logistic-regression-in-machine-learning)
+
+It's for binary classification problems.<br/>
+There are __'k-class logistic regression'__ and __'k-class & ordinal logistic regression'__ as deformed models. For example, spam detection<br/>
+__k-class__ is for multiple(3 or more) categories. For example, sports preference.<br/>
+__k-class & ordinal__ is for multiple categories and there is a natural ordering among the categories. For example, movie ratings.<br/>
+
+It uses __Sigmoid function__ to calculate the probability that specific data is included in the class. So it can predict the probability, or classify true or false if the value over the cutoff(threshold or decision boundary).<br/>
+
+So logistic regression can return 2 types of results.<br/>
+- <predict_proba()> Real probability of 2 classes. It can return probabilities like this [0.32, 0.68]. It means the probability for class0 is 0.32, and 0.68 is for class1.<br/>
+- <predict()> Return just 0 or 1 of value. It means false or true. We can also set the cutoff(default: 0.5). So It classifies true or false if the value over the cutoff.<br/>
+
+And it needs another cost function not mse.<br/>
+It uses __cross entropy(CE)__ cost function.
+
+<hr/>
+
 ## One-hot encoding
 
 It's for only categorical columns.<br/>
@@ -2259,28 +2281,6 @@ And it also used in Deep learning as an __activation function__.<br/>
 Actually there are more __activation functions__ like Relu, Tanh, Softmax. And these also have deformed shapes.<br/>
 <hr/>
 
-## Logistic Regression
-
-<img src="https://static.javatpoint.com/tutorial/machine-learning/images/logistic-regression-in-machine-learning.png" style="background-color: #ffffff"/>
-
-[img src](https://www.javatpoint.com/logistic-regression-in-machine-learning)
-
-It's for binary classification problems.<br/>
-There are __'k-class logistic regression'__ and __'k-class & ordinal logistic regression'__ as deformed models. For example, spam detection<br/>
-__k-class__ is for multiple(3 or more) categories. For example, sports preference.<br/>
-__k-class & ordinal__ is for multiple categories and there is a natural ordering among the categories. For example, movie ratings.<br/>
-
-It uses __Sigmoid function__ to calculate the probability that specific data is included in the class. So it can predict the probability, or classify true or false if the value over the cutoff(threshold or decision boundary).<br/>
-
-So logistic regression can return 2 types of results.<br/>
-- <predict_proba()> Real probability of 2 classes. It can return probabilities like this [0.32, 0.68]. It means the probability for class0 is 0.32, and 0.68 is for class1.<br/>
-- <predict()> Return just 0 or 1 of value. It means false or true. We can also set the cutoff(default: 0.5). So It classifies true or false if the value over the cutoff.<br/>
-
-And it needs another cost function not mse.<br/>
-It uses __cross entropy(CE)__ cost function.
-
-<hr/>
-
 ## Scikit learn
 
 This is a library for traditional Machine Learning.<br/>
@@ -2299,5 +2299,96 @@ Feature scaling for numerical columns using Min-MAX algorithm or Standardization
 5. Model fitting.
 6. Predict on test datas to estimate the model performance.
 7. Apply to real datas.
+<hr/>
 
+## Confusion matrix
+
+Confusion matrix is an evaluation metric for classification.<br/>
+
+<table style="text-align: center">
+    <tr>
+        <td colspan="2" rowspan="2"></td>
+        <td colspan="2">Actual Values</td>
+    </tr>
+    <tr>
+        <td>Positive</td>
+        <td>Negative</td>
+    </tr>
+    <tr>
+        <td rowspan="2">Predicted Values</td>
+        <td>Positive</td>
+        <td>$$\color{blue}{True Positive(TP)}$$</td>
+        <td>$$\color{red}{False Positive(FP)}$$</td>
+    </tr>
+    <tr>
+        <td>Negative</td>
+        <td>$$\color{red}{False Negative(FN)}$$</td>
+        <td>$$\color{blue}{True Negative(TN)}$$</td>
+    </tr>
+</table>
+
+As we can see, it contains TP, FP, FN, TN values that compares actual values and predicted values to evaluate the model's performance.<br/>
+And each factor means
+- TP : predict the value as true which is actually true
+- FP : predict the value as true which is actually false
+- FN : predict the value as false which is actually true
+- TN : predict the value as false which is actually false
+
+So TP, TN indicates the number of well predicted values.<br/>
+And FP, FN indicates the number of badly predicted values.<br/>
+
+We can get many performance indicators.
+
+1. Accuracy
+
+Accuracy is the ratio that the model predicted well.<br/>
+
+$${Accuracy = {TP + TN \over TP + FP + FN + TN}}$$
+
+It indicates the correct answers only.<br/>
+So it can't check the wrong answers deeply.<br/>
+When we classify the cancer patient, it's dangerous if the model classify a cancer patient as not a cancer patient.<br/>
+So we have to check the wrong answers, and try hard to reduce false negative values.<br/>
+
+2. Precision
+
+Precision is the ratio of the actual positive values among the predicted positive values.<br/>
+So it focuses on FP.<br/>
+It is an important factor in the classification of the spam mail.<br/>
+
+$${Precision = {TP \over TP + FP}}$$
+
+3. Recall
+
+Recall is the ratio of the predicted positive values among the actual positives.<br/>
+So it focuses on FN.<br/>
+It is an important factor in the classification of the cancer patient.<br/>
+
+$${Recall = {TP \over {TP + FN}}}$$
+
+4. F1-score
+
+F1-score is a harmonic mean of Precision and Recall.<br/>
+So it reflects both two indicators in a balanced manner.<br/>
+
+Contrary to the Accuracy, it is usually used as an evaluation metric in the imbalanced classification problems.<br/>
+Also we can use this when if it is ambiguous where to focus between Precision and Recall.<br/>
+
+$${F1-score = {2 * Precision * Recall \over Precision + Recall}}$$
+
+5. F-beta score
+
+Contrary to F1-score, it can give weights to Precision and Recall.<br/>
+Actually, F1-score is same with F-beta score that weights is one.<br/>
+
+$${F-beta score = (1 + \beta^2) * {Precision * Recall \over (\beta^2 * Precision) + Recall}}$$
+
+If the beta is bigger than 1.0, it'll focus on Recall more.<br/>
+Else if the beta is lower than 1.0, it'll focus on Precision more.<br/>
+
+Although we want to focus on Recall, it is better to set the beta value below 10. Because if the beta value over 10, the result will be similar to that with the original Recall value.<br/>
+And although we want to focus on Precision, it is better to set the beta value over 0.01. Because if the beta value is under 0.01, the result will be similar to that with the original Precision value.<br/> 
+So 1.5 or 2.0 for focusing on the Recall, and 0.6 or 0.3 for focusing on the Precision is recommended.<br/>
+
+Lastly, if the Precision and the Recall has exactly same value, the result will be same regardless of the beta value.<br/>
 <hr/>
