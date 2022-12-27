@@ -1910,7 +1910,7 @@ Feature reduction is also good but not recommended.
 
 <hr/>
 
-## Linear Regression
+## Linear Regression(Supervised learning)
 
 Regression analysis technique that modeling linear correlation between one dependent variable(Y) and one or more independent variable(X).<br/>
 It can be divided into two types according to the number of X.
@@ -2214,7 +2214,7 @@ It iss usually used at the output layer in DL. And do the __Backpropagation__ wi
 
 <hr/>
 
-## Logistic Regression
+## Logistic Regression(Supervised learning)
 
 <img src="https://static.javatpoint.com/tutorial/machine-learning/images/logistic-regression-in-machine-learning.png" style="background-color: #ffffff"/>
 
@@ -2470,3 +2470,166 @@ Typically, used for the normal person and patient classification problems.<br/>
 [more about ROC-Curve & AUC (2)](https://angeloyeo.github.io/2020/08/05/ROC.html)
 <hr/>
 
+## Decision Tree(Supervised learning)
+
+![decision tree](http://i.imgur.com/ZKDnzOB.png)
+
+[src](https://ratsgo.github.io/machine%20learning/2017/03/26/tree/) <br/>
+
+It's an algorithm that we usually use in our daily lives.<br/>
+Above image is a sample decision tree algorithm.<br/>
+Root node shows whether played the tennis or not during the 14 days.<br/>
+And second level's nodes show the climates during the 14 days.<br/>
+And in the leaf nodes show whether windy or not and the humidity.<br/>
+The real data is this.<br/>
+
+|index|OUTLOOK|HUMIDITY|WINDY|$$\color{red}{PLAY}$$|
+|:---:|:---:|:---:|:---:|:---:|
+|0|sunny|<= 70|-|$$\color{red}{Play}$$|
+|1|sunny|\> 70|-|$$\color{red}{Don't Play}$$|
+|2|rain|-|True|$$\color{red}{Don't Play}$$|
+|...|...|...|...|$$\color{red}{...}$$|
+
+So Decision Tree is made of these columns.<br/>
+It's easy to understand and interpretation, but the structure of tree can be varied greatly even with small fluctuations in input datas like the presence of several outliers, and also easy to overfitting.<br/>
+When we use this basic decision tree as a model, the depth of tree will be massively deeper during the training, and there will be only one data in each leaf node.<br/>
+It means that there is only one data which is the basis for the model's judgment. And the decision (prediction) becomes unfounded.<br/>
+And also it is hard to respond when outliers come as a new input data.<br/>
+So it is unstable.<br/>
+Due to these weaknesses, the basic decision tree is a little too bad to trust and use.<br/>
+
+So as to solve this problem, [Boosting](https://github.com/Park-SeungWoo/kakao-ai-study#Boosting) upgrade was appeared.<br/>
+
+### More about Decision Tree
+
+[blog](https://ratsgo.github.io/machine%20learning/2017/03/26/tree/) <br/>
+[lecture materials(Dongguk univ)](http://bigdata.dongguk.ac.kr/lectures/datascience/_book/%EC%9D%98%EC%82%AC%EA%B2%B0%EC%A0%95%EB%82%98%EB%AC%B4tree-model.html) <br/>
+[datascience school](https://datascienceschool.net/03%20machine%20learning/12.01%20%EC%9D%98%EC%82%AC%EA%B2%B0%EC%A0%95%EB%82%98%EB%AC%B4.html) <br/>
+[presentation material(Choongbuk univ)](http://contents2.kocw.or.kr/KOCW/document/2017/chungbuk/najonghwa/6.pdf) <br/>
+<hr/>
+
+## Model ensemble
+
+![model ensemble](https://vitalflux.com/wp-content/uploads/2022/08/voting-ensemble-method-640x349.png)
+
+[src](https://vitalflux.com/5-common-ensemble-methods-in-machine-learning/) <br/>
+
+It makes several models with datas, and results a final prediction by combining of these all results from every model. So it results by using the strength of each model(making up for each model's weakness).<br/>
+
+So it makes different version of decision trees, and combine(select) their predictions to make final decision.<br/>
+In this image models classify the classes, so the final classification is done with majority vote of all results from each model.<br/>
+If in the Regression problem, the final result will be the average or a weighted average of all results from each model.<br/>
+
+![different models](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbareXs%2Fbtqw8CG16Rm%2F9RJElPLL9RXGvuBKgyIJL0%2Fimg.png)
+
+[src](https://dailyheumsi.tistory.com/111) <br/>
+
+Models in model ensemble technique don't need to be a same model. It can be consisted of Decision Tee, Logistic reg model, SVM, Deep Learning models, etc...<br/>
+
+And there is two representative types of ensemble called Bagging, Boosting.
+
+![2 types of ensemble](https://assaeunji.github.io/images/tree-boosting.png)
+
+[src](https://assaeunji.github.io/machine%20learning/2020-08-06-tree/) <br/>
+
+### Boosting
+
+It's one of the representative model ensemble technique that makes week models as strong models. Published in 1988.<br/>
+Contrary to Bagging, it is additive and sequential training technique.<br/>
+Additive means that it operates like adding the models.<br/>
+And sequential means that it learns one by one, and learn better based on prior results.<br/>
+It is just an algorithm that added 'Sequential' and 'Additive' to basic ensemble's idea.<br/>
+
+Typically, Boosting results the best among the ensemble algorithms.<br/>
+
+These are representative Boosting algorithms.
+- [AdaBoost](https://github.com/Park-SeungWoo/kakao-ai-study#AdaBoostAdaptive-Boosting)
+- [Gradient Boosting Model(GBM)](https://github.com/Park-SeungWoo/kakao-ai-study#Gradient-Boosting-ModelGBM)
+- [XGBoost](https://github.com/Park-SeungWoo/kakao-ai-study#XG-Boost-Extreme-Gradient-Boosting)
+
+### Bagging
+
+Bagging is an abbreviation of 'Bootstrap' and 'Aggregating'.<br/>
+Contrary to Boosting, it is a parallel training technique.<br/>
+Parallel means all weak learners are trained in parallel.<br/>
+
+![bagging](https://miro.medium.com/max/1678/1*Wf91XObaX2zwow7mMwDmGw.png)
+
+[src](https://eunsukimme.github.io/ml/2019/11/26/Random-Forest/) <br/>
+
+First, make data samples by bootstrapping(sub-sampling) original data. Usually each sample's size is 63% of the original data's size.<br/> And there can be duplication of the datas. And the number of samples is a hyper-parameter.<br/>
+Second, make Decision Trees(DT) for each sample.<br/>
+Third, train each DT and get results.<br/>
+Fourth, combine these results by voting(categorical) or getting average(numerical columns).<br/>
+Finally, get total errors(OOB error: Out Of Bag error) by averaging weak learner's errors.<br/>
+
+This is representative Bagging algorithms.
+- [Random Forest](https://github.com/Park-SeungWoo/kakao-ai-study#Random-Forest)
+
+### More about Bagging & Boosting
+
+[more about Bagging & Boosting](https://assaeunji.github.io/machine%20learning/2020-08-06-tree/) <br/>
+[more about Bagging & Boosting(2)](https://dailyheumsi.tistory.com/111) <br/>
+[more about Boosting & Adaboost](https://yngie-c.github.io/machine%20learning/2021/03/20/adaboost/) <br/>
+[Bagging & RandomForest](https://todayisbetterthanyesterday.tistory.com/48) <br/>
+[Bagging](https://yeong-jin-data-blog.tistory.com/entry/%EC%95%99%EC%83%81%EB%B8%94-%EA%B8%B0%EB%B2%95Ensemble-Method-Bagging-vs-Boosting) <br/>
+<hr/>
+
+## AdaBoost(Adaptive Boosting)
+
+It is one of the representative Boosting algorithm.<br/>
+And also it is an algorithm based on decision tree(boosted decision tree).<br/>
+
+![adaboost](https://imghub.insilicogen.com/media/photos/boost.png)
+
+![adaboost combine](readme_assets/adaboost_combine.png)
+
+[src](http://www.incodom.kr/Adaboost) <br/>
+
+It repeatedly makes several week learners(models) based on datas.<br/>
+And learn by giving weights(multiply numeric weight to data to classify those datas well) to each badly predicted datas by prior learners(models).<br/>
+If all weak learners are finished to train, make the strong learner by combining the results.<br/>
+Simply, after counting the number of classes classified by the weak learners for each data, classify each data through majority vote.<br/>
+Actually, in order to make the strong learner, we combine the results by giving weights according to each result's(trained model) accuracy to each trained model.<br/>
+Finally, proceed final predict using the strong learner.<br/>
+
+### More about AdaBoost
+
+[AdaBoost](https://assaeunji.github.io/machine%20learning/2020-08-14-adaboost/) <br/>
+[AdaBoost(1)](http://www.incodom.kr/Adaboost) <br/>
+[AdaBoost(2)](https://hyunlee103.tistory.com/25) <br/>
+[more about Boosting & Adaboost](https://yngie-c.github.io/machine%20learning/2021/03/20/adaboost/) <br/>
+<hr/>
+
+## Gradient Boosting Model(GBM)
+
+
+<hr/>
+
+## XG Boost (Extreme Gradient Boosting)
+
+XG Boost is a three times upgraded version of decision tree.<br/>
+Each word means each upgrade. It upgraded first with Boosting, second with Gradient Descent, and lastly third with Extreme.
+
+A lot of winning teams selected this algorithm in competitions like Kaggle, and it won over many neural networks(Deep learning models) because of its flexibility and speed.<br/>
+<hr/>
+
+## Random Forest
+
+Random Forest is an algorithm using Bagging.<br/>
+So all process is similar with the description in [Bagging](https://github.com/Park-SeungWoo/kakao-ai-study#Bagging) except one thing.<br/>
+The one major difference is that it selects random features also.<br/>
+Each datas have features, and the features also selected when bootstrapping in Random Forest. So it makes the model avoid overfitting.<br/>
+It is also duplicable.<br/>
+If there are M of features, people usually select ${\sqrt M}$ of features.<br/>
+
+### Sites About Random Forest
+
+[Random Forest](https://eunsukimme.github.io/ml/2019/11/26/Random-Forest/) <br/>
+
+<hr/>
+
+# More sites about datascience
+
+[lecture materials(Dongguk univ)](http://bigdata.dongguk.ac.kr/lectures/datascience/_book/%EC%9D%98%EC%82%AC%EA%B2%B0%EC%A0%95%EB%82%98%EB%AC%B4tree-model.html) <br/>
+[datascience school](https://datascienceschool.net/03%20machine%20learning/12.01%20%EC%9D%98%EC%82%AC%EA%B2%B0%EC%A0%95%EB%82%98%EB%AC%B4.html) <br/>
