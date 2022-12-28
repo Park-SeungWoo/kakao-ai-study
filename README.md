@@ -2472,11 +2472,20 @@ Typically, used for the normal person and patient classification problems.<br/>
 
 ## Decision Tree(Supervised learning)
 
+It's an algorithm that we usually use in our daily lives.<br/>
+
+Decision Tree divides the variable area into two at each node(branch).<br/>
+And it learns in a direction of increasing the __homogeneity__, decreasing __impurity(uncertainty)__ of each area as much as possible after passing every node.<br/>
+In other words, it learns by decreasing the __entropy(instability)__.<br/>
+And it called 'information gain' in the Information Theory.<br/>
+In each node, they divide the data into two. And it is called 'recursive partitioning'.<br/>
+And also, when the tree's homogeneity is 100%(__Full tree__), it may occur overfitting because it is too deep.<br/>
+So it merges the leaf nodes in a proper levels(__pruning__).<br/>
+
 ![decision tree](http://i.imgur.com/ZKDnzOB.png)
 
 [src](https://ratsgo.github.io/machine%20learning/2017/03/26/tree/) <br/>
 
-It's an algorithm that we usually use in our daily lives.<br/>
 Above image is a sample decision tree algorithm.<br/>
 Root node shows whether played the tennis or not during the 14 days.<br/>
 And second level's nodes show the climates during the 14 days.<br/>
@@ -2557,11 +2566,14 @@ Parallel means all weak learners are trained in parallel.<br/>
 
 [src](https://eunsukimme.github.io/ml/2019/11/26/Random-Forest/) <br/>
 
-First, make data samples by bootstrapping(sub-sampling) original data. Usually each sample's size is 63% of the original data's size.<br/> And there can be duplication of the datas. And the number of samples is a hyper-parameter.<br/>
+First, make data samples by bootstrapping(sub-sampling) original data. Usually each sample's size is 63% of the original data's size.<br/> And there can be duplication of the datas. And the number of samples is typically up to us. But it doesn't need to be many, under 50 of samples are recommended.<br/>
 Second, make Decision Trees(DT) for each sample.<br/>
 Third, train each DT and get results.<br/>
 Fourth, combine these results by voting(categorical) or getting average(numerical columns).<br/>
 Finally, get total errors(OOB error: Out Of Bag error) by averaging weak learner's errors.<br/>
+
+It doesn't need pruning, because if the model's entropy(instability) is bigger, the performance improvement of the model larger due to bagging.<br/>
+It we use Decision Tree as the Base learner, the deeper the tree's depth, the entropy will increase. So the model will be getting more favorable for the Bagging.<br/>
 
 This is representative Bagging algorithms.
 - [Random Forest](https://github.com/Park-SeungWoo/kakao-ai-study#Random-Forest)
@@ -2586,12 +2598,14 @@ And also it is an algorithm based on decision tree(boosted decision tree).<br/>
 
 [src](http://www.incodom.kr/Adaboost) <br/>
 
-It repeatedly makes several week learners(models) based on datas.<br/>
+It repeatedly makes several weak learners(models) based on datas.<br/>
 And learn by giving weights(multiply numeric weight to data to classify those datas well) to each badly predicted datas by prior learners(models).<br/>
 If all weak learners are finished to train, make the strong learner by combining the results.<br/>
 Simply, after counting the number of classes classified by the weak learners for each data, classify each data through majority vote.<br/>
 Actually, in order to make the strong learner, we combine the results by giving weights according to each result's(trained model) accuracy to each trained model.<br/>
 Finally, proceed final predict using the strong learner.<br/>
+
+AdaBoost uses tree model consisted of two nodes called stump as weak learners.<br/>
 
 ### More about AdaBoost
 
@@ -2616,10 +2630,14 @@ A lot of winning teams selected this algorithm in competitions like Kaggle, and 
 
 ## Random Forest
 
+![random forest](https://miro.medium.com/max/1400/1*hmtbIgxoflflJqMJ_UHwXw.jpeg)
+
+[src](https://medium.com/analytics-vidhya/random-forest-classifier-and-its-hyperparameters-8467bec755f6) <br/>
+
 Random Forest is an algorithm using Bagging.<br/>
-So all process is similar with the description in [Bagging](https://github.com/Park-SeungWoo/kakao-ai-study#Bagging) except one thing.<br/>
+So all process is similar with the description in [Bagging](https://github.com/Park-SeungWoo/kakao-ai-study#Bagging) except one major thing.<br/>
 The one major difference is that it selects random features also.<br/>
-Each datas have features, and the features also selected when bootstrapping in Random Forest. So it makes the model avoid overfitting.<br/>
+Each datas have features, and the features also selected when bootstrapping. So that make the model avoid overfitting.<br/>
 It is also duplicable.<br/>
 If there are M of features, people usually select ${\sqrt M}$ of features.<br/>
 
