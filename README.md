@@ -2543,7 +2543,7 @@ And there is two representative types of ensemble called Bagging, Boosting.
 
 ### Boosting
 
-It's one of the representative model ensemble technique that makes week models as strong models. Published in 1988.<br/>
+It's one of the representative model ensemble technique that makes weak models as strong models. Published in 1988.<br/>
 Contrary to Bagging, it is additive and sequential training technique.<br/>
 Additive means that it operates like adding the models.<br/>
 And sequential means that it learns one by one, and learn better based on prior results.<br/>
@@ -2573,9 +2573,9 @@ Fourth, combine these results by voting(categorical) or getting average(numerica
 Finally, get total errors(OOB error: Out Of Bag error) by averaging weak learner's errors.<br/>
 
 It doesn't need pruning, because if the model's entropy(instability) is bigger, the performance improvement of the model larger due to bagging.<br/>
-It we use Decision Tree as the Base learner, the deeper the tree's depth, the entropy will increase. So the model will be getting more favorable for the Bagging.<br/>
+If we use Decision Tree as the Base learner, the deeper the tree's depth, the entropy will increase. So the model will be getting more favorable for the Bagging.<br/>
 
-This is representative Bagging algorithms.
+This is a representative Bagging algorithm.
 - [Random Forest](https://github.com/Park-SeungWoo/kakao-ai-study#Random-Forest)
 
 ### More about Bagging & Boosting
