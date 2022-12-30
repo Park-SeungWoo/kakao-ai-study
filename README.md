@@ -2750,7 +2750,7 @@ $${\sum Residual \over \sum(previous_probability * (1 - previous_probability))}$
 
 For the case of second leaf node,<br>
 
-$${{(-0.7) + (-0.7)} \over {(0.7 * (1 -0.7)) + (0.7 * (1 -0.7))}} = -3.3}$$
+$${ { {(-0.7) + (-0.7)} \over { (0.7 * (1 -0.7)) + (0.7 * (1 -0.7)) } } = -3.3 }$$
 
 4. Calculate the probability of each sample.
 
@@ -2779,7 +2779,7 @@ And I did it for all datas.<br/>
 |3|8|M|0|$$\color{red}{0.1}$$|$$\color{red}{-0.1(0-0.1)}$$|
 |3|27|F|1|$$\color{red}{0.9}$$|$$\color{red}{0.1(1-0.9)}$$|
 
-Due to the big learning rate, it could get the good result in an iteration, but I'll do it again.<br/>
+Due to the big learning rate, we were able to get the good result from the first iteration, but I'll do it again to see the difference.<br/>
 
 5. Iterate 2 ~ 4
 
