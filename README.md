@@ -2742,7 +2742,7 @@ And I'll mark with the blue color.<br/>
 > In this case, I made 3 leaf nodes, but in actual, 8 ~ 32 leaves are recommended.<br/>
 
 Create a tree that predicts the residual of the previous one.<br/>
-And the feature selection is also up to computer.<br/>
+And the feature selection is also up to computer(by doing simulations each column to find the best one that divided the datas well).<br/>
 And the red numbers under the leaves means the representative value of each sample(leaf node). Because all leaf nodes have to result the same value.<br/>
 While averaging the values in regression, classification needs more transformations.<br/>
 
@@ -2815,6 +2815,8 @@ In this case, it learned fast due to the big learning rate.<br/>
 When get the final classification, classify it with the basis of threshold(usually 0.5 is used as the threshold).<br/>
 
 But it operates recursively, so it's slow(improved in XGBoost), and it can reduce the bias effectively, but might occur overfitting(use sampling, penalizing to ovoid it).<br/>
+When GBM makes new trees, it slows down as it performs many operations.<br/>
+
 > ### bias & variance in ML / DL
 > 
 > - bias : the average of differences between predicted value and the target value. We can often hear 'the model learns to the direction of reducing the bias'.<br/>
@@ -2833,6 +2835,19 @@ And Here's the total process flow written in my language.
 ![total flow](readme_assets/GBM/total_process_flow_GBM.jpg)
 
 And last, to improve the weakness of GBM, here comes [XGBoost](https://github.com/Park-SeungWoo/kakao-ai-study#XG-Boost-Extreme-Gradient-Boosting) .<br/>
+Additionally, there is also the representative upgrade version of GBM called light-GBM.<br/>
+Contrary to those all tree-based ensemble algorithms expands the tree horizontally(level-wise), light-GBM expands the tree vertically(leaf-wise).<br/>
+So it makes the model faster.<br/>
+
+- leaf-wise(light-GBM)
+
+![leaf-wise](https://entheoscientist.files.wordpress.com/2020/04/e37e7-1azssoxb8lc5n6mnhqx5jcg.png)
+
+- level-wise(other tree based ensemble algorithms)
+
+![level-wise](https://entheoscientist.files.wordpress.com/2020/04/b9f48-1whsa8ry4sgfqj1recwr8ag.png)
+
+[src for two img](https://nurilee.com/2020/04/03/lightgbm-definition-parameter-tuning/) <br/>
 
 ### Reference
 
@@ -2847,8 +2862,23 @@ And last, to improve the weakness of GBM, here comes [XGBoost](https://github.co
 
 XG Boost is a three times upgraded version of decision tree.<br/>
 Each word means each upgrade. It upgraded first with Boosting, second with Gradient Descent, and lastly third with Extreme.
+And so on it is also the upgrade version of GBM at the same time.<br/>
+
+![XGBoost speed](https://raw.githubusercontent.com/dmlc/web-data/master/xgboost/SpeedFigure.png)
+
+[src](https://xgboost.ai/rstats/2016/03/10/xgboost.html) <br/>
+
+This is the representative difference between GB and XGBoost.<br/>
+The crucial weakness of the GBM is the speed.<br/>
+So as to improve this problem, it applied Parallel Processing Techniques to the GBM.<br/>
+It is not for the computation of models like Bagging.<br/>
+When making a new tree, it applied Parallel Processing Technique for the calculation of the probability during the process of decision for which feature is the best in every node in the tree.<br/>
+
+But it also has the weakness.<br/>
+It needs too many hyper-parameters, so it's hard to find the best combination.<br/>
 
 A lot of winning teams selected this algorithm in competitions like Kaggle, and it won over many neural networks(Deep learning models) because of its flexibility and speed.<br/>
+GBM is also well-used.<br/>
 <hr/>
 
 ## Random Forest
