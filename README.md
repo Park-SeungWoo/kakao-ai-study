@@ -1959,6 +1959,9 @@ On the contrary, if the gradient has positive value, the lower theta, the lower 
 So we have to modify theta in the opposite direction of the gradient's symbols.<br/>
 And the lowest point in the graph(Global minimum) is our goal that we have to arrive.
 
+Actually Gradient descent is not only for finding optimum theta value, but also for finding the optimum value of any variables that is modifiable and have the criterion that judges the variable like loss.<br/>
+So it can be used for finding any optimum values.<br/>
+
 Total process is here.
 
 1. Initialize theta value.
@@ -2092,8 +2095,7 @@ That's the reason why it called as Mean Squared Error. It is so intuitive.<br/>
 
 - MAE(Mean Absolute Error) : Use the absolute errors instead of squared errors.
 - MAPE(Mean Absolute Percentage Error) : Use the percentage of the errors.
-- RMSE(Root Mean Squared Error) : Because the MSE squared the errors, It takes rooted value to
-- get closer error values to the initial error values.
+- RMSE(Root Mean Squared Error) : Because the MSE squared the errors, It takes rooted value to get closer error values to the initial error values.
 <hr/>
 
 ### Cross Entropy
@@ -2569,8 +2571,8 @@ Parallel means all weak learners are trained in parallel.<br/>
 First, make data samples by bootstrapping(sub-sampling) original data. Usually each sample's size is 63% of the original data's size.<br/> And there can be duplication of the datas. And the number of samples is typically up to us. But it doesn't need to be many, under 50 of samples are recommended.<br/>
 Second, make Decision Trees(DT) for each sample.<br/>
 Third, train each DT and get results.<br/>
-Fourth, combine these results by voting(categorical) or getting average(numerical columns).<br/>
-Finally, get total errors(OOB error: Out Of Bag error) by averaging weak learner's errors.<br/>
+Fourth, combine these results by voting(categorical) or getting average(numerical). And it is the final prediction.<br/>
+Finally, get total errors(OOB error: Out Of Bag error) by averaging(or voting) weak learner's errors.<br/>
 
 It doesn't need pruning, because if the model's entropy(instability) is bigger, the performance improvement of the model larger due to bagging.<br/>
 If we use Decision Tree as the Base learner, the deeper the tree's depth, the entropy will increase. So the model will be getting more favorable for the Bagging.<br/>
@@ -2607,6 +2609,12 @@ Finally, proceed final predict using the strong learner.<br/>
 
 AdaBoost uses tree model consisted of two nodes called stump as weak learners.<br/>
 
+But if there is a data point that has a high weight, its performance will decrease dramatically.<br/>
+If the one data point has a high weight, it may increase the possibility that occur the misclassification of the other close data points.<br/>
+So we have to give the weights to the direction of minimizing the loss.<br/>
+Actually, we've ever faced with this problem in Gradient Descent.<br/>
+So here comes [__Gradient Boosting__](https://github.com/Park-SeungWoo/kakao-ai-study#G) that added gradient descent to find the optimum weights for datas in AdaBoost.<br/>
+
 ### More about AdaBoost
 
 [AdaBoost](https://assaeunji.github.io/machine%20learning/2020-08-14-adaboost/) <br/>
@@ -2617,6 +2625,220 @@ AdaBoost uses tree model consisted of two nodes called stump as weak learners.<b
 
 ## Gradient Boosting Model(GBM)
 
+![gbm & adaboost](https://tyami.github.io/assets/images/post/ML/2020-10-10-gradient-boosting-regression/2020-10-10-gradient-boosting-regression-comparison-adaboost-gradient-boost.png)
+
+[src](https://tyami.github.io/machine%20learning/ensemble-4-boosting-gradient-boosting-regression/) <br/>
+
+It is an advanced version of AdaBoost.<br/>
+But I think it's totally different with AdaBoost except the feature of Sequential and Additive.<br/>
+First, its weak learner is different with AdaBoost. While AdaBoost's weak learner is a stump, it is consisted of a leaf and restricted trees(i.e. the tree is restricted with maximum number of leaves).<br/>
+Second, while AdaBoost predicts the output value, GBM predicts the pseudo-residual(Observed - Predicted) of previous weak learner's predicted probability.<br/>
+Third, weights for models(weak learners) is different. AdaBoost gives weights based on their accuracy, but GBM just multiply equally the learning rate.<br/>
+
+Let's check about the total process for classification.<br/>
+The left one is for classification and the right one is for regression.<br/>
+
+<div style="display: flex;">
+
+![GBM for classification](https://tyami.github.io/assets/images/post/ML/2020-10-12-gradient-boosting-classification/2020-10-12-gradient-boosting-classification-procedure-overview.png)
+
+![GBM for regression](https://tyami.github.io/assets/images/post/ML/2020-10-10-gradient-boosting-regression/2020-10-10-gradient-boosting-regression-procedure-overview.png)
+
+</div>
+
+[src](https://tyami.github.io/machine%20learning/ensemble-4-boosting-gradient-boosting-regression/) <br/>
+
+That's it!<br/>
+It's simple but checking out the whole flow and studying details is recommended.<br/>
+
+Let's see the formula.<br/>
+
+$${F_t(x) = F_0(x) + \eta \sum\limits_{t=1}^M h_t(x)}$$
+
+Basically it operates by making the weak learners(trees) that predict the pseudo-residual(i.e. to differentiate with residual in linear regression, the term pseudo is added) of previous weak learner's prediction(sequential). And sum the results from weak learners to make final prediction(additive).<br/>
+${F_0(x)}$ is the value of the first leaf(i.e just a node in DT). We will see in the example below soon.<br/>
+
+This is the formula in an intuitive version.<br/>
+
+![gbm formula (simplified)](readme_assets/GBM_formula.jpeg)
+
+By adding the prediction of the residuals, it'll be getting more descriptive for the datas.<br/>
+
+Just one difference between GBM for regression and for classification is calculation of the probability in classification.<br/>
+
+And also it results the best with tabular format datas.<br/>
+
+Let's see the example!<br/>
+
+In this case I'll use the sample of Titanic datas.<br/>
+
+|P-class|Age|Sex|Survived|
+|:---:|:---:|:---:|:---:|
+|3|22|M|0|
+|1|38|F|1|
+|2|26|F|1|
+|1|35|F|1|
+|3|8|M|0|
+|3|27|F|1|
+
+Before start, let's remind this process flow.<br/>
+I'll do the classification with these datas.<br/>
+
+1. Create a first leaf
+2. Calculate pseudo-residual
+3. Create next tree
+4. Calculate predicted probability
+5. Iterate 2 ~ 4
+
+Let's start!<br/>
+
+1. Create a first leaf
+
+In classification, the first leaf's prediction value is ${log(odds)}$ (target's average in regression).<br/>
+
+> __log(odds)__<br/>
+> The odds are the case A's probability of occurrence compared to the probability that Case A will not occur.<br/>
+> 
+> $${odds = {P(A) \over P(A^c)} = {P(A) \over {1 - P(A)}}}$$
+> 
+> For example, survived column in the Titanic datas, 4 people are survived, and 2 are not.<br/>
+> 
+> $${odds = {4 \over 2}}$$
+> 
+> $${log(odds) = log_e {4 \over 2} = 0.6931 \approx 0.7}$$
+
+And we have to calculate the probability with this, because it is the classification problem.<br/>
+
+$${Probability = P(A) = {e^log({P(A) \over P(A^C)}) \over {1 + e^log({P(A) \over P(A^C)})}} = {e^log(odds) \over {1 + e^log(odds)}}}$$
+
+$${P(survived) = {e^0.7 \over {1 + e^0.7}} = 0.6681 \approx 0.7}$$
+
+This case is so exceptional. log(odds) and the probability barely has the same value.<br/>
+
+2. Calculate the pseudo-residual
+
+![survived graph](readme_assets/pseudo-residual for classification(Titanic).jpeg)
+
+Yellow dots and blue dots indicate each the survived and didn't survive datas.<br/>
+And the pseudo-residual(observed - predicted) will be like this.<br/>
+
+|P-class|Age|Sex|Survived|$$\color{red}{residual}$$|
+|:---:|:---:|:---:|:---:|:---:|
+|3|22|M|0|$$\color{red}{-0.7(0-0.7)}$$|
+|1|38|F|1|$$\color{red}{0.3(1-0.7)}$$|
+|2|26|F|1|$$\color{red}{0.3(1-0.7)}$$|
+|1|35|F|1|$$\color{red}{0.3(1-0.7)}$$|
+|3|8|M|0|$$\color{red}{-0.7(0-0.7)}$$|
+|3|27|F|1|$$\color{red}{0.3(1-0.7)}$$|
+
+From now on we will focus on the first data to see the change.<br/>
+And I'll mark with the blue color.<br/>
+
+3. Create next tree(that predicts the residual of prev)
+
+![first tree](readme_assets/GBM/first_tree.jpeg)
+
+> In this case, I made 3 leaf nodes, but in actual, 8 ~ 32 leaves are recommended.<br/>
+
+Create a tree that predicts the residual of the previous one.<br/>
+And the feature selection is also up to computer.<br/>
+And the red numbers under the leaves means the representative value of each sample(leaf node). Because all leaf nodes have to result the same value.<br/>
+While averaging the values in regression, classification needs more transformations.<br/>
+
+$${\sum Residual \over \sum(previous probability * (1 - previous probability))}$$
+
+For the case of second leaf node,<br>
+
+$${{(-0.7) + (-0.7)} \over {(0.7 * (1 -0.7)) + (0.7 * (1 -0.7))} = -3.3}$$
+
+4. Calculate the probability of each sample.
+
+For the last step, we have to add this predicted value(residual value) to the previous result.<br/>
+Let's apply those -3.3 to the total formula that we saw.<br/>
+I'll set the Learning rate as 0.8 to see the change intuitively.<br/>
+In actual, people use 0.1 or 0.02 as the Learning rate.<br/>
+
+$${result = 0.7 + (0.8 * -3.3) = -1.94}$$
+
+Because it is the classification, we have to calculate the probability to get the next residual.<br/>
+In regression, we can just use the result.<br/>
+
+So, we have to use the probability formula that was used for transforming the log(odds) in the first step.<br/>
+
+$${{e^-1.94 \over {1 + e^-1.94}} \approx 0.1}$$
+
+And I did it for all datas.<br/>
+
+|P-class|Age|Sex|Survived|$$\color{red}{predicted}$$|$$\color{red}{residual}$$|
+|:---:|:---:|:---:|:---:|:---:|:---:|
+|3|22|M|0|$$\color{red}{0.1}$$|$$\color{red}{-0.1(0-0.1)}$$|
+|1|38|F|1|$$\color{red}{0.9}$$|$$\color{red}{0.1(1-0.9)}$$|
+|2|26|F|1|$$\color{red}{0.9}$$|$$\color{red}{0.1(1-0.9)}$$|
+|1|35|F|1|$$\color{red}{0.9}$$|$$\color{red}{0.1(1-0.9)}$$|
+|3|8|M|0|$$\color{red}{0.1}$$|$$\color{red}{-0.1(0-0.1)}$$|
+|3|27|F|1|$$\color{red}{0.9}$$|$$\color{red}{0.1(1-0.9)}$$|
+
+Due to the big learning rate, it could get the good result in an iteration, but I'll do it again.<br/>
+
+5. Iterate 2 ~ 4
+
+![second tree](readme_assets/GBM/new_tree.jpeg)
+
+First, get the representative value.<br/>
+
+$${ { (-0.1) + (0.1) + (-0.1) \over (0.1 * (1-0.1)) + (0.9 * (1-0.9)) + (0.1 * (1-0.1)) } = -0.37 \approx -0.4 }$$
+
+And let's see the data we are focusing on(blue marked).<br/>
+
+Second, get total predicted result of it.<br/>
+
+$${0.7 + (0.8*-3.3) + (0.8*-0.4) = -2.26}$$
+
+Lastly, transform it to a predicted probability.<br/>
+
+$${{e^-2.26 \over {1 + e^-2.26}} = 0.09}$$
+
+|P-class|Age|Sex|Survived|$$\color{red}{previous predict}$$|$$\color{red}{current predict}$$|
+|:---:|:---:|:---:|:---:|:---:|:---:|
+|3|22|M|0|$$\color{red}{0.1}$$|$$\color{red}{0.09}$$|
+|1|38|F|1|$$\color{red}{0.9}$$|$$\color{red}{...}$$|
+|2|26|F|1|$$\color{red}{0.9}$$|$$\color{red}{...}$$|
+|1|35|F|1|$$\color{red}{0.9}$$|$$\color{red}{...}$$|
+|3|8|M|0|$$\color{red}{0.1}$$|$$\color{red}{...}$$|
+|3|27|F|1|$$\color{red}{0.9}$$|$$\color{red}{...}$$|
+
+So we can see the final result is better than the first one.<br/>
+
+So the prediction is getting closer to the target each time it pass the trees.<br/>
+In this case, it learned fast due to the big learning rate.<br/>
+When get the final classification, classify it with the basis of threshold(usually 0.5 is used as the threshold).<br/>
+
+But it operates recursively, so it's slow(improved in XGBoost), and it can reduce the bias effectively, but might occur overfitting(use sampling, penalizing to ovoid it).<br/>
+> ### bias & variance in ML / DL
+> 
+> - bias : the average of differences between predicted value and the target value. We can often hear 'the model learns to the direction of reducing the bias'.<br/>
+> - variance : the quantity of how much a prediction can change for new data.
+> 
+> And these two things are in trade-off relationship.<br/>
+> 
+> - reducing Bias(ovoid underfitting) => increase Variance(the probability of overfitting increases)
+> - reducing Variance(avoid overfitting) => increase Bias(the probability of underfitting increases)
+> 
+> #### Reference
+> [bias & variance](https://gaussian37.github.io/machine-learning-concept-bias_and_variance/)
+
+And Here's the total process flow written in my language.
+
+![total flow](readme_assets/GBM/total_process_flow_GBM.jpg)
+
+And last, to improve the weakness of GBM, here comes [XGBoost](https://github.com/Park-SeungWoo/kakao-ai-study#XG-Boost-Extreme-Gradient-Boosting) .<br/>
+
+### Reference
+
+[GBM](https://hyoeun-log.tistory.com/entry/ML-Gradient-Boosting-GBM) <br/>
+[GBM for classification (en)](https://blog.paperspace.com/gradient-boosting-for-classification/) <br/>
+[GBM for classification (ko)](https://tyami.github.io/machine%20learning/ensemble-5-boosting-gradient-boosting-classification/) <br/>
+[GBM for regression (ko)](https://tyami.github.io/machine%20learning/ensemble-4-boosting-gradient-boosting-regression/) <br/>
 
 <hr/>
 
