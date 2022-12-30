@@ -2638,13 +2638,14 @@ Third, weights for models(weak learners) is different. AdaBoost gives weights ba
 Let's check about the total process for classification.<br/>
 The left one is for classification and the right one is for regression.<br/>
 
-<div style="display: flex;">
+Classification
 
 ![GBM for classification](https://tyami.github.io/assets/images/post/ML/2020-10-12-gradient-boosting-classification/2020-10-12-gradient-boosting-classification-procedure-overview.png)
 
+Regression
+
 ![GBM for regression](https://tyami.github.io/assets/images/post/ML/2020-10-10-gradient-boosting-regression/2020-10-10-gradient-boosting-regression-procedure-overview.png)
 
-</div>
 
 [src](https://tyami.github.io/machine%20learning/ensemble-4-boosting-gradient-boosting-regression/) <br/>
 
@@ -2660,7 +2661,7 @@ ${F_0(x)}$ is the value of the first leaf(i.e just a node in DT). We will see in
 
 This is the formula in an intuitive version.<br/>
 
-![gbm formula (simplified)](readme_assets/GBM_formula.jpeg)
+![gbm formula (simplified)](readme_assets/GBM/GBM_formula.jpeg)
 
 By adding the prediction of the residuals, it'll be getting more descriptive for the datas.<br/>
 
@@ -2705,19 +2706,19 @@ In classification, the first leaf's prediction value is ${log(odds)}$ (target's 
 > 
 > $${odds = {4 \over 2}}$$
 > 
-> $${log(odds) = log_e {4 \over 2} = 0.6931 \approx 0.7}$$
+> $${log(odds) = log {4 \over 2} = 0.6931 \approx 0.7}$$
 
 And we have to calculate the probability with this, because it is the classification problem.<br/>
 
-$${Probability = P(A) = {e^log({P(A) \over P(A^C)}) \over {1 + e^log({P(A) \over P(A^C)})}} = {e^log(odds) \over {1 + e^log(odds)}}}$$
+$${Probability = P(A) = {e^{log({P(A) \over P(A^C)})} \over {1 + e^{log({P(A) \over P(A^C)})}}} = {e^{log(odds)} \over {1 + e^{log(odds)}}}}$$
 
-$${P(survived) = {e^0.7 \over {1 + e^0.7}} = 0.6681 \approx 0.7}$$
+$${P(survived) = {e^{0.7} \over {1 + e^{0.7}}} = 0.6681 \approx 0.7}$$
 
 This case is so exceptional. log(odds) and the probability barely has the same value.<br/>
 
 2. Calculate the pseudo-residual
 
-![survived graph](readme_assets/pseudo-residual for classification(Titanic).jpeg)
+![survived graph](readme_assets/GBM/pseudo-residual for classification(Titanic).jpeg)
 
 Yellow dots and blue dots indicate each the survived and didn't survive datas.<br/>
 And the pseudo-residual(observed - predicted) will be like this.<br/>
@@ -2745,11 +2746,11 @@ And the feature selection is also up to computer.<br/>
 And the red numbers under the leaves means the representative value of each sample(leaf node). Because all leaf nodes have to result the same value.<br/>
 While averaging the values in regression, classification needs more transformations.<br/>
 
-$${\sum Residual \over \sum(previous probability * (1 - previous probability))}$$
+$${\sum Residual \over \sum(previous_probability * (1 - previous_probability))}$$
 
 For the case of second leaf node,<br>
 
-$${{(-0.7) + (-0.7)} \over {(0.7 * (1 -0.7)) + (0.7 * (1 -0.7))} = -3.3}$$
+$${{(-0.7) + (-0.7)} \over {(0.7 * (1 -0.7)) + (0.7 * (1 -0.7))}} = -3.3}$$
 
 4. Calculate the probability of each sample.
 
@@ -2765,7 +2766,7 @@ In regression, we can just use the result.<br/>
 
 So, we have to use the probability formula that was used for transforming the log(odds) in the first step.<br/>
 
-$${{e^-1.94 \over {1 + e^-1.94}} \approx 0.1}$$
+$${{e^{-1.94} \over {1 + e^{-1.94}}} \approx 0.1}$$
 
 And I did it for all datas.<br/>
 
@@ -2796,7 +2797,7 @@ $${0.7 + (0.8*-3.3) + (0.8*-0.4) = -2.26}$$
 
 Lastly, transform it to a predicted probability.<br/>
 
-$${{e^-2.26 \over {1 + e^-2.26}} = 0.09}$$
+$${{e^{-2.26} \over {1 + e^{-2.26}}} = 0.09}$$
 
 |P-class|Age|Sex|Survived|$$\color{red}{previous predict}$$|$$\color{red}{current predict}$$|
 |:---:|:---:|:---:|:---:|:---:|:---:|
