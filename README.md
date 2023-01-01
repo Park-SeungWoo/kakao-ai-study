@@ -2718,7 +2718,7 @@ This case is so exceptional. log(odds) and the probability barely has the same v
 
 2. Calculate the pseudo-residual
 
-![survived graph](readme_assets/GBM/pseudo-residual for classification(Titanic).jpeg)
+![survived graph](readme_assets/GBM/pseudo-residual_for_classification_Titanic.jpeg)
 
 Yellow dots and blue dots indicate each the survived and didn't survive datas.<br/>
 And the pseudo-residual(observed - predicted) will be like this.<br/>
@@ -2832,7 +2832,7 @@ When GBM makes new trees, it slows down as it performs many operations.<br/>
 
 And Here's the total process flow written in my language.
 
-![total flow](readme_assets/GBM/total_process_flow_GBM.jpg)
+![total flow](readme_assets/GBM/total_process_flow_GBM.JPG)
 
 And last, to improve the weakness of GBM, here comes [XGBoost](https://github.com/Park-SeungWoo/kakao-ai-study#XG-Boost-Extreme-Gradient-Boosting) .<br/>
 Additionally, there is also the representative upgrade version of GBM called light-GBM.<br/>
