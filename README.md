@@ -2900,6 +2900,20 @@ If there are M of features, people usually select ${\sqrt M}$ of features.<br/>
 
 <hr/>
 
+## Feature importance
+
+<hr/>
+
+## Permutation importance
+
+### scoring (r2 scorer)
+
+closer to 1, better model, and closer to 0, worse model.
+
+scorer in scikit-learn
+almost all reg => r2 scorer
+almost all classification => accuracy scorer
+
 # More sites about datascience
 
 [lecture materials(Dongguk univ)](http://bigdata.dongguk.ac.kr/lectures/datascience/_book/%EC%9D%98%EC%82%AC%EA%B2%B0%EC%A0%95%EB%82%98%EB%AC%B4tree-model.html) <br/>
