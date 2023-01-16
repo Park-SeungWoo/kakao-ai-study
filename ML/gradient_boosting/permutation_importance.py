@@ -43,11 +43,11 @@ mse = mean_squared_error(y_test, model.predict(x_test))
 # permutation importance (better than feature importance, but there are some models that cannot see this, then use feature importance)
 plt.figure(figsize=(8, 8))
 
-res = permutation_importance(model, x_test, y_test, n_repeats=10, n_jobs=2, random_state=42)
+res = permutation_importance(model, x_test, y_test, n_repeats=10, n_jobs=2, random_state=42)  # n_jobs => parallel computing
 print(res)
 # importances_mean : the mean of each feature's res
 # importances_std : the std of each feature's res
-# importances : results of each fearute
+# importances : results of each feature
 # scoring ->
 
 sorted_idx = res.importances_mean.argsort()

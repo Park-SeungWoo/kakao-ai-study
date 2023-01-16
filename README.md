@@ -2477,9 +2477,9 @@ Typically, used for the normal person and patient classification problems.<br/>
 It's an algorithm that we usually use in our daily lives.<br/>
 
 Decision Tree divides the variable area into two at each node(branch).<br/>
-And it learns in a direction of increasing the __homogeneity__, decreasing __impurity(uncertainty)__ of each area as much as possible after passing every node.<br/>
-In other words, it learns by decreasing the __entropy(instability)__.<br/>
-And it called 'information gain' in the Information Theory.<br/>
+And it learns in a direction of increasing the __purity__, decreasing __impurity(uncertainty)__ of each area as much as possible after passing every node.<br/>
+In other words, it learns by the direction of decreasing the __entropy(uncertainty)__.<br/>
+And it called 'Information gain' in the Information Theory.<br/>
 In each node, they divide the data into two. And it is called 'recursive partitioning'.<br/>
 And also, when the tree's homogeneity is 100%(__Full tree__), it may occur overfitting because it is too deep.<br/>
 So it merges the leaf nodes in a proper levels(__pruning__).<br/>
@@ -2613,7 +2613,7 @@ But if there is a data point that has a high weight, its performance will decrea
 If the one data point has a high weight, it may increase the possibility that occur the misclassification of the other close data points.<br/>
 So we have to give the weights to the direction of minimizing the loss.<br/>
 Actually, we've ever faced with this problem in Gradient Descent.<br/>
-So here comes [__Gradient Boosting__](https://github.com/Park-SeungWoo/kakao-ai-study#G) that added gradient descent to find the optimum weights for datas in AdaBoost.<br/>
+So here comes [__Gradient Boosting__](https://github.com/Park-SeungWoo/kakao-ai-study#Gradient-Boosting-ModelGBM) that added gradient descent to find the optimum weights for datas in AdaBoost.<br/>
 
 ### More about AdaBoost
 
@@ -2902,17 +2902,57 @@ If there are M of features, people usually select ${\sqrt M}$ of features.<br/>
 
 ## Feature importance
 
-<hr/>
+### By Coefficient
 
-## Permutation importance
+#### Linear models
 
-### scoring (r2 scorer)
+#### Tree based models
+
+default gini coefficient
+
+### Permutation importance
+
+#### Scoring
 
 closer to 1, better model, and closer to 0, worse model.
 
-scorer in scikit-learn
-almost all reg => r2 scorer
-almost all classification => accuracy scorer
+default scorer in scikit-learn
+almost all reg => [r2 score](https://github.com/Park-SeungWoo/kakao-ai-study#R-2-score)
+almost all classification => accuracy score
+
+#### Weakness
+
+#### Strength
+
+<hr/>
+
+## R2 score
+
+### SST
+
+### SSE
+
+### SSR
+
+<hr/>
+
+# Information Theory
+
+## Information quantitation
+
+It is the quantity of information that we can 
+We can also understand it as a degree of surprising.<br/>
+
+
+<hr/>
+
+## Entropy
+
+<hr/>
+
+## Information gain
+
+<hr/>
 
 # More sites about datascience
 
