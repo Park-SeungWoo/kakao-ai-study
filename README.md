@@ -2960,6 +2960,8 @@ Before using it, we have to normalize it.
 
 $${normalized\ feature\ importance = {feature\ importance \over \sum\limits_{all\ feature} feature\ importance}}$$
 
+![MDI importance with GINI](readme_assets/feature_importance/MDI_importance_with_GINI.jpeg)
+
 Every fitted tree based model has `feature_importances_` that has GINI coefficient based MDI importances in Sklearn.<br/>
 Almost all tree based model uses GINI coefficient as a default for getting feature importance.<br/>
 But it can't be used as an absolute indicator, because only the GINI coefficient or information gain is considered.<br/>
@@ -2967,7 +2969,26 @@ And also this value was calculated during the training with the train datas, so 
 
 ### Permutation importance
 
+![permutation importance](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbtEk0R%2FbtqCZZDkJpD%2FpIENFwWi170N70myeLHBl1%2Fimg.png) <br/>
+[src](https://data-newbie.tistory.com/445) <br/>
 
+It is a way to calculate the importance by putting the datas with a specific feature shuffled to the fitted model to make the feature obsolete. 
+And reevaluate the model to get the feature importance. 
+If the performance decreases, it means the feature is important.<br/>
+But in the paper, they divide the dataset in half and exchange their specific feature's value to each other. 
+Because shuffling takes a long time.
+Actually, it works like shuffling.<br/>
+But whether we use training data or test data as input datas is up to us.<br/>
+To evaluate the model, R2 score is used as a model evaluation indicator in regression models, and Accuracy score is used in classification models in Sklearn.
+Almost all regression models and classification models use R2 score and Accuracy score in Sklearn.<br/>
+And it can be used if there are datas and fitted model, so it can be used in any models even Deep learning models.<br/>
+Contrary to another way to get feature importance(e.g. Drop-Column Importance), it doesn't need to retrain the model.<br/>
+And also it's not a partial importance.
+If we shuffle the feature, every correlation with other features will be disappeared.<br/>
+Another weakness of this is that it can make unrealistic datas during the shuffling.
+Especially if there is a high correlation among the features like the height and weight, we can make the weird datas like 2 meter of height with 30 kg of weight.
+Actually it will affect highly to the prediction, but the importance will be not a one that we wanted.
+So, we have to check the correlation among the features in advance.<br/>
 
 ### Conclusion
 
@@ -2995,17 +3016,78 @@ We have to choose the right method by our circumstance.
 
 ## R2 score
 
+> R2 score = R squared = coefficient of determination
+
+As a similar term with the coefficient in correlation analysis, It is an indicator that indicates how accurate the regression is(i.e. how well the independent variable described the dependent variable).<br/>
+It means more accurate when the coefficient of determination(i.e. R2 score) is high.<br/>
+So, the more independent variables, the higher it is.<br/>
+But, in real, it doesn't predict better, even if the number of features is large.
+So the __'adjusted R-squared'__ has emerged.<br/>
+It uses '${R^2}$' as a symbol, and usually uses 0 to 1 of the value.
+
+> - ${R^2 \approx 1}$ : good model
+> - ${R^2 \approx 0}$ : bad model
+> - ${R^2 \lt 0}$ : useless model or used an arbitrary data
+
+Even if the regression analysis(i.e. regression line) is same, the accuracy is different according to the density of datas.<br/>
+
+![accuracy by density](readme_assets/R2_score/R2_score_accuracy_by_density.jpeg)
+
+So, we determine the accuracy by using the ${R^2}$ score.<br/>
+The closer to 1, the better the model is.
+And the closer to 0, the worse the model is.<br/>
+
+![comparison of R2](readme_assets/R2_score/comparison_R2.jpeg)
+
+> Accuracy in this topic means the degree of how well the independent variable described the dependent variable.<br/>
+
+And there are two ways to get ${R^2}$ score.
+
+- square the correlation coefficient -> ${R^2 = r^2}$
+- using ANOVA(ANalaysis Of VAriance) for regression. => ${R^2 = 1 - SSR \over SST}$
+
+Usually use ANOVA for regression to get ${R^2}$ score.<br/>
+
 ### ANOVA for regression
 
 #### SST
 
+It is the sum of squared differences between observed datas and the average of observed datas.<br/>
+
+$${\sum{(observed - average\ of\ observed}^2}}$$
+
 #### SSE
+
+It is the sum of squared differences between predicted value and the average of observed datas.<br/>
+
+$${\sum{(predicted - average\ of\ observed)^2}}$$
 
 #### SSR
 
+It is the sum of squared differences between predicted value and observed data.<br/>
+And its formula is similar with [MSE](#mean-squared-errormse).<br/>
+Because MSE is the standardized formula of SSR.<br/>
+
+$${\sum{(predicted - observed)^2}}$$
+
+> This terms are expressed differently from person to person, so be careful
+
+![ANOVA for regression](readme_assets/R2_score/ANOVA_for_regression.jpeg)
+As we can see, SST equals sum of SSE and SSR.<br/>
+
 ### Adjusted R squared
 
+If we have 2 or more features, we have to use this.<br/>
+
+$${Adjusted\ R^2 = {{1 - SSR \div (n - k - 1)} \over {SST \div (n - 1)} }}$$
+
+- n = the number of datas
+- k = the number of features
+
 ### Conclusion
+R2 score is used as an indicator of regression models' performance in Sklearn.<br/>
+To be clear, correlation coefficient indicates the correlation between 2 independent variables of independent variable and dependent variable.
+And coefficient of determination indicates the correlation between dependent variable and regression model + independent variable(i.e. the model's performance).<br/>
 
 ### More about R2 score
 
