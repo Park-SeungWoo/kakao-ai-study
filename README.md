@@ -3023,7 +3023,7 @@ It means more accurate when the coefficient of determination(i.e. R2 score) is h
 So, the more independent variables, the higher it is.<br/>
 But, in real, it doesn't predict better, even if the number of features is large.
 So the __'adjusted R-squared'__ has emerged.<br/>
-It uses '${R^2}$' as a symbol, and usually uses 0 to 1 of the value.
+It uses ' ${R^2}$ ' as a symbol, and usually uses 0 to 1 of the value.
 
 > - ${R^2 \approx 1}$ : good model
 > - ${R^2 \approx 0}$ : bad model
@@ -3054,7 +3054,7 @@ Usually use ANOVA for regression to get ${R^2}$ score.<br/>
 
 It is the sum of squared differences between observed datas and the average of observed datas.<br/>
 
-$${\sum{(observed - average\ of\ observed}^2}}$$
+$${\sum{(observed - average\ of\ observed)^2}}$$
 
 #### SSE
 
@@ -3079,7 +3079,7 @@ As we can see, SST equals sum of SSE and SSR.<br/>
 
 If we have 2 or more features, we have to use this.<br/>
 
-$${Adjusted\ R^2 = {{1 - SSR \div (n - k - 1)} \over {SST \div (n - 1)} }}$$
+$${Adjusted\ R^2 = {1 - {SSR \div (n - k - 1)} \over {SST \div (n - 1)} }}$$
 
 - n = the number of datas
 - k = the number of features
