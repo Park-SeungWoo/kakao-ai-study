@@ -2921,9 +2921,9 @@ To know that, we have to know the process of the branching in advance.<br/>
 It branches by the direction of decreasing the impurity of the leaf nodes.<br/>
 There are 2 representative ways to get impurity.<br/>
 
-#### Entropy
+#### By Entropy
 
-Branch to the direction of maximizing the differences between the entropy that before branched and sum of that after branched on the condition that the impurity after branched is lower than before.<br/>
+Branch to the direction of maximizing the differences between the [entropy](#entropy) that before branched and sum of that after branched on the condition that the impurity after branched is lower than before.<br/>
 Simply, Entropy is one of the indicator of impurity like GINI coefficient.
 
 $${Impurity = G(N) = -\sum\limits_{i=0}^k P_i log P_i}$$
@@ -2931,7 +2931,7 @@ $${Impurity = G(N) = -\sum\limits_{i=0}^k P_i log P_i}$$
 - N = node
 - K = the number of classes
 
-#### GINI coefficient
+#### By GINI coefficient
 
 GINI coefficient(i.e. GINI index) is originally a statistical index that indicates an income imbalance.
 It can compensate for the shortcomings off Lorentz curve that it is difficult to compare when different Lorentz curve intersect.<br/>
@@ -2979,7 +2979,7 @@ But in the paper, they divide the dataset in half and exchange their specific fe
 Because shuffling takes a long time.
 Actually, it works like shuffling.<br/>
 But whether we use training data or test data as input datas is up to us.<br/>
-To evaluate the model, R2 score is used as a model evaluation indicator in regression models, and Accuracy score is used in classification models in Sklearn.
+To evaluate the model, [R2 score](#r2-score) is used as a model evaluation indicator in regression models, and Accuracy score is used in classification models in Sklearn.
 Almost all regression models and classification models use R2 score and Accuracy score in Sklearn.<br/>
 And it can be used if there are datas and fitted model, so it can be used in any models even Deep learning models.<br/>
 Contrary to another way to get feature importance(e.g. Drop-Column Importance), it doesn't need to retrain the model.<br/>
@@ -3022,7 +3022,7 @@ As a similar term with the coefficient in correlation analysis, It is an indicat
 It means more accurate when the coefficient of determination(i.e. R2 score) is high.<br/>
 So, the more independent variables, the higher it is.<br/>
 But, in real, it doesn't predict better, even if the number of features is large.
-So the __'adjusted R-squared'__ has emerged.<br/>
+So the [adjusted R-squared](#adjusted-r-squared) has emerged.<br/>
 It uses ' ${R^2}$ ' as a symbol, and usually uses 0 to 1 of the value.
 
 > - ${R^2 \approx 1}$ : good model
@@ -3156,7 +3156,6 @@ For example, it is the subtraction of the parent node's entropy with the weighte
 
 [Information theory with DT](https://stevenoh0908.kro.kr/blog/knowledges/%EC%97%94%ED%8A%B8%EB%A1%9C%ED%94%BC-%EC%A0%95%EB%B3%B4%ED%9A%8D%EB%93%9D%EA%B3%BC-%EB%B6%84%EB%A5%98%ED%8A%B8%EB%A6%AC/) <br/>
 
-<hr/>
 
 ## More about Information Theory
 
