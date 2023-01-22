@@ -2477,7 +2477,7 @@ Typically, used for the normal person and patient classification problems.<br/>
 It's an algorithm that we usually use in our daily lives.<br/>
 
 Decision Tree divides the variable area into two at each node(branch).<br/>
-And it learns in a direction of increasing the __purity__, decreasing __impurity(uncertainty)__ of each area as much as possible after passing every node.<br/>
+And it learns in a direction of increasing the __homogeneity__, decreasing __impurity(uncertainty)__ of each area as much as possible after passing every node.<br/>
 In other words, it learns by the direction of decreasing the __entropy(uncertainty)__.<br/>
 And it called 'Information gain' in the Information Theory.<br/>
 In each node, they divide the data into two. And it is called 'recursive partitioning'.<br/>
@@ -2902,37 +2902,116 @@ If there are M of features, people usually select ${\sqrt M}$ of features.<br/>
 
 ## Feature importance
 
-### By Coefficient
+### By Coefficient - Linear models
 
-#### Linear models
+Determine by the weights that were applied to each feature.
+Simply higher the absolute of a weight, more its importance is.<br/>
+If there are 2 features that each has 0.001 and 1000 of weight.
+And we change two features' value at the same degree in order.
+the prediction will be changed more with the feature that has a higher absolute value of a weight.<br/>
+It means the feature that has 1000 of weight affects more to the prediction.
+And when if the weight is similar, the feature whose value is more certain as indicated by its distribution(i.e. close to normal distribution) should be given higher importance.<br/>
+But be sure that it can be used under the assumption that the features are normalized.
+Because every feature has their own scale, so we have to make them have the same scale.<br/>
 
-#### Tree based models
+### By Coefficient - Tree based models (MDI Importance)
 
-default gini coefficient
+It calculates the importance depending on how much each feature affects the node's branching.<br/>
+To know that, we have to know the process of the branching in advance.<br/>
+It branches by the direction of decreasing the impurity of the leaf nodes.<br/>
+There are 2 representative ways to get impurity.<br/>
+
+#### Entropy
+
+Branch to the direction of maximizing the differences between the entropy that before branched and sum of that after branched on the condition that the impurity after branched is lower than before.<br/>
+Simply, Entropy is one of the indicator of impurity like GINI coefficient.
+
+$${Impurity = G(N) = -\sum\limit{i=0}^k P_i log P_i}$$
+
+- N = node
+- K = the number of classes
+
+#### GINI coefficient
+
+GINI coefficient(i.e. GINI index) is originally a statistical index that indicates an income imbalance.
+It can compensate for the shortcomings off Lorentz curve that it is difficult to compare when different Lorentz curve intersect.<br/>
+Using its formula, we can get GINI impurity.
+And also it'll be higher when the datas were distributed evenly.<br/>
+
+$${Impurity = G(N) = 1 - \sum\limit{i=0}^k P_i^2}$$
+
+- N = node
+- K = the number of classes
+
+The tree branches to the direction of minimizing impurity.<br/>
+
+Actually, Entropy and GINI coefficient are for just calculating the impurity, But MDI Importance is the way to get importance using these.<br/>
+It calculates the node importance(i.e. information gain in specific node) with using impurity.
+
+$${N's importance = I(N) = w * G(N) - \sum\limit{i=0}^{the_number_of_child_nodes} w * G(N_i)}$$
+
+- ${w = specific_node's_datas \over total_datas}$
+
+And finally, we can calculate each feature's importance.<br/>
+
+$${feature_importance = \sum\limit{every_node_branched_by_the_specific_feature} Information_gain \over \sum\limit{every_node} Information_gain}$$
+
+Before using it, we have to normalize it.
+
+$${normalized_feature_importance = feature_importance \over \sum\limit{all_feature} feature_importance}$$
+
+Every fitted tree based model has `feature_importances_` that has GINI coefficient based MDI importances in Sklearn.<br/>
+Almost all tree based model uses GINI coefficient as a default for getting feature importance.<br/>
+But it can't be used as an absolute indicator, because only the GINI coefficient or information gain is considered.<br/>
+And also this value was calculated during the training with the train datas, so we don't know how it'll be changed with the test datas.<br/>
 
 ### Permutation importance
 
-#### Scoring
 
-closer to 1, better model, and closer to 0, worse model.
 
-default scorer in scikit-learn
-almost all reg => [r2 score](https://github.com/Park-SeungWoo/kakao-ai-study#R-2-score)
-almost all classification => accuracy score
+### Conclusion
 
-#### Weakness
+Feature Importance can be calculated by these three ways
 
-#### Strength
+- MDI Importance
+- Permutation Importance
+- Drop-column Importance
 
+We have to choose the right method by our circumstance.
+
+### More about feature importance
+
+[MDI & Permutation & Drop-column importance](https://velog.io/@vvakki_/%EB%9E%9C%EB%8D%A4-%ED%8F%AC%EB%A0%88%EC%8A%A4%ED%8A%B8%EC%97%90%EC%84%9C%EC%9D%98-%EB%B3%80%EC%88%98-%EC%A4%91%EC%9A%94%EB%8F%84Variable-Importance-3%EA%B0%80%EC%A7%80) <br/>
+[3 ways to get feature importance](https://velog.io/@73syjs/%ED%8A%B9%EC%84%B1-%EC%A4%91%EC%9A%94%EB%8F%84Feature-Importances) <br/>
+[feature importance vs permutation importance](https://hwi-doc.tistory.com/entry/Feature-selection-feature-importance-vs-permutation-importance) <br/>
+[feature importance for linear & tree based model (+permutation importance)](https://dsbook.tistory.com/361) <br/>
+[feature importance for linear model](https://towardsdatascience.com/model-based-feature-importance-d4f6fb2ad403) <br/>
+[entropy & gini index (+information gain)](https://process-mining.tistory.com/106) <br/>
+[feature importance with gini index (detailed)](https://soohee410.github.io/iml_tree_importance) <br/>
+[permutation importance](https://moondol-ai.tistory.com/401) <br/>
+[more about feature importance(feature importance for each datas)](https://rfriend.tistory.com/513) <br/>
+[correlation & feature importance](https://seungseop.tistory.com/5) <br/>
 <hr/>
 
 ## R2 score
 
-### SST
+### ANOVA for regression
 
-### SSE
+#### SST
 
-### SSR
+#### SSE
+
+#### SSR
+
+### Adjusted R squared
+
+### Conclusion
+
+### More about R2 score
+
+[simplified description of R2 score](https://velog.io/@parkchansaem/R2-score결정계수) <br/>
+[R2 score](https://math100.tistory.com/120) <br/>
+[detailed description of R2 score](https://aliencoder.tistory.com/34#nav1) <br/>
 
 <hr/>
 
@@ -2948,9 +3027,29 @@ We can also understand it as a degree of surprising.<br/>
 
 ## Entropy
 
+### More about Entropy
+
+[Entropy1](https://angeloyeo.github.io/2020/10/26/information_entropy.html) <br/>
+[Entropy2](https://news.samsungdisplay.com/20076) <br/>
+[Entropy3](http://www.ktword.co.kr/test/view/view.php?m_temp1=649) <br/>
+[Entropy4](https://hyunw.kim/blog/2017/10/14/Entropy.html) <br/>
+[Entropy5](https://horizon.kias.re.kr/18474/) <br/>
+
 <hr/>
 
 ## Information gain
+
+### More about Information gain
+
+[Information theory with DT](https://stevenoh0908.kro.kr/blog/knowledges/%EC%97%94%ED%8A%B8%EB%A1%9C%ED%94%BC-%EC%A0%95%EB%B3%B4%ED%9A%8D%EB%93%9D%EA%B3%BC-%EB%B6%84%EB%A5%98%ED%8A%B8%EB%A6%AC/) <br/>
+
+<hr/>
+
+## More about Information Theory
+
+[Information quatitation](http://www.ktword.co.kr/test/view/view.php?m_temp1=3660) <br/>
+[Basic Information Theory](https://ratsgo.github.io/statistics/2017/09/22/information/) <br/>
+[Information Theory](https://brunch.co.kr/@chris-song/68) <br/>
 
 <hr/>
 
