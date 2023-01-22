@@ -2948,17 +2948,17 @@ The tree branches to the direction of minimizing impurity.<br/>
 Actually, Entropy and GINI coefficient are for just calculating the impurity, But MDI Importance is the way to get importance using these.<br/>
 It calculates the node importance(i.e. information gain in specific node) with using impurity.
 
-$${N's importance = I(N) = w \multiply G(N) - \sum\limits_{i=0}^{the_number_of_child_nodes} w \multiply G(N_i)}$$
+$${N's\ importance = I(N) = w \times G(N) - \sum\limits_{i=0}^{the\ number\ of\ child\ nodes} w \times G(N_i)}$$
 
-- ${w = specific_node's_datas \over total_datas}$
+- ${w = {specific\ node's\ datas \over total\ datas}}$
 
 And finally, we can calculate each feature's importance.<br/>
 
-$${feature_importance = \sum\limits_{every_node_branched_by_the_specific_feature} Information_gain \over \sum\limits_{every_node} Information_gain}$$
+$${feature\ importance = {\sum\limits_{every\ node\ branched\ by\ the\ specific\ feature} Information\ gain \over \sum\limits_{every\ node} Information\ gain}}$$
 
 Before using it, we have to normalize it.
 
-$${normalized_feature_importance = feature_importance \over \sum\limits_{all_feature} feature_importance}$$
+$${normalized\ feature\ importance = {feature\ importance \over \sum\limits_{all\ feature} feature\ importance}}$$
 
 Every fitted tree based model has `feature_importances_` that has GINI coefficient based MDI importances in Sklearn.<br/>
 Almost all tree based model uses GINI coefficient as a default for getting feature importance.<br/>
