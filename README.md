@@ -2926,7 +2926,7 @@ There are 2 representative ways to get impurity.<br/>
 Branch to the direction of maximizing the differences between the entropy that before branched and sum of that after branched on the condition that the impurity after branched is lower than before.<br/>
 Simply, Entropy is one of the indicator of impurity like GINI coefficient.
 
-$${Impurity = G(N) = -\sum\limits{i=0}^k P_i log P_i}$$
+$${Impurity = G(N) = -\sum\limits_{i=0}^k P_i log P_i}$$
 
 - N = node
 - K = the number of classes
@@ -2938,7 +2938,7 @@ It can compensate for the shortcomings off Lorentz curve that it is difficult to
 Using its formula, we can get GINI impurity.
 And also it'll be higher when the datas were distributed evenly.<br/>
 
-$${Impurity = G(N) = 1 - \sum\limits{i=0}^k P_i^2}$$
+$${Impurity = G(N) = 1 - \sum\limits_{i=0}^k P_i^2}$$
 
 - N = node
 - K = the number of classes
@@ -2948,17 +2948,17 @@ The tree branches to the direction of minimizing impurity.<br/>
 Actually, Entropy and GINI coefficient are for just calculating the impurity, But MDI Importance is the way to get importance using these.<br/>
 It calculates the node importance(i.e. information gain in specific node) with using impurity.
 
-$${N's importance = I(N) = w * G(N) - \sum\limits{i=0}^{the_number_of_child_nodes} w * G(N_i)}$$
+$${N's importance = I(N) = w \multiply G(N) - \sum\limits_{i=0}^{the_number_of_child_nodes} w \multiply G(N_i)}$$
 
 - ${w = specific_node's_datas \over total_datas}$
 
 And finally, we can calculate each feature's importance.<br/>
 
-$${feature_importance = \sum\limits{every_node_branched_by_the_specific_feature} Information_gain \over \sum\limit{every_node} Information_gain}$$
+$${feature_importance = \sum\limits_{every_node_branched_by_the_specific_feature} Information_gain \over \sum\limits_{every_node} Information_gain}$$
 
 Before using it, we have to normalize it.
 
-$${normalized_feature_importance = feature_importance \over \sum\limits{all_feature} feature_importance}$$
+$${normalized_feature_importance = feature_importance \over \sum\limits_{all_feature} feature_importance}$$
 
 Every fitted tree based model has `feature_importances_` that has GINI coefficient based MDI importances in Sklearn.<br/>
 Almost all tree based model uses GINI coefficient as a default for getting feature importance.<br/>
