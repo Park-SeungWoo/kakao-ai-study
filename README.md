@@ -3079,7 +3079,7 @@ As we can see, SST equals sum of SSE and SSR.<br/>
 
 If we have 2 or more features, we have to use this.<br/>
 
-$${Adjusted\ R^2 = 1 - {SSR \div (n - k - 1)} \over {SST \div (n - 1)} }$$
+$${Adjusted\ R^2 = 1 - {{SSR \div (n - k - 1)} \over {SST \div (n - 1)}} }$$
 
 - n = the number of datas
 - k = the number of features
@@ -3099,15 +3099,40 @@ And coefficient of determination indicates the correlation between dependent var
 
 # Information Theory
 
+The key point of the information theory is an infrequent event has more information quantitation that the frequent event.<br/>
+
 ## Information quantitation
 
-It is the quantity of information that we can 
-We can also understand it as a degree of surprising.<br/>
+The information quantitation means the degree of surprised.<br/>
+For example, there is a soccer game between Korea and Germany.<br/>
+If Korea win the game, we would be surprised more than lose or draw.
+And we would be surprised if they draw the game more than lose.
+So we can say the case that Korea win the game has the information (quantitation) most.
+And the case that they draw, there will be more information than lose.<br/>
+Let's see the formula.<br/>
 
+$${information\ quantitation = I(X_j) = -log_\alpha P(X_j)}$$
+
+We can use 2 or e as the ${\alpha}$ value.<br/>
+2 is used in the information theory, and use 'bit' as a unit.<br/>
+And e is used in machine learning, but it uses 'nat(natural unit)'as a unit.<br/>
+As we saw in the first sentence, the lower the probability of events, the greater the amount of information.<br/>
+Let's see this graph.<br/>
+
+![information quantitation](readme_assets/information_theory/information_quantitation.jpeg)
 
 <hr/>
 
 ## Entropy
+
+The entropy in the Information theory is a concept that expanded the entropy in Thermodynamics.<br/>
+It indicates the degree of uncertainty.<br/>
+So it has the greatest value when probabilities are similar or have a large amount of the number of cases(i.e. it'll have the greatest value if it is hard to predict).<br/>
+
+$${Entropy = H(x) = -\sum\limits_x P(x) log P(x)}$$
+
+In DT(i.e. Decision Tree), there are some cases that it calculates the impurity using this.<br/>
+And it branches to the direction of minimizing the impurity(i.e. entropy in this case).<br/>
 
 ### More about Entropy
 
@@ -3120,6 +3145,12 @@ We can also understand it as a degree of surprising.<br/>
 <hr/>
 
 ## Information gain
+
+In the Information theory, the information gain means the decrement of the uncertainty(i.e. increment of purity or homogeneity).<br/>
+In other words, it can be defined as the subtraction of the before entropy with the after one.<br/>
+For example, it is the subtraction of the parent node's entropy with the weighted average of child nodes'.<br/>
+
+![information gain](readme_assets/information_theory/information_gain.jpeg)
 
 ### More about Information gain
 
