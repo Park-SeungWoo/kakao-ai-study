@@ -3044,7 +3044,7 @@ And the closer to 0, the worse the model is.<br/>
 And there are two ways to get ${R^2}$ score.
 
 - square the correlation coefficient -> ${R^2 = r^2}$
-- using ANOVA(ANalaysis Of VAriance) for regression. => ${R^2 = 1 - SSR \over SST}$
+- using ANOVA(ANalaysis Of VAriance) for regression. => ${R^2 = 1 - {SSR \over SST}}$
 
 Usually use ANOVA for regression to get ${R^2}$ score.<br/>
 
@@ -3079,7 +3079,7 @@ As we can see, SST equals sum of SSE and SSR.<br/>
 
 If we have 2 or more features, we have to use this.<br/>
 
-$${Adjusted\ R^2 = {1 - {SSR \div (n - k - 1)} \over {SST \div (n - 1)} }}$$
+$${Adjusted\ R^2 = 1 - {SSR \div (n - k - 1)} \over {SST \div (n - 1)} }$$
 
 - n = the number of datas
 - k = the number of features
