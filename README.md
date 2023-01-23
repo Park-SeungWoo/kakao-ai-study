@@ -3159,7 +3159,7 @@ For example, it is the subtraction of the parent node's entropy with the weighte
 
 ## More about Information Theory
 
-[Information quatitation](http://www.ktword.co.kr/test/view/view.php?m_temp1=3660) <br/>
+[Information quantitation](http://www.ktword.co.kr/test/view/view.php?m_temp1=3660) <br/>
 [Basic Information Theory](https://ratsgo.github.io/statistics/2017/09/22/information/) <br/>
 [Information Theory](https://brunch.co.kr/@chris-song/68) <br/>
 
@@ -3169,3 +3169,4 @@ For example, it is the subtraction of the parent node's entropy with the weighte
 
 [lecture materials(Dongguk univ)](http://bigdata.dongguk.ac.kr/lectures/datascience/_book/%EC%9D%98%EC%82%AC%EA%B2%B0%EC%A0%95%EB%82%98%EB%AC%B4tree-model.html) <br/>
 [datascience school](https://datascienceschool.net/03%20machine%20learning/12.01%20%EC%9D%98%EC%82%AC%EA%B2%B0%EC%A0%95%EB%82%98%EB%AC%B4.html) <br/>
+[math for datascience](https://angeloyeo.github.io/2020/10/26/information_entropy.html) <br/>

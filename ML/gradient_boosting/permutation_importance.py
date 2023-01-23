@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
 from sklearn.inspection import permutation_importance
 
-from feature_importance import show_deviance, show_feature_importance
+from feature_importance_regression import show_deviance, show_feature_importance
 
 # permutation importance is more recommended that feature importance
 
